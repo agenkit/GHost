@@ -16,6 +16,17 @@ Graphical Host (`GHost`):
 - [ ] Security (1): browser, secrets, SSH server
 - [ ] Terminal (1): Zsh,
 - [ ] IOMMU
+- [ ] VM `.iso` download
+    - [ ] (Windows guest) `virtio` drivers download
+- [ ] Libvirt hooks
+- [ ] VM (1) creation (VirtManager)
+    - [ ] Error 43 workaround
+- [ ] Performance
+    - [ ] hugepages
+    - [ ] CPU governor
+    - [ ] CPU pinning
+    - [ ] Disk tuning
+    - [ ] (Windows guest) Hyper-V tuning
 - [ ] 
 
 
