@@ -14,20 +14,57 @@ Graphical Host (`GHost`):
 
 - [ ] Install Linux (I use Kubuntu 24.04)
 - [ ] Security (1): browser, secrets, SSH server
-- [ ] Terminal (1): Zsh,
+- [ ] Terminal (1): Zsh, OMZ, bat, tldr, etc.
 - [ ] IOMMU
-- [ ] VM `.iso` download
-    - [ ] (Windows guest) `virtio` drivers download
-- [ ] Libvirt hooks
+- [ ] Libvirt hooks (PCIe hand-off)
 - [ ] VM (1) creation (VirtManager)
-    - [ ] Error 43 workaround
-- [ ] Performance
+    - [ ] Guest OS `.iso` download
+    - [ ] *\[Windows guest\]* `virtio` drivers download
+    - [ ] …
+    - [ ] *\[Nvidia GPU\]* Error 43 workaround
+- [ ] Performance tweaks
     - [ ] hugepages
     - [ ] CPU governor
     - [ ] CPU pinning
     - [ ] Disk tuning
-    - [ ] (Windows guest) Hyper-V tuning
+    - [ ] *\[Windows guest\]* Hyper-V tuning
 - [ ] 
 
+## GHost setup
+
+This guide gets you there as fast as possible. Links are provided in Footnotes and Resources below. See `somepage.md` for deeper discussion.
+
+### Linux
+
+
+### Security (1)
+
+### Terminal (1)
+
+### IOMMU
+
+### Libvirt hooks
+
+### VM (1) creation
+
+### Performance tweaks
+
+
+
+
+
+
+
+
+
+
+
+## Footnotes
+
+
+
+
+
+## Resources
 
 
