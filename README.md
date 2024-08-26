@@ -4,6 +4,7 @@ Graphical Host (`GHost`):
 - Virtualization-ready workstation (Linux KVM)
 - PCIe passthrough (for GPU, TPU, USB, NVMe…)
 - "Type-II hypervisor" setup (the host is a fully usable desktop)
+- Tested on Kubuntu 24.04 (should work on recent Debian & Ubuntu)
 
 <!--
 > [!Tip]
@@ -32,9 +33,17 @@ Graphical Host (`GHost`):
 
 ## GHost setup
 
-This guide gets you there as fast as possible. Links are provided in Footnotes and Resources below. See `somepage.md` for deeper discussion.
+This guide gets you there as fast as possible.  
+
+> [!Tip]
+> See `somepage.md` for a in-depth discussion.
+> TMI is provided in [Footnotes](#footnotes) and [Resources](#resources).
 
 ### Linux
+
+YMMV. Flash your iso to 
+
+🔗 [Kubuntu 24.04]([url](https://kubuntu.org/getkubuntu/))
 
 
 ### Security (1)
