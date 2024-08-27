@@ -147,6 +147,8 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 
 ### IOMMU
 
+From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/).
+
 ### Libvirt hooks
 
 ### VM (1) creation
@@ -173,6 +175,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 
 - [Rsync](https://rsync.samba.org/)
    - [Repository](https://github.com/RsyncProject/rsync)
+   - [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
 
 
 
