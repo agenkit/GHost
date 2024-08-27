@@ -2,7 +2,10 @@
 
 > **GHost: G*raphical* Host**
 
-**TL;DR**: *If* you know what you're doing, ***the ToC is all you need.***
+
+> [!Tip]
+> ***If*** you know what you're doing,  
+> ***the ToC is all you need.***
 
 ## Overview
 
@@ -16,7 +19,7 @@ This notably includes full-fledged "native" GPU-powered workstation VMs for grap
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
 
 > [!Tip]
-> There's a headless/CLI variant called SHost.[^SHost]
+> There's a headless/CLI variant called **SHost: S*erver* Host**.[^SHost]
 
 
 ### Hardware requirements
@@ -28,24 +31,42 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
    - … with a chipset/motherboard that sports *enough™* **PCIe lanes** (usually 20 on consumer platforms)
 - NVMe storage (at least for OS, host & guests)
 
-**Recommended**
+**Recommended** for convenience, notably during setup:
 
-- Any solution to display two machines concurrently (2 physical displays, some picture-by-picture feature…), at least during setup. This avoids tediously switching inputs at times, and facilitates monitoring.
-- Two keyboard-mouse combos. Alternatively, a single combo behind a KVM switch (hardware device), or a Synergy[^synergy] license (software utility, ideal if you have multiple displays).
+- Any solution to display 2 machines concurrently (2 physical displays, some picture-by-picture feature…).
+- 2 keyboard-mouse combos. Alternatively, a KVM switch (hardware device), or a Synergy[^synergy] license (software utility, ideal if you have multiple displays).
 - A second computer to SSH into the host.
+
 
 ### About this guide
 
 This procedure gets you there *as fast as possible*.
 
-- No talk 🡪 blaze through atomic steps.
-- Direct links whenever possible.
-- One-size-fits-*most*.  
-  Find all **reference links** for variations in [Resources](#resources) (docs, repos, guides, discussions…)
+- No talk
+- Atomic steps
+- Direct links
+- One-size-fits-*most!*
+   Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
 
 To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) — it's my little book about this kind of virtualized infra, and probably contains answers you seek.
 
-----
+> [!Note]
+> #### Hardware used
+>
+> - Chipset: X670E (using PCIe 4.0 only)
+> - DDR5: 64 GB
+> - CPU: AMD Ryzen 7950X (16/32 cores)
+> - GPU 0: AMD Raphael (integrated, shared memory)
+> - GPU 1: Nvidia RTX 3090 (24 GB)
+> - NVMe 0: host OS (2 TB)
+> - NVMe 1-3: ZFS datasets for VMs & data (12 TB)
+>
+>**Soon™**
+>
+> - TPU: Tenstorrent Wormhole (2×12 GB)
+> - HDD: hot backup (16 TB)
+
+
 
 ## Setup
 
