@@ -1,8 +1,12 @@
 # GHost
 
-> GHost: the **G***raphical* **Host**
+> **GHost: G*raphical* Host**
+
+**TL;DR**: *If* you know what you're doing, ***the ToC is all you need.***
 
 ## Overview
+
+### What does it do?
 
 **GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations.
 
@@ -11,8 +15,11 @@ This notably includes full-fledged "native" GPU-powered workstation VMs for grap
 
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
 
+> [!Tip]
+> There's a headless/CLI variant called SHost.[^SHost]
 
-### Hardware
+
+### Hardware requirements
 
 - Exactly **1 PC** (x64 platform)
    - … with a chipset/motherboard that supports **IOMMU** virtualization features
@@ -21,36 +28,32 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
    - … with a chipset/motherboard that sports *enough™* **PCIe lanes** (usually 20 on consumer platforms)
 - NVMe storage (at least for OS, host & guests)
 
+**Recommended**
+
+- Any solution to display two machines concurrently (2 physical displays, some picture-by-picture feature…), at least during setup. This avoids tediously switching inputs at times, and facilitates monitoring.
+- Two keyboard-mouse combos. Alternatively, a single combo behind a KVM switch (hardware device), or a Synergy[^synergy] license (software utility, ideal if you have multiple displays).
+- A second computer to SSH into the host.
 
 ### About this guide
 
-This procedure gets you there **as fast as possible**.
+This procedure gets you there *as fast as possible*.
 
-- Instructions only (KISS, no "why")
-- Atomic steps (single actions)
-- Direct links (whenever possible)
-- Footnotes = **Help!** 🡪 *"If **this**[^footnote] doesn't work, check out its footnote!"*
+- No talk 🡪 blaze through atomic steps.
+- Direct links whenever possible.
+- One-size-fits-*most*.  
+  Find all **reference links** for variations in [Resources](#resources) (docs, repos, guides, discussions…)
 
-> [!Tip]
->
-> This is a *one-size-fits-most* GHost setup.
-> You may need additional resources for your use case.
-> 
-> - [Resources](#resources) has all the **reference links**: docs, repos, guides, discussions, etc.
-> - [`disc.md`](disc.md) is my little book about this kind of virtualized infra. It probably contains some answers you seek.
-> - [`SHost`]() (Server Host) is the **CLI/headless** variant.
->   - It's closer to a Type-I hypervisor.
->   - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…
-
-`GHost` (**G**raphical **Host**) is part of my tentative [***Ultra***structure]() computing paradigm.
+To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) — it's my little book about this kind of virtualized infra, and probably contains answers you seek.
 
 ----
 
 ## Setup
 
+> [!Tip]
+> Footnote = **Help!**
+> 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
-
-### Kubuntu Linux Installation
+### Kubuntu
 
 
 
@@ -64,29 +67,47 @@ This procedure gets you there **as fast as possible**.
    sudo apt install ./balena-etcher_******_amd64.deb
    ```
 
-1. Launch Etcher (GUI app in your usual menu).
+1. Launch it (GUI app in your usual menu).
 
-   1. Select the iso.
-   2. Select the USB stick.
-   3. Flash.
+1. Flash `kubuntu-24.04-desktop-amd64.iso` onto your USB stick.
 
-1. Shutdown the PC.
-
-1. Unplug (physically) all video outputs, except the host's. *In this guide, it's the Ryzen iGPU.*
+1. ⚠️ Shutdown the PC and **unplug (physically) all video outputs, except the host's.**  
+   *In this guide, the iGPU is dedicated to the host, so at this point we remove any video cable going out of the Nvidia GPU.*[^2]
 
 1. Boot to USB to setup Kubuntu. Most defaults are OK, except:
 
    1. **Btrfs** on the root partition (`/`) is **required** for some features (local snapshots, remote backups, easy rollback, and more).
-   3. Agree to install `virt-manager` and the other thing [???] (not Krita).
+   1. Agree to install `virt-manager` and the other thing [???] (not Krita).
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
 
 
-
-
 ### Security & Access (1)
+
+1. Upgrade packages.
+
+   ```bash
+   sudo apt update
+   sudo apt upgrade
+   ```
+
+1. Optionally install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
+
+   ```bash
+   sudo apt install curl
+
+   sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+   sudo apt update
+
+   sudo apt install brave-browser
+   ```
+
+2. 
 
 #### Secrets
 
@@ -117,12 +138,12 @@ This procedure gets you there **as fast as possible**.
 
 ## Resources
 
-
 - [Kubuntu](https://kubuntu.org/)
 - [Etcher](https://etcher.io/)
 - [Btrfs](https://btrfs.readthedocs.io/en/latest/)
 
 
+- [Synergy](https://symless.com/synergy)
 
 - [Rsync](https://rsync.samba.org/)
    - [Repository](https://github.com/RsyncProject/rsync)
@@ -130,14 +151,25 @@ This procedure gets you there **as fast as possible**.
 
 
 
-[^footnote]: Then hit the back link to get back where you were:
+[^footnote]: Click the ending link to go back up where you were:
 
-[^1]: TMI: Too Much Information
+[^synergy]: Control multiple machines (Linux, Mac, Windows) with one keyboard+mouse combo, as if they were multiple displays connected to the same PC.  
+  License cost per user (pay once, keep forever): \$29 for up to 3 machines, or \$49 for 15.
+
+[^SHost]: `SHost` (Server Host) is the **CLI/headless** variant.
+   - It's closer to a Type-I hypervisor.
+   - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…
+   - Both are part of my tentative [***Ultra***structure]() computing paradigm.
+
+
+
 
 [^2]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:
   - proper *graphics* drivers will get installed on the host;
   - auto-configs (Xorg…) work well;
   - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*
+
+
 
 
 [^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
