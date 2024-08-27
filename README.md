@@ -11,9 +11,9 @@
 
 ### What does it do?
 
-**GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations.
+**GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations. It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms).
 
-In plain English, it's an always-on single box that virtualizes whatever infrastructure you want to throw at it.  
+In plain English, it's an always-on single box that virtualizes whatever infrastructure you want to throw at it. This guide offers a number of working examples.  
 This notably includes full-fledged "native" GPU-powered workstation VMs for graphical or AI applications, with their own display, keyboard, mouse…
 
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
@@ -24,12 +24,13 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 ### Hardware requirements
 
-- Exactly **1 PC** (x64 platform)
-   - … with a chipset/motherboard that supports **IOMMU** virtualization features
+1. Exactly **1 PC** (x64 platform)
+   - … with a motherboard that supports **IOMMU** virtualization features,
+   - … has *enough™* **PCIe ≥ 4.0 lanes** (usually 20 on consumer platforms),
    - … and *enough™* **RAM** & CPU **cores** (I like 64 GB over 16 physical cores)
-- At least **2 GPU** (counting iGPU, if any)
-   - … with a chipset/motherboard that sports *enough™* **PCIe lanes** (usually 20 on consumer platforms)
-- NVMe storage (at least for OS, host & guests)
+2. At least **2 GPU** (counting iGPU, if any)
+   - … with a chipset/motherboard that sports 
+3. NVMe storage (at least for all OS)
 
 **Recommended** for convenience, notably during setup:
 
@@ -53,7 +54,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > [!Note]
 > #### Hardware used
 >
-> - Chipset: X670E (using PCIe 4.0 only)
+> - Chipset: AMD AM5 X670E (req. PCIe ≥ 4.0)
 > - DDR5: 64 GB
 > - CPU: AMD Ryzen 7950X (16/32 cores)
 > - GPU 0: AMD Raphael (integrated, shared memory)
@@ -61,9 +62,13 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > - NVMe 0: host OS (2 TB)
 > - NVMe 1-3: ZFS datasets for VMs & data (12 TB)
 >
->**Soon™**
+> **Soon™**
 >
+> Pick one:
 > - TPU: Tenstorrent Wormhole (2×12 GB)
+> - GPU: whatever outputs 8K@60Hz (to free the 3090 from graphics duty and run it on compute while still enjoying 8K)
+> 
+> Nice things:
 > - HDD: hot backup (16 TB)
 
 
