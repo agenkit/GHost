@@ -4,8 +4,8 @@
 
 
 > [!Tip]
-> ***If*** you know what you're doing,  
-> ***the ToC is all you need.***
+> *If you know what you're doing,  
+> the ToC is all you need.*
 
 ## Overview
 
