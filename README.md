@@ -14,7 +14,7 @@
 **GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations. It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms).
 
 In plain English, it's an always-on single box that virtualizes whatever infrastructure you want to throw at it. This guide offers a number of working examples.  
-This notably includes full-fledged "native" GPU-powered workstation VMs for graphical or AI applications, with their own display, keyboard, mouse…
+This notably includes full-fledged "native" GPU-powered workstation VMs for graphical applications, with their own display, keyboard, mouse; or AI GPU/TPU servers.
 
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
 
