@@ -24,10 +24,10 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 ### Hardware requirements
 
-1. Exactly **1 PC** (x64 platform)
-   - … with a motherboard that supports **IOMMU** virtualization features,
-   - … has *enough™* **PCIe ≥ 4.0 lanes** (usually 20 on consumer platforms),
-   - … and *enough™* **RAM** & CPU **cores** (I like 64 GB over 16 physical cores)
+1. Exactly **1 PC** (x64 platform) whose motherboard:
+   - supports **IOMMU** virtualization features,
+   - has *enough™* **PCIe ≥ 4.0 lanes** (usually **20** on consumer platforms),
+   - and *enough™* **RAM** & CPU **cores** (I like **≥ 48 GB** over **≥ 12** physical cores)
 2. At least **2 GPU** (counting iGPU, if any)
 3. NVMe storage
 
