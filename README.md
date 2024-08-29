@@ -185,17 +185,17 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
   License cost per user (pay once, keep forever): \$29 for up to 3 machines, or \$49 for 15.
 
 [^SHost]: `SHost` (Server Host) is the **CLI/headless** variant.
-   - It's closer to a Type-I hypervisor.
-   - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…
-   - Both are part of my tentative [***Ultra***structure]() computing paradigm.
+     - It's closer to a Type-I hypervisor.
+     - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…
+     - Both are part of my tentative [***Ultra***structure]() computing paradigm.
 
-[]
+
 
 
 [^2]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:
-  - proper *graphics* drivers will get installed on the host;
-  - auto-configs (Xorg…) work well;
-  - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*
+      - proper *graphics* drivers will get installed on the host;
+      - auto-configs (Xorg…) work well;
+      - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*
 
 
 
