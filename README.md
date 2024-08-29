@@ -132,7 +132,6 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
    sudo apt install brave-browser
    ```
 
-2. 
 
 #### Secrets
 
