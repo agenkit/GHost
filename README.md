@@ -29,8 +29,7 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
    - … has *enough™* **PCIe ≥ 4.0 lanes** (usually 20 on consumer platforms),
    - … and *enough™* **RAM** & CPU **cores** (I like 64 GB over 16 physical cores)
 2. At least **2 GPU** (counting iGPU, if any)
-   - … with a chipset/motherboard that sports 
-3. NVMe storage (at least for all OS)
+3. NVMe storage
 
 **Recommended** for convenience, notably during setup:
 
