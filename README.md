@@ -102,7 +102,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 1. Boot to USB to setup Kubuntu. Most defaults are OK, except:
 
    1. **Btrfs** on the root partition (`/`) is **required** for some features (local snapshots, remote backups, easy rollback, and more).
-   1. Agree to install `virt-manager` and the other thing [???] (not Krita).
+   1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
