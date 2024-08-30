@@ -78,9 +78,9 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 > Footnote = **Help!**
 > ðŸ¡ª *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
-### Kubuntu
+### Linux
 
-
+*Two approaches for the host GUI: "rich" (KDE, Gnome...) or "lean" (Mate, i3...). Here we go with KDE on Ubuntu.*
 
 1. Download the **Kubuntu [`.iso`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
@@ -116,7 +116,9 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
    sudo apt upgrade
    ```
 
-1. Optionally install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
+1. [Optional] Play with OS/DE settings to your liking.
+
+1. [Optional] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
    ```bash
    sudo apt install curl
@@ -130,12 +132,12 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
    sudo apt install brave-browser
    ```
 
-1. Optionally setup additional data storage.
+1. [Optional] Setup additional storage.
 
-   For instance in my case, with 3 drives optimized for speed and latency, whose `/dev/disk/by-id/VALUE{1-3}` were mapped to `$DISK{1-3}` (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`):
+   For instance in my case, with 3 drives in `RAID0` (for speed and latency), whose `/dev/disk/by-id/VALUE{1-3}` were mapped to `$DISK{1-3}` (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`):
 
    ```bash
-   sudo mkfs.btrfs -v -L fast_data -m raid1c3 -d raid0 -O block-group-tree $DISK1 $DISK2 $DISK3
+   sudo mkfs.btrfs -v -L data -m raid1c3 -d raid0 -O block-group-tree $DISK1 $DISK2 $DISK3
    ```
 
 ### Security (1)
