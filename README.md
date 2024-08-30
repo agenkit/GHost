@@ -92,7 +92,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
    sudo apt install ./balena-etcher_******_amd64.deb
    ```
 
-1. Launch it (GUI app in your usual menu).
+1. Launch it (GUI 🖱️ app in your usual menu).
 
 1. Flash `kubuntu-24.04-desktop-amd64.iso` onto your USB stick.
 
