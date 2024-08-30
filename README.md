@@ -80,7 +80,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 
 ### Linux
 
-*Two approaches for the host GUI: "rich" (KDE, Gnome...) or "lean" (Mate, i3...). Here we go with KDE on Ubuntu.*
+*Two approaches for the host GUI: "rich" (KDE, Gnome...) or "lean" (Mate, i3...). Here we go with KDE on Ubuntu, because it has many required features out of the box.*
 
 1. Download the **Kubuntu [`.iso`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
