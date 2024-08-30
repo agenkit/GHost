@@ -42,10 +42,13 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 This procedure gets you there *as fast as possible*.
 
-- No talk
-- Atomic steps
-- Direct links (marked with 🔽)
-- One-size-fits-*most!*
+- **No talk**
+- Formatting:
+   - Bold **keywords**
+   - *You can **skip** all sentences in **italics**!*
+- **Atomic** steps (do **ONE thing**)
+- **Direct links** (marked with 🔽)
+- **One-size-fits-*most!***  
    Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
 
 To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) — it's my little book about this kind of virtualized infra, and probably contains answers you seek.
@@ -80,7 +83,10 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 
 ### Linux
 
-*Two approaches for the host GUI: "rich" (KDE, Gnome...) or "lean" (Mate, i3...). Here we go with KDE on Ubuntu, because it has many required features out of the box.*
+*Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
+Here we go with KDE on Ubuntu, because it has many required features out of the box.*
+
+#### Setup bootable device
 
 1. Download the **Kubuntu [`.iso 🔽`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
@@ -98,6 +104,8 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 
 1. Shutdown the PC.
 
+#### Install OS
+
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**  
    *In this guide, the iGPU is dedicated to the host, so at this point we remove any video cable going out of the Nvidia GPU.*[^2]
 
@@ -110,7 +118,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
-### Basics
+#### Post-install
 
 1. Upgrade packages.
 
@@ -178,19 +186,32 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 ## Resources
 
-- [Kubuntu](https://kubuntu.org/)
-- [Etcher](https://etcher.io/)
-- [Btrfs](https://btrfs.readthedocs.io/en/latest/)
+Titles link to official project page.
+
+### [Kubuntu](https://kubuntu.org/)
+
+### [Etcher](https://etcher.io/)
+
+### [Btrfs](https://btrfs.readthedocs.io/en/latest/)
+
+### [Synergy](https://symless.com/synergy)
+
+### [Rsync](https://rsync.samba.org/)
+
+- [Repository](https://github.com/RsyncProject/rsync)
+- [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
+
+### ...
 
 
-- [Synergy](https://symless.com/synergy)
-
-- [Rsync](https://rsync.samba.org/)
-   - [Repository](https://github.com/RsyncProject/rsync)
-   - [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
 
 
 
+
+
+----
+
+work-in-progress \[2024.08.31\]
 
 [^footnote]: Click the ending link to go back up where you were:
 
@@ -216,7 +237,7 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 [^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
 
 
-[^btrfs-root]: Easy system rollback/versioning, remote backup, and more.
+[^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
 
 
