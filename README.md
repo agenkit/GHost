@@ -96,12 +96,15 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 
 1. Flash `kubuntu-24.04-desktop-amd64.iso` onto your USB stick.
 
-1. ⚠️ Shutdown the PC and **unplug (physically) all video outputs, except the host's.**  
+1. Shutdown the PC.
+
+1. ⚠️ **Unplug (physically) all video outputs, except the host's.**  
    *In this guide, the iGPU is dedicated to the host, so at this point we remove any video cable going out of the Nvidia GPU.*[^2]
 
-1. Boot to USB to setup Kubuntu. Most defaults are OK, except:
+1. Boot to USB to setup Kubuntu. Two requirements:
 
-   1. **Btrfs** on the root partition (`/`) is **required** for some features (local snapshots, remote backups, easy rollback, and more).
+   1. **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]  
+      (If using multiple devices, do RAID `1`|`1c3`|`10`|`1c4`; **NOT** `0`|`5`|`6`).
    1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
@@ -213,7 +216,7 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 [^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
 
 
-
+[^btrfs-root]: Easy system rollback/versioning, remote backup, and more.
 
 
 
