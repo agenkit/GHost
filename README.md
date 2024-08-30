@@ -107,13 +107,21 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
-#### Basics
+### Basics
 
 1. Upgrade packages.
 
    ```bash
    sudo apt update
    sudo apt upgrade
+   ```
+
+1. [Optional] Setup additional devices, such as storage.
+
+   For instance in my case, with 3 drives in `RAID0` (for speed and latency), whose `/dev/disk/by-id/VALUE{1-3}` were mapped to `$DISK{1-3}` (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`):
+
+   ```bash
+   sudo mkfs.btrfs -v -L data -m raid1c3 -d raid0 -O block-group-tree $DISK1 $DISK2 $DISK3
    ```
 
 1. [Optional] Play with OS/DE settings to your liking.
@@ -130,14 +138,6 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
    sudo apt update
 
    sudo apt install brave-browser
-   ```
-
-1. [Optional] Setup additional storage.
-
-   For instance in my case, with 3 drives in `RAID0` (for speed and latency), whose `/dev/disk/by-id/VALUE{1-3}` were mapped to `$DISK{1-3}` (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`):
-
-   ```bash
-   sudo mkfs.btrfs -v -L data -m raid1c3 -d raid0 -O block-group-tree $DISK1 $DISK2 $DISK3
    ```
 
 ### Security (1)
