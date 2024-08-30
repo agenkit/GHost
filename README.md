@@ -44,7 +44,7 @@ This procedure gets you there *as fast as possible*.
 
 - No talk
 - Atomic steps
-- Direct links
+- Direct links (marked with 🔽)
 - One-size-fits-*most!*
    Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
 
@@ -82,7 +82,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 
 *Two approaches for the host GUI: "rich" (KDE, Gnome...) or "lean" (Mate, i3...). Here we go with KDE on Ubuntu, because it has many required features out of the box.*
 
-1. Download the **Kubuntu [`.iso`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
+1. Download the **Kubuntu [`.iso 🔽`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
 1. Download the latest **Balena Etcher [release](https://github.com/balena-io/etcher/releases)** for your *current* OS (where you will flash the `.iso` to USB).
 
