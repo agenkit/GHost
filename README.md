@@ -51,7 +51,9 @@ This procedure gets you there *as fast as possible*.
 - **One-size-fits-*most!***  
    Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
 
+<!--
 To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) — it's my little book about this kind of virtualized infra, and probably contains answers you seek.
+-->
 
 > [!Note]
 > #### Hardware used
@@ -86,7 +88,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
 
-#### Setup bootable device
+#### Make a bootable device
 
 1. Download the **Kubuntu [`.iso 🔽`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
@@ -127,12 +129,18 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
-1. [Optional] Setup additional devices, such as storage.
+1. [Optional] Setup additional devices meant to be used by the host, such as fast storage for VMs.
 
-   For instance in my case, with 3 drives in `RAID0` (for speed and latency), whose `/dev/disk/by-id/VALUE{1-3}` were mapped to `$DISK{1-3}` (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`):
+   *For instance for 3 drives in `RAID0`.[^raid0]*  
+   *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
+   (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`).*
 
    ```bash
-   sudo mkfs.btrfs -v -L data -m raid1c3 -d raid0 -O block-group-tree $DISK1 $DISK2 $DISK3
+   sudo mkfs.btrfs -v -L data \
+   -m raid1c3 \
+   -d raid0 \
+   -O block-group-tree \
+   $DISK1 $DISK2 $DISK3
    ```
 
 1. [Optional] Play with OS/DE settings to your liking.
@@ -153,7 +161,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 ### Security (1)
 
-This is a test
+
 
 #### Secrets
 
@@ -186,7 +194,7 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 ## Resources
 
-Titles link to official project page.
+A-Z titles link to official project page.
 
 ### [Kubuntu](https://kubuntu.org/)
 
@@ -239,7 +247,7 @@ work-in-progress \[2024.08.31\]
 
 [^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
-
+[^raid0]: Using RAID 0 is highly discouraged if you don't do extremely regular backups, or you just plain don't care about your data.
 
 
 
