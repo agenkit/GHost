@@ -134,9 +134,9 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
-1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs.
+1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-   *Example Btfrs filesystem with 3 devices in `RAID0`.[^raid0]*  
+   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.[^raid0]*  
    *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
    (e.g., `nvme-VENDOR_MODEL_SIZE_SERIALNUMBER` to `$DISK1`).*
 
@@ -146,6 +146,12 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    -d raid0 \
    -O block-group-tree \
    $DISK1 $DISK2 $DISK3
+   ```
+
+   *Alternatively in XFS over `mdadm`:*
+
+   ```bash
+   sudo 
    ```
 
 1. \[*Optional*\] Play with OS & DE settings to your liking.
@@ -205,6 +211,9 @@ A-Z titles link to official project page.
 
 ### [Btrfs](https://btrfs.readthedocs.io/en/latest/)
 
+- disable COW: [`chattr +C`](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW)
+- [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features)
+
 ### [Synergy](https://symless.com/synergy)
 
 ### [Rsync](https://rsync.samba.org/)
@@ -250,8 +259,9 @@ work-in-progress \[2024.08.31\]
 
 [^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
-[^raid0]: Using **RAID 0 is highly discouraged** if you don't do extremely regular backups, or you just plain don't care about your data.  
-We use [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features) to *"greatly reduce mount time for large filesystems."*
+[^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.  
+We use [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features) to *"greatly reduce mount time for large filesystems."*  
+Note that we'll have to [disable COW](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW) for the VM image directory using `chattr +C /path/to/dir` to avoid a useless performance hit.
 
 
 
