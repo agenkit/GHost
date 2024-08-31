@@ -134,7 +134,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
    *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.*[^raid0]  
-   *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
+   *Their `/dev/disk/by-id/nvme-...` device id was mapped to `$DISK{1-3}`  
    (e.g., `nvme-VENDOR_MODEL_SIZE_SERIALNUMBER` to `$DISK1`).*
 
    ```bash
@@ -142,7 +142,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    -m raid1c3 \
    -d raid0 \
    -O block-group-tree \
-   $DISK1 $DISK2 $DISK3
+   $DISK1 $DISK2 $DISK3    # Tab to quickly find device name
    ```
 
    *Alternatively, use [XFS over `mdadm`](#xfs).*
@@ -200,19 +200,28 @@ A-Z titles link to official project page.
 
 ### [Etcher](https://etcher.io/)
 
-### [Btrfs](https://btrfs.readthedocs.io/en/latest/)
+### [Btrfs](https://docs.kernel.org/filesystems/btrfs.html)
+
+[Documentation](https://btrfs.readthedocs.io/en/latest/)
+
+- [`mkfs.btrfs(8)`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html)
+- [Volume management](https://btrfs.readthedocs.io/en/latest/Volume-management.html)
+- [Subvolumes](https://btrfs.readthedocs.io/en/latest/Subvolumes.html)
+
+Options
 
 - disable COW: [`chattr +C`](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW)
 - [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features)
 
-### [Synergy](https://symless.com/synergy)
+### `chattr`
 
-### [Rsync](https://rsync.samba.org/)
+https://man7.org/linux/man-pages/man1/chattr.1.html
 
-- [Repository](https://github.com/RsyncProject/rsync)
-- [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
+https://man7.org/linux/man-pages/man1/lsattr.1.html
 
-### XFS
+
+
+### [XFS](https://xfs.wiki.kernel.org/)
 
 XFS over `mdadm`:
 
@@ -234,6 +243,16 @@ UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
 
 sudo mdadm --detail -vv /dev/md0
 ```
+
+
+
+
+### [Synergy](https://symless.com/synergy)
+
+### [Rsync](https://rsync.samba.org/)
+
+- [Repository](https://github.com/RsyncProject/rsync)
+- [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
 
 
 
