@@ -2,9 +2,9 @@
 
 What you need to know:
 
-- physical drives must be formatted using a [filesystem](#filesystem)
-- but to group multiple drives, first create an [array](#arrays)
-- a filesystem must be [mounted](#mount) to be accessed
+- physical drives must be **formatted** using a [filesystem](#filesystem)
+   - but to group **multiple drives**, first create an [array](#arrays)
+- a filesystem must be [mounted](#mount) before you can **read/write** it
 
 > [!Note]
 > In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
