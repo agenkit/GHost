@@ -108,16 +108,21 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 #### Install OS
 
-1. ⚠️ **Unplug (physically) all video outputs, except the host's.**  
-   *In this guide, the iGPU is dedicated to the host, so at this point we remove any video cable going out of the Nvidia GPU.*[^2]
+1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
+
+   *In this guide, the AMD iGPU is dedicated to the host.  
+   So at this point, we remove all video cables going out of the Nvidia GPU.*[^2]
 
 1. Boot to USB to setup Kubuntu. Two requirements:
 
    1. **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]  
-      (If using multiple devices, do RAID `1`|`1c3`|`10`|`1c4`; **NOT** `0`|`5`|`6`).
+      *NOTE: **NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.*  
+      *All manners of RAID 1 and 0 (1c3, 1c4, 10) are perfectly fine however.*
+      
    1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
+
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
 #### Post-install
@@ -131,19 +136,19 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. [Optional] Setup additional devices meant to be used by the host, such as fast storage for VMs.
 
-   *For instance for 3 drives in `RAID0`.[^raid0]*  
+   *Example Btfrs filesystem with 3 devices in `RAID0`.[^raid0]*  
    *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
-   (e.g., `nvme-Samsung_SSD_990_PRO_4TB_N1GNLV1T866442X` to `$DISK1`).*
+   (e.g., `nvme-VENDOR_MODEL_SIZE_SERIALNUMBER` to `$DISK1`).*
 
    ```bash
-   sudo mkfs.btrfs -v -L data \
+   sudo mkfs.btrfs -v -L fastfs \
    -m raid1c3 \
    -d raid0 \
    -O block-group-tree \
    $DISK1 $DISK2 $DISK3
    ```
 
-1. [Optional] Play with OS/DE settings to your liking.
+1. [Optional] Play with OS & DE settings to your liking.
 
 1. [Optional] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
@@ -161,15 +166,13 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 ### Security (1)
 
-
-
 #### Secrets
 
-
+You should probably have some solution to manage secrets, such as a password management system of sorts.
 
 #### SSH server
 
-
+OpenSSH 
 
 ### Terminal (1)
 
