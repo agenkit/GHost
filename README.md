@@ -29,7 +29,7 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
    - has *enough™* **PCIe ≥ 4.0 lanes** (usually **20** on consumer platforms),
    - and *enough™* **RAM** & CPU **cores** (I like **≥ 48 GB** over **≥ 12** physical cores)
 2. At least **2 GPU** (counting iGPU, if any)
-3. *Enough™* NVMe storage (say 50GB per OS + userland + pro use case like data, models, content, audio/video, samples...)
+3. *Enough™* NVMe storage (say 50GB per OS + userland + pro use case like data, models, content, audio/video, samples...), ideally two physical drives or more (one for the host; others for VMs).
 
 **Recommended** for convenience, notably during setup:
 
@@ -134,7 +134,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
-1. [Optional] Setup additional devices meant to be used by the host, such as fast storage for VMs.
+1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs.
 
    *Example Btfrs filesystem with 3 devices in `RAID0`.[^raid0]*  
    *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
@@ -148,9 +148,9 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    $DISK1 $DISK2 $DISK3
    ```
 
-1. [Optional] Play with OS & DE settings to your liking.
+1. \[*Optional*\] Play with OS & DE settings to your liking.
 
-1. [Optional] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
+1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
    ```bash
    sudo apt install curl
