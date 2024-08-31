@@ -250,7 +250,8 @@ work-in-progress \[2024.08.31\]
 
 [^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
-[^raid0]: Using RAID 0 is highly discouraged if you don't do extremely regular backups, or you just plain don't care about your data.
+[^raid0]: Using **RAID 0 is highly discouraged** if you don't do extremely regular backups, or you just plain don't care about your data.  
+We use [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features) to *"greatly reduce mount time for large filesystems."*
 
 
 
