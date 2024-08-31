@@ -1,10 +1,12 @@
 # Storage
 
-What you need to know:
+## What you need to know
 
-- physical drives must be **formatted** using a [filesystem](#filesystem)
-   - but to group **multiple drives**, first create an [array](#arrays)
-- a filesystem must be [mounted](#mount) before you can **read/write** it
+- (optional) If you need to group **multiple drives**, *first* create an [array](#arrays) before formatting it.
+- A physical drive must be **formatted** using a [filesystem](#filesystem).
+- A formatted filesystem must finally be [mounted](#mount) to **read/write** it.
+
+For [ZFS](#zfs) and [Btrfs](#btrfs), head over to their dedicated section as they manage things their own way.
 
 > [!Note]
 > In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
@@ -183,10 +185,6 @@ And further inspect the RAID:
 ```bash
 sudo mdadm --detail -vv /dev/md0
 ```
-
-See [Filesystem](#filesystem) to format the array. If in doubt, use [XFS](#xfs).
-
-See [Mount](#mount)
 
 
 
