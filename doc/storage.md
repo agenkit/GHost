@@ -37,7 +37,7 @@ If you have special needs:
 #### Create the XFS filesystem
 
 Format the device with the XFS filesystem.  
-*Here we use a RAID device (`/dev/md0`) previously created with [`mdadm`](#mdadm).*
+*Here we use a RAID device `/dev/md0` previously created with [`mdadm`](#mdadm).*
 
 ```bash
 sudo mkfs.xfs -L data /dev/md0
@@ -52,6 +52,28 @@ then mount the device.
 sudo mkdir /mnt/data
 sudo mount /dev/md0 /mnt/data
 ```
+
+
+#### `fstab` (boot mount)
+
+Get the UUID of the device:
+
+```bash
+sudo blkid | grep <your-device>
+```
+
+Edit `/etc/fstab` to add an entry for the RAID 0 array:
+
+```bash
+sudo nano /etc/fstab
+```
+
+Add this line (replace `UUID` with the actual UUID from the `blkid` command):
+
+```
+UUID=<your-uuid> /mnt/data xfs defaults 0 0
+```
+
 
 
 
@@ -158,28 +180,6 @@ Create a mount point and mount the device.
 sudo mkdir /mnt/data
 sudo mount /dev/md0 /mnt/data
 ```
-
-#### `fstab` (boot mount)
-
-Get the UUID of the device:
-
-```bash
-sudo blkid | grep <your-device>
-```
-
-Edit `/etc/fstab` to add an entry for the RAID 0 array:
-
-```bash
-sudo nano /etc/fstab
-```
-
-Add this line (replace `UUID` with the actual UUID from the `blkid` command):
-
-```
-UUID=<your-uuid> /mnt/data xfs defaults 0 0
-```
-
-
 
 
 
