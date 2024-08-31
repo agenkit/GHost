@@ -133,19 +133,30 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.*[^raid0]
+   *Example RAID 0 (3 devices) in XFS.*[^raid0]  
+   *(Alternatively, use [Btrfs](#btrfs-raid-0).)*
 
    ```bash
-   sudo mkfs.btrfs -v -L fastfs \
-   -O block-group-tree \
-   -m raid1c3 \
-   -d raid0 \
-   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_1 \
-   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_2 \
-   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_3
+   sudo apt install mdadm
+   sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
+   
+   cat /proc/mdstat
+   sudo mdadm --detail -vv /dev/md0
+   
+   sudo mkfs.xfs -L fastfs /dev/md0
+   
+   sudo mkdir /mnt/fastfs
+   sudo mount /dev/md0 /mnt/fastfs
+   
+   sudo blkid | grep md0
+   sudo nano /etc/fstab
+   UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
+   
+   sudo mdadm --detail -vv /dev/md0
    ```
 
-   *Alternatively, use [XFS over `mdadm`](#xfs).*
+
+
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
@@ -213,6 +224,22 @@ Options
 - disable COW: [`chattr +C`](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW)
 - [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features)
 
+
+#### Btrfs RAID 0
+
+```bash
+sudo mkfs.btrfs -v -L fastfs \
+-O block-group-tree \
+-m raid1c3 \
+-d raid0 \
+nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_1 \
+nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_2 \
+nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_3
+```
+
+
+
+
 ### `chattr`
 
 https://man7.org/linux/man-pages/man1/chattr.1.html
@@ -222,28 +249,6 @@ https://man7.org/linux/man-pages/man1/lsattr.1.html
 
 
 ### [XFS](https://xfs.wiki.kernel.org/)
-
-XFS over `mdadm`:
-
-```bash
-sudo apt install mdadm
-sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
-
-cat /proc/mdstat
-sudo mdadm --detail -vv /dev/md0
-
-sudo mkfs.xfs -L fastfs /dev/md0
-
-sudo mkdir /mnt/fastfs
-sudo mount /dev/md0 /mnt/fastfs
-
-sudo blkid | grep md0
-sudo nano /etc/fstab
-UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
-
-sudo mdadm --detail -vv /dev/md0
-```
-
 
 
 
