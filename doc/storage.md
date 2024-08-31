@@ -1,6 +1,7 @@
 # Storage
 
-
+> [!Note]
+> In this doc, we manage a hypothetical storage unit called `data`, to be mounted at `/mnt/data`.
 
 ## Multiple devices
 
@@ -64,6 +65,28 @@ sudo mkdir /mnt/data
 sudo mount /dev/md0 /mnt/data
 ```
 
+#### `fstab` (boot mount)
+
+Get the UUID of the device:
+
+```bash
+sudo blkid | grep <your-device>
+```
+
+Edit `/etc/fstab` to add an entry for the RAID 0 array:
+
+```bash
+sudo nano /etc/fstab
+```
+
+Add this line (replace `UUID` with the actual UUID from the `blkid` command):
+
+```
+UUID=<your-uuid> /mnt/data xfs defaults 0 0
+```
+
+
+
 
 
 ## Filesystem
@@ -76,7 +99,7 @@ If you have special needs, consider ZFS (especially in Raidz1-3), then Btrfs.
 
 #### Create the XFS Filesystem
 
-Format the device with the XFS filesystem. Here we use a RAID device created with `mdadm`.
+Format the device with the XFS filesystem. Here we use a RAID device (`/dev/md0`) created with `mdadm`.
 
 ```bash
 sudo mkfs.xfs -L data /dev/md0
