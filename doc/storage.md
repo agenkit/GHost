@@ -1,12 +1,14 @@
 # Storage
 
+*Since YMMV, this doc is more general than most. It contains basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
+
 ## What you need to know
 
-- (optional) If you need to group **multiple drives**, *first* create an [array](#arrays) before formatting it.
+- (optional) If you need to group **multiple drives**, *first* create an [array](#arrays).
 - A physical drive must be **formatted** using a [filesystem](#filesystem).
 - A formatted filesystem must finally be [mounted](#mount) to **read/write** it.
 
-For [ZFS](#zfs) and [Btrfs](#btrfs), head over to their dedicated section as they manage things their own way.
+For [ZFS](#zfs) and [Btrfs](#btrfs), these principles stand, but head over to their dedicated section as they manage things their own way.
 
 > [!Note]
 > In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
@@ -144,9 +146,13 @@ Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in 
 
 ### `mdadm`
 
+`mdadm` *(**m**ultiple **d**evices **adm**inistration) lets us "merge" storage devices in RAID arrays, which are then seen (and formatted) as one virtual device (for increased higher size, reliability and/or performance).*
+
 📘`man`: [`mdadm`][man-mdadm]
 
 Canonical command: `mdadm [mode] <raiddevice> [options] <component-devices>`
+
+
 
 #### Installation
 
