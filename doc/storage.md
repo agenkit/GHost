@@ -51,6 +51,20 @@ sudo mdadm --detail -vv /dev/md0
 ```
 
 
+#### Formatting
+
+See Filesystems. If in doubt, use [XFS](#xfs).
+
+#### Mount
+
+Create a mount point and mount the device.
+
+```bash
+sudo mkdir /mnt/data
+sudo mount /dev/md0 /mnt/data
+```
+
+
 
 ## Filesystem
 
