@@ -3,12 +3,44 @@
 Topics: [Filesystem](#filesystem), [Arrays](#arrays).
 
 > [!Note]
-> In this doc, we manage a hypothetical storage unit called `data`, to be mounted at `/mnt/data`.
+> In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
 
 
 
 
 
+
+## Mount
+
+A formatted device can be mounted to a directory using `mount` as superuser.
+
+Create a mount point (`-m` = `--mkdir` if it does not exist yet),  
+then mount the device.
+
+```bash
+sudo mount -m /dev/md0 /mnt/data
+```
+
+
+#### `fstab` (boot mount)
+
+Get the UUID of the device:
+
+```bash
+sudo blkid | grep <your-device>
+```
+
+Edit `/etc/fstab` to add an entry for the RAID 0 array:
+
+```bash
+sudo nano /etc/fstab
+```
+
+Add this line (replace `UUID` with the actual UUID from the `blkid` command):
+
+```
+UUID=<your-uuid> /mnt/data xfs defaults 0 0
+```
 
 
 
@@ -42,39 +74,6 @@ Format the device with the XFS filesystem.
 ```bash
 sudo mkfs.xfs -L data /dev/md0
 ```
-
-#### Mount
-
-Create a mount point,  
-then mount the device.
-
-```bash
-sudo mkdir /mnt/data
-sudo mount /dev/md0 /mnt/data
-```
-
-
-#### `fstab` (boot mount)
-
-Get the UUID of the device:
-
-```bash
-sudo blkid | grep <your-device>
-```
-
-Edit `/etc/fstab` to add an entry for the RAID 0 array:
-
-```bash
-sudo nano /etc/fstab
-```
-
-Add this line (replace `UUID` with the actual UUID from the `blkid` command):
-
-```
-UUID=<your-uuid> /mnt/data xfs defaults 0 0
-```
-
-
 
 
 
@@ -167,19 +166,13 @@ And further inspect the RAID:
 sudo mdadm --detail -vv /dev/md0
 ```
 
+See [Filesystem](#filesystem) to format the array. If in doubt, use [XFS](#xfs).
 
-#### Formatting
+See [Mount](#mount)
 
-See Filesystems. If in doubt, use [XFS](#xfs).
 
-#### Mount
 
-Create a mount point and mount the device.
 
-```bash
-sudo mkdir /mnt/data
-sudo mount /dev/md0 /mnt/data
-```
 
 
 
