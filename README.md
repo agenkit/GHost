@@ -133,7 +133,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.[^raid0]*  
+   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.*[^raid0]  
    *Their `/dev/disk/by-id/nvme-...` device id (*with serial #*) was mapped to `$DISK{1-3}`  
    (e.g., `nvme-VENDOR_MODEL_SIZE_SERIALNUMBER` to `$DISK1`).*
 
@@ -145,26 +145,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    $DISK1 $DISK2 $DISK3
    ```
 
-   *Alternatively in XFS over `mdadm`:*
-
-   ```bash
-   sudo apt install mdadm
-   sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
-   
-   cat /proc/mdstat
-   sudo mdadm --detail -vv /dev/md0
-   
-   sudo mkfs.xfs -L fastfs /dev/md0
-   
-   sudo mkdir /mnt/fastfs
-   sudo mount /dev/md0 /mnt/fastfs
-   
-   sudo blkid | grep md0
-   sudo nano /etc/fstab
-   UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
-   
-   sudo mdadm --detail -vv /dev/md0
-   ```
+   *Alternatively, use [XFS over `mdadm`](#xfs).*
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
@@ -231,9 +212,28 @@ A-Z titles link to official project page.
 - [Repository](https://github.com/RsyncProject/rsync)
 - [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
 
-### ...
+### XFS
 
+XFS over `mdadm`:
 
+```bash
+sudo apt install mdadm
+sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
+
+cat /proc/mdstat
+sudo mdadm --detail -vv /dev/md0
+
+sudo mkfs.xfs -L fastfs /dev/md0
+
+sudo mkdir /mnt/fastfs
+sudo mount /dev/md0 /mnt/fastfs
+
+sudo blkid | grep md0
+sudo nano /etc/fstab
+UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
+
+sudo mdadm --detail -vv /dev/md0
+```
 
 
 
@@ -273,6 +273,7 @@ work-in-progress \[2024.08.31\]
 We use [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features) to *"greatly reduce mount time for large filesystems."*  
 Note that we'll have to [disable COW](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW) for the VM image directory using `chattr +C /path/to/dir` to avoid a useless performance hit.
 
+[^xfs]: 
 
 
 
