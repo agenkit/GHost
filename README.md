@@ -133,16 +133,16 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.*[^raid0]  
-   *Their `/dev/disk/by-id/nvme-...` device id was mapped to `$DISK{1-3}`  
-   (e.g., `nvme-VENDOR_MODEL_SIZE_SERIALNUMBER` to `$DISK1`).*
+   *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.*[^raid0]
 
    ```bash
    sudo mkfs.btrfs -v -L fastfs \
+   -O block-group-tree \
    -m raid1c3 \
    -d raid0 \
-   -O block-group-tree \
-   $DISK1 $DISK2 $DISK3    # Tab to quickly find device name
+   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_1 \
+   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_2 \
+   nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_3
    ```
 
    *Alternatively, use [XFS over `mdadm`](#xfs).*
