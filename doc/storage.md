@@ -1,11 +1,105 @@
 # Storage
 
+Topics: [Filesystem](#filesystem), [Arrays](#arrays).
+
 > [!Note]
 > In this doc, we manage a hypothetical storage unit called `data`, to be mounted at `/mnt/data`.
 
-## Multiple devices
 
-Also called *arrays*. Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in device management.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Filesystem
+
+[XFS](#xfs) (or even Ext4) is fine for most cases.
+
+If you have special needs:
+- consider [ZFS](#zfs) (raid z is great),
+- then [Btrfs](#btrfs) (but **NEVER** in raid 5 or 6).  
+
+*[Bcachefs](https://bcachefs.org/) is too new in my opinion.*
+
+### XFS
+
+#### Create the XFS filesystem
+
+Format the device with the XFS filesystem.  
+*Here we use a RAID device (`/dev/md0`) previously created with [`mdadm`](#mdadm).*
+
+```bash
+sudo mkfs.xfs -L data /dev/md0
+```
+
+#### Mount
+
+Create a mount point,  
+then mount the device.
+
+```bash
+sudo mkdir /mnt/data
+sudo mount /dev/md0 /mnt/data
+```
+
+
+
+
+
+
+
+
+
+
+
+
+### ZFS
+
+
+
+
+
+
+
+
+
+
+### Btrfs
+
+> [!Caution]
+> **NEVER use RAID 5 or 6 with Btrfs!**  
+> It's ***fundamentally* broken**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Arrays
+
+Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in device management.
 
 
 
@@ -86,60 +180,6 @@ UUID=<your-uuid> /mnt/data xfs defaults 0 0
 ```
 
 
-
-
-
-## Filesystem
-
-XFS (or even Ext4) is fine for most cases.  
-If you have special needs, consider ZFS (especially in Raidz1-3), then Btrfs.  
-*[Bcachefs](https://bcachefs.org/) is too new in my opinion.*
-
-### XFS
-
-#### Create the XFS Filesystem
-
-Format the device with the XFS filesystem. Here we use a RAID device (`/dev/md0`) created with `mdadm`.
-
-```bash
-sudo mkfs.xfs -L data /dev/md0
-```
-
-#### Mount
-
-Create a mount point and mount the device.
-
-```bash
-sudo mkdir /mnt/data
-sudo mount /dev/md0 /mnt/data
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Btrfs
-
-> [!Caution]
-> **NEVER use RAID 5 or 6 with Btrfs!**  
-> It's ***fundamentally* broken**.
-
-
-
-
-
-
-
-
-### ZFS
 
 
 
