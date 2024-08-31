@@ -42,14 +42,18 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 This procedure gets you there *as fast as possible*.
 
-- **No talk**
+> ***"Premature optimization is the root of all evil."***
+>
+> — Donald Knuth
+
+- **Great defaults**  
+   Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
+- **Terse** (no discussion)
 - Formatting:
    - Bold **keywords**
    - *You can **skip** all sentences in **italics**!*
 - **Atomic** steps (do **ONE thing**)
 - **Direct links** (marked with 🔽)
-- **One-size-fits-*most!***  
-   Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
 
 <!--
 To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) — it's my little book about this kind of virtualized infra, and probably contains answers you seek.
@@ -65,15 +69,6 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > - GPU 1: Nvidia RTX 3090 (24 GB)
 > - NVMe 0: host OS (2 TB)
 > - NVMe 1-3: ZFS datasets for VMs & data (12 TB)
->
-> **Soon™**
->
-> Pick one:
-> - TPU: Tenstorrent Wormhole (2×12 GB)
-> - GPU: whatever outputs 8K@60Hz (to free the 3090 from graphics duty and run it on compute while still enjoying 8K)
-> 
-> Nice things:
-> - HDD: hot backup (16 TB)
 
 
 
@@ -134,6 +129,8 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
+1. \[Optional\] Play with OS & DE settings to your liking.
+
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
    *Example Btrfs filesystem with 3 NVMe devices in `RAID0`.[^raid0]*  
@@ -151,10 +148,23 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    *Alternatively in XFS over `mdadm`:*
 
    ```bash
-   sudo 
+   sudo apt install mdadm
+   sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
+   
+   cat /proc/mdstat
+   sudo mdadm --detail -vv /dev/md0
+   
+   sudo mkfs.xfs -L fastfs /dev/md0
+   
+   sudo mkdir /mnt/fastfs
+   sudo mount /dev/md0 /mnt/fastfs
+   
+   sudo blkid | grep md0
+   sudo nano /etc/fstab
+   UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
+   
+   sudo mdadm --detail -vv /dev/md0
    ```
-
-1. \[*Optional*\] Play with OS & DE settings to your liking.
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
