@@ -1,6 +1,10 @@
 # Storage
 
-Topics: [Filesystem](#filesystem), [Arrays](#arrays).
+What you need to know:
+
+- physical drives must be formatted using a [filesystem](#filesystem)
+- but to group multiple drives, first create an [array](#arrays)
+- a filesystem must be [mounted](#mount) to be accessed
 
 > [!Note]
 > In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
@@ -8,26 +12,31 @@ Topics: [Filesystem](#filesystem), [Arrays](#arrays).
 
 
 
-
-
 ## Mount
+
+📘`man`: [`mount`][man-mount]
+
+Canonical form: `mount [-fnrsvw] [-t fstype] [-o options] device mountpoint`
+
+
+
+### Basic use
 
 A formatted device can be mounted to a directory using `mount` as superuser.
 
-Create a mount point (`-m` = `--mkdir` if it does not exist yet),  
-then mount the device.
-
 ```bash
-sudo mount -m /dev/md0 /mnt/data
+sudo mount -vm /dev/md0 /mnt/data
 ```
 
+> [!Tip]
+> `-m` (`--mkdir`) creates the mount point directory if it does not exist yet.
 
-#### `fstab` (boot mount)
+### `fstab` (boot mount)
 
 Get the UUID of the device:
 
 ```bash
-sudo blkid | grep <your-device>
+sudo blkid | grep /dev/<your-device>
 ```
 
 Edit `/etc/fstab` to add an entry for the RAID 0 array:
@@ -38,8 +47,8 @@ sudo nano /etc/fstab
 
 Add this line (replace `UUID` with the actual UUID from the `blkid` command):
 
-```
-UUID=<your-uuid> /mnt/data xfs defaults 0 0
+```fstab
+UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
 ```
 
 
@@ -62,9 +71,16 @@ If you have special needs:
 - consider [ZFS](#zfs) (raid z is great),
 - then [Btrfs](#btrfs) (but **NEVER** in raid 5 or 6).  
 
-*[Bcachefs](https://bcachefs.org/) is too new in my opinion.*
+*[Bcachefs](https://bcachefs.org/) looks promising but is too new in my opinion.*
+
+
+
 
 ### XFS
+
+📘`man`: [`xfs`][man-xfs], [`mkfs.xfs`][man-mkfs.xfs]
+
+
 
 #### Create the XFS filesystem
 
@@ -126,6 +142,8 @@ Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in 
 
 ### `mdadm`
 
+📘`man`: [`mdadm`][man-mdadm]
+
 Canonical command: `mdadm [mode] <raiddevice> [options] <component-devices>`
 
 #### Installation
@@ -169,6 +187,33 @@ sudo mdadm --detail -vv /dev/md0
 See [Filesystem](#filesystem) to format the array. If in doubt, use [XFS](#xfs).
 
 See [Mount](#mount)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[man-mount]: https://manpages.ubuntu.com/manpages/noble/en/man8/mount.8.html
+[man-xfs]: https://manpages.ubuntu.com/manpages/noble/en/man5/xfs.5.html
+[man-mkfs.xfs]: https://manpages.ubuntu.com/manpages/noble/en/man8/mkfs.xfs.8.html
+[man-mdadm]: https://manpages.ubuntu.com/manpages/noble/en/man8/mdadm.8.html
+
+
+<!--
+[man-]: 
+[man-]: 
+-->
+
+
 
 
 
