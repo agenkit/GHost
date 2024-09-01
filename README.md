@@ -10,8 +10,8 @@
 ## Overview
 
 ```mermaid
-graph BT
-   a -> b
+graph BT;
+   a --> b;
 
 ```
 
