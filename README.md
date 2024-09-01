@@ -133,29 +133,6 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-   *Example RAID 0 (3 devices) in XFS.*[^raid0]  
-   *(Alternatively, use [Btrfs](#btrfs-raid-0).)*
-
-   ```bash
-   sudo apt install mdadm
-   sudo mdadm -Cv /dev/md0 -l0 -n3 $DISK1 $DISK2 $DISK3
-   
-   cat /proc/mdstat
-   sudo mdadm --detail -vv /dev/md0
-   
-   sudo mkfs.xfs -L fastfs /dev/md0
-   
-   sudo mkdir /mnt/fastfs
-   sudo mount /dev/md0 /mnt/fastfs
-   
-   sudo blkid | grep md0
-   sudo nano /etc/fstab
-   UUID=<your-uuid> /mnt/fastfs xfs defaults,noatime,nodiratime 0 0
-   
-   sudo mdadm --detail -vv /dev/md0
-   ```
-
-
 
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
@@ -265,7 +242,7 @@ https://man7.org/linux/man-pages/man1/lsattr.1.html
 
 ----
 
-work-in-progress \[2024.08.31\]
+work-in-progress \[2024.09.01\]
 
 [^footnote]: Click the ending link to go back up where you were:
 
@@ -293,9 +270,7 @@ work-in-progress \[2024.08.31\]
 
 [^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
-[^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.  
-We use [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features) to *"greatly reduce mount time for large filesystems."*  
-Note that we'll have to [disable COW](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW) for the VM image directory using `chattr +C /path/to/dir` to avoid a useless performance hit.
+[^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.
 
 [^xfs]: 
 
