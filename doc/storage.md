@@ -2,6 +2,47 @@
 
 *Since YMMV, this doc is more general than most. It contains basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
 
+## Quick-n-Clean (TL;DR)
+
+
+*Example RAID 0 over 3 devices.*[^raid0]
+
+```bash
+sudo apt install mdadm
+   ```
+
+   ```bash
+   sudo mdadm -Cv /dev/md0 -l0 -n3 /dev/disk/by-id/nvme-Samsung_SSD_990*{497K,512J,528K}
+   ```
+
+   ```bash
+   cat /proc/mdstat
+   sudo mdadm --detail -vv /dev/md0
+   ```
+
+   ```bash
+   sudo mkfs.xfs -L data /dev/md0
+   ```
+   
+   ```bash
+   sudo mkdir /mnt/data
+   sudo mount /dev/md0 /mnt/data
+   ```
+   
+   ```bash
+   sudo blkid | grep md0
+   sudo nano /etc/fstab
+   UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
+   ```
+   
+   ```bash
+   sudo mdadm --detail -vv /dev/md0
+   ```
+
+
+
+
+
 ## What you need to know
 
 - (optional) If you need to group **multiple drives**, *first* create an [array](#arrays).
