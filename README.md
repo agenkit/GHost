@@ -6,12 +6,12 @@
 
 ```mermaid
 graph BT;
-   pcpu["Physical<br>CPU"];
-   pmem["Physical<br>RAM"];
-   pstor["Physical<br>storage"];
-   pgpu1["Physical<br>GPU 1"];
-   pgpu2["Physical<br>GPU 2"];
-   host["Host machine [Linux KVM hypervisor]"];
+   pcpu{{"Physical<br>CPU"}};
+   pmem{{"Physical<br>RAM"}};
+   pstor{{"Physical<br>storage"}};
+   pgpu1{{"Physical<br>GPU 1"}};
+   pgpu2{{"Physical<br>GPU 2"}};
+   host{{"Host machine [Linux KVM hypervisor]"}};
 
 vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
 vsrv1
