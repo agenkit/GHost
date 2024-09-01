@@ -2,16 +2,17 @@
 
 > **GHost: G*raphical* Host**
 
-
-> [!Tip]
-> *If you know what you're doing,  
-> the ToC is all you need.*
-
 ## Overview
 
 ```mermaid
 graph BT;
-   HostCPU --> KVM;
+   pcpu["Physical<br>CPU"];
+   pmem["Physical<br>RAM"];
+   pstor["Physical<br>Storage"];
+   pgpu1["Physical<br>GPU 1"];
+   pgpu2["Physical<br>GPU 2"];
+   host["Host workstation"];
+   pcpu & pmem & pstor & pgpu1 & pgpu2 --> host;
 
 ```
 
