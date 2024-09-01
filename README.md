@@ -9,23 +9,23 @@ graph TB
 
 subgraph Physical
    direction TB
-   pgpu1{{"GPU 1"}} --> host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
-   pcpu{{"CPU"}} --> host
-   pmem{{"RAM"}} --> host
-   pgpu2{{"GPU 2"}} --> host
-   pstor{{"storage"}} --> host
+   pstor{{"storage<br>"}} --> host
+   pmem{{"RAM<br>"}} --> host
+   pcpu{{"CPU<br>"}} --> host
+   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
+   pgpu2{{"GPU 2<br>Nvidia dGPU"}} --> host
    
 end
 
 subgraph Virtual
-   direction LR
-   pgpu1 -.-> vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
+   direction TB
+   vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
 
    subgraph Servers
-      direction TB
-      pgpu2 -..-> vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
-      pstor -..-> vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
-      pstor -..-> vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
+      direction LR
+      vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
+      vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
+      vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
    end
 end
 
