@@ -8,11 +8,11 @@
 graph TB
 
 subgraph "Physical hardware"
-   pgpu1{{"Physical<br>GPU 1"}}
-   pcpu{{"Physical<br>CPU"}}
-   pmem{{"Physical<br>RAM"}}
-   pstor{{"Physical<br>storage"}}
-   pgpu2{{"Physical<br>GPU 2"}}
+   pgpu1{{"GPU 1"}}
+   pcpu{{"CPU"}}
+   pmem{{"RAM"}}
+   pstor{{"storage"}}
+   pgpu2{{"GPU 2"}}
    host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
 end
 
