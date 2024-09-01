@@ -8,10 +8,19 @@
 graph BT;
    pcpu["Physical<br>CPU"];
    pmem["Physical<br>RAM"];
-   pstor["Physical<br>Storage"];
+   pstor["Physical<br>storage"];
    pgpu1["Physical<br>GPU 1"];
    pgpu2["Physical<br>GPU 2"];
-   host["Host workstation"];
+   host["Host machine [Linux KVM hypervisor]"];
+
+vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
+vsrv1
+
+
+
+
+
+
    pcpu & pmem & pstor & pgpu1 & pgpu2 --> host;
 
 ```
