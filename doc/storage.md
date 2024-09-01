@@ -2,9 +2,15 @@
 
 *Since YMMV, this doc is more general than most. It contains basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
 
+> [!Note]
+> In this doc, we manage a hypothetical  
+> - storage unit called `data`  
+> - located at `/mnt/data`  
+> - composed of physical drives aliased `$disk1`, `$disk2`, …, `$diskN`
+
 ## Quick Start (TL;DR)
 
-Setup XFS in RAID `0` over `3` devices *(named `nvme-Samsung_SSD*`)*.  
+Setup XFS in RAID `0` over `3` drives.  
 *Just change these values (`0`, `3`) for variations.*
 
 1. Install `mdadm`.
@@ -13,10 +19,10 @@ Setup XFS in RAID `0` over `3` devices *(named `nvme-Samsung_SSD*`)*.
 sudo apt install mdadm
 ```
 
-2. Create a RAID array.
+2. Create a RAID `0` array with `3` drives.
 
 ```bash
-sudo mdadm -Cv /dev/md0 -l0 -n3 /dev/disk/by-id/nvme-Samsung_SSD*{497K,512J,528K}
+sudo mdadm -Cv /dev/md0 -l0 -n3 $disk{1,2,3}
 ```
 
 3. Check up. <= do this often!
@@ -35,7 +41,7 @@ sudo mkfs.xfs -L data /dev/md0
 5. Mount the RAID device to a new directory.
 
 ```bash
-sudo mount /dev/md0 /mnt/data
+sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/data
 ```
 
 6. Setup mounting at boot time.
@@ -43,7 +49,7 @@ sudo mount /dev/md0 /mnt/data
 ```bash
 sudo blkid | grep md0
 sudo nano /etc/fstab
-UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
+UUID=<your-uuid> /mnt/data xfs defaults,noatime,logbsize=256k 0 0
 ```
 
 
@@ -56,9 +62,6 @@ UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
 - A formatted filesystem must finally be [mounted](#mount) to **read/write** it.
 
 For [ZFS](#zfs) and [Btrfs](#btrfs), these principles stand, but head over to their dedicated section as they manage things their own way.
-
-> [!Note]
-> In this doc, we manage a hypothetical storage subsystem called `data`, located at `/mnt/data`.
 
 
 
@@ -227,7 +230,7 @@ The XFS filesystem supports setting the following file attributes on Linux syste
 
 ### ZFS
 
-
+…
 
 
 
@@ -250,7 +253,7 @@ Note that we'll have to [disable COW](https://wiki.archlinux.org/title/Btrfs#Dis
 
 
 
-
+Great blog: [Forza's ramblings](https://wiki.tnonline.net/w/Category:Btrfs)
 
 
 
@@ -341,6 +344,10 @@ sudo mdadm --detail -vv /dev/md0
 <!--
 [man-]: 
 -->
+
+
+
+
 
 
 

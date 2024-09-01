@@ -9,6 +9,17 @@
 
 ## Overview
 
+```mermaid
+graph BT
+   a -> b
+
+```
+
+
+
+
+
+
 ### What does it do?
 
 **GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations. It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms).
@@ -184,6 +195,10 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 A-Z titles link to official project page.
 
+
+
+
+
 ### [Kubuntu](https://kubuntu.org/)
 
 ### [Etcher](https://etcher.io/)
@@ -201,18 +216,6 @@ Options
 - disable COW: [`chattr +C`](https://wiki.archlinux.org/title/Btrfs#Disabling_CoW)
 - [`block-group-tree`](https://btrfs.readthedocs.io/en/latest/mkfs.btrfs.html#filesystem-features)
 
-
-#### Btrfs RAID 0
-
-```bash
-sudo mkfs.btrfs -v -L fastfs \
--O block-group-tree \
--m raid1c3 \
--d raid0 \
-nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_1 \
-nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_2 \
-nvme-Samsung_SSD_990_PRO_4TB_SERIAL_NUMBER_3
-```
 
 
 
