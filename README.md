@@ -5,25 +5,37 @@
 ## Overview
 
 ```mermaid
-graph BT;
-   pcpu{{"Physical<br>CPU"}};
-   pmem{{"Physical<br>RAM"}};
-   pstor{{"Physical<br>storage"}};
-   pgpu1{{"Physical<br>GPU 1"}};
-   pgpu2{{"Physical<br>GPU 2"}};
-   host{{"Host machine [Linux KVM hypervisor]"}};
+graph TB
+
+subgraph "Physical hardware"
+   pgpu1{{"Physical<br>GPU 1"}}
+   pcpu{{"Physical<br>CPU"}}
+   pmem{{"Physical<br>RAM"}}
+   pstor{{"Physical<br>storage"}}
+   pgpu2{{"Physical<br>GPU 2"}}
+   host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
+end
+
+subgraph Virtual
 
 vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
-vsrv1
+
+subgraph Servers
+vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
+vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
+vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
+end
+end
 
 
+pgpu1 -.-> vws
+host ==> Servers
+   pcpu & pmem & pstor & pgpu1 & pgpu2 --> host
+pgpu2 -.-> vsrv1
 
-
-
-
-   pcpu & pmem & pstor & pgpu1 & pgpu2 --> host;
 
 ```
+host ==> vws
 
 
 
