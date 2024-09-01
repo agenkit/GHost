@@ -7,31 +7,29 @@
 ```mermaid
 graph TB
 
-subgraph "Physical hardware"
-   pgpu1{{"GPU 1"}}
-   pcpu{{"CPU"}}
-   pmem{{"RAM"}}
-   pstor{{"storage"}}
-   pgpu2{{"GPU 2"}}
-   host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
+subgraph Physical
+   direction TB
+   pgpu1{{"GPU 1"}} --> host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
+   pcpu{{"CPU"}} --> host
+   pmem{{"RAM"}} --> host
+   pgpu2{{"GPU 2"}} --> host
+   pstor{{"storage"}} --> host
+   
 end
 
 subgraph Virtual
+   direction LR
+   pgpu1 -.-> vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
 
-vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
-
-subgraph Servers
-vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
-vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
-vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
+   subgraph Servers
+      direction TB
+      pgpu2 -..-> vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
+      pstor -..-> vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
+      pstor -..-> vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
+   end
 end
-end
 
-
-pgpu1 -.-> vws
-host ==> Servers
-   pcpu & pmem & pstor & pgpu1 & pgpu2 --> host
-pgpu2 -.-> vsrv1
+Physical ==> Virtual
 
 
 ```
