@@ -5,23 +5,26 @@
 ## Overview
 
 ```mermaid
-graph TB
+graph LR
 
-subgraph Physical
-   direction TB
+subgraph p["[PM] Physical Machine<br>(x86-64 PC)"]
+   direction LR
+   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("<br>Linux KVM<br>Hypervisor<br><br>IOMMU<br>+<br>VFIO<br><br>")
+   pmem{{"RAM<br>"}} ---> host
+   pcpu{{"CPU<br>"}} ---> host
+   pgpu2{{"GPU 2<br>Nvidia dGPU"}} ---> host
    pstor{{"storage<br>"}} --> host
-   pmem{{"RAM<br>"}} --> host
-   pcpu{{"CPU<br>"}} --> host
-   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("PC<br><br>Host machine<br>[Linux KVM hypervisor]<br>IOMMU + VFIO<br><br>")
-   pgpu2{{"GPU 2<br>Nvidia dGPU"}} --> host
    
 end
 
-subgraph Virtual
-   direction TB
-   vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
+subgraph v["[VMs] Virtual Machines"]
+   direction LR
 
-   subgraph Servers
+   subgraph gui["Graphical OS"]
+      direction LR
+      vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
+   end
+   subgraph srv["Servers (headless, ssh)"]
       direction LR
       vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
       vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
@@ -29,11 +32,12 @@ subgraph Virtual
    end
 end
 
-Physical ==> Virtual
-
-
+p ==> v
+pgpu1 -.- vws
+pgpu2 -.- vsrv1
+pstor -.- vsrv2 & vsrv3
 ```
-host ==> vws
+
 
 
 
