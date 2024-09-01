@@ -11,7 +11,7 @@
 
 ```mermaid
 graph BT;
-   a --> b;
+   HostCPU --> KVM;
 
 ```
 
