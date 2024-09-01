@@ -2,50 +2,56 @@
 
 *Since YMMV, this doc is more general than most. It contains basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
 
-## Quick-n-Clean (TL;DR)
+## Quick Start (TL;DR)
 
+Setup XFS in RAID `0` over `3` devices *(named `nvme-Samsung_SSD*`)*.  
+*Just change these values (`0`, `3`) for variations.*
 
-*Example RAID 0 over 3 devices.*[^raid0]
+1. Install `mdadm`.
 
 ```bash
 sudo apt install mdadm
-   ```
+```
 
-   ```bash
-   sudo mdadm -Cv /dev/md0 -l0 -n3 /dev/disk/by-id/nvme-Samsung_SSD_990*{497K,512J,528K}
-   ```
+2. Create a RAID array.
 
-   ```bash
-   cat /proc/mdstat
-   sudo mdadm --detail -vv /dev/md0
-   ```
+```bash
+sudo mdadm -Cv /dev/md0 -l0 -n3 /dev/disk/by-id/nvme-Samsung_SSD*{497K,512J,528K}
+```
 
-   ```bash
-   sudo mkfs.xfs -L data /dev/md0
-   ```
-   
-   ```bash
-   sudo mkdir /mnt/data
-   sudo mount /dev/md0 /mnt/data
-   ```
-   
-   ```bash
-   sudo blkid | grep md0
-   sudo nano /etc/fstab
-   UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
-   ```
-   
-   ```bash
-   sudo mdadm --detail -vv /dev/md0
-   ```
+3. Check up. <= do this often!
 
+```bash
+cat /proc/mdstat
+sudo mdadm --detail -vv /dev/md0
+```
+
+4. Format the RAID device.
+
+```bash
+sudo mkfs.xfs -L data /dev/md0
+```
+
+5. Mount the RAID device to a new directory.
+
+```bash
+sudo mount /dev/md0 /mnt/data
+```
+
+6. Setup mounting at boot time.
+
+```bash
+sudo blkid | grep md0
+sudo nano /etc/fstab
+UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
+```
 
 
 
 
 ## What you need to know
 
-- (optional) If you need to group **multiple drives**, *first* create an [array](#arrays).
+- \[optional\] **Multiple drives** must *first* be grouped in an [array](#arrays).
 - A physical drive must be **formatted** using a [filesystem](#filesystem).
 - A formatted filesystem must finally be [mounted](#mount) to **read/write** it.
 
@@ -107,7 +113,6 @@ UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
 
 
 
-
 ## Filesystem
 
 [XFS](#xfs) (or even Ext4) is fine for most cases.
@@ -138,11 +143,85 @@ sudo mkfs.xfs -L data /dev/md0
 
 
 
+#### XFS over `mdadm`
+
+On modern Linux, leave it to defaults, unless you really know why.
+
+> `xfsprogs` and the `mkfs.xfs` utility automatically select the best stripe size and stripe width for underlying devices that support it, such as Linux software RAID devices.
+>
+> …
+>
+> To check the parameters in use for an XFS filesystem, use xfs_info.
+>
+> ```bash
+> xfs_info /dev/md0
+> ```
+>
+> ```
+> meta-data=/dev/md0               isize=256    agcount=32, agsize=45785440 blks
+>          =                       sectsz=4096  attr=2
+> data     =                       bsize=4096   blocks=1465133952, imaxpct=5
+>          =                       sunit=16     swidth=48 blks
+> naming   =version 2              bsize=4096   ascii-ci=0
+> log      =internal               bsize=4096   blocks=521728, version=2
+>          =                       sectsz=4096  sunit=1 blks, lazy-count=0
+> realtime =none                   extsz=196608 blocks=0, rtextents=0
+> ```
+>
+> 🔗 <https://raid.wiki.kernel.org/index.php/RAID_setup#XFS>
 
 
+#### `mount` options
+
+Generally keep defaults.
 
 
+##### `discard`|`nodiscard`
 
+Note: It is currently recommended that you use the `fstrim` application to discard unused blocks rather than the `discard` mount option because the performance impact of this option is quite severe. For this reason, **`nodiscard`** is the **default**.
+
+
+##### `logbsize=value`
+
+Set the size of each in-memory log buffer.  
+Valid sizes for version 2 logs also include `65536` (value=`64k`),`131072` (value=`128k`) and `262144` (value=`256k`).
+
+The  default value for version 1 logs is `32768`, while the default value for version 2 logs is `max(32768, log_sunit)`.
+
+
+##### Deprecated
+
+Smell obsolete guides.
+
+```
+Name                        Removed
+----                        -------
+delaylog/nodelaylog         v4.0
+ihashsize                   v4.0
+irixsgid                    v4.0
+osyncisdsync/osyncisosync   v4.0
+barrier/nobarrier           v4.19
+```
+
+
+#### xfsdump
+
+> Each XFS filesystem is labeled with a Universal Unique Identifier (UUID). The UUID is stored in every allocation group header and is used to help distinguish one XFS filesystem from another, therefore you should  avoid  using `dd(1)` or other block-by-block copying programs to copy XFS filesystems.
+>
+> …
+>
+> **`xfsdump(8)` and `xfsrestore(8)` are recommended for making copies of XFS filesystems.**
+
+
+#### File attributes
+
+The XFS filesystem supports setting the following file attributes on Linux systems using the [`chattr(1)`][man-chattr] utility:
+
+`a` - append only  
+`A` - no atime updates  
+`d` - no dump  
+`i` - immutable  
+`S` - synchronous updates  
 
 
 
@@ -198,28 +277,38 @@ Canonical command: `mdadm [mode] <raiddevice> [options] <component-devices>`
 #### Installation
 
 ```bash
-sudo apt-get update
-sudo apt-get install mdadm
+sudo apt update
+sudo apt install mdadm
 ```
 
 #### Create array
 
-Example RAID 0 over 3 devices:
+The **create** mode (`-C`|`--create`) will make:
+
+- a Linux software **RAID device** (virtual device `/dev/md0`)
+- over **`n` component devices** (`n` physical drives)
+- set to RAID **level `l`** (`l`=`0`,`1`,`10`,`5`,`6`)
+
+Example RAID level `0` over n=`3` devices:
 
 ```bash
 sudo mdadm -Cv /dev/md0 -l0 -n3 \
-/dev/nvme-xxx \
-/dev/nvme-xxx \
-/dev/nvme-xxx
+/dev/disk/by-id/nvme-Samsung_SSD*{497K,512J,528K}
 ```
 
-- `-C` = `--create` \[mode\]
 - `-v` = `--verbose`
-- `/dev/md0` is the name of the new RAID device.
-- `-l0` = `--level=0` specifies the RAID level of the array.  
-  (Options are: `linear`, `raid0` | `0` | `stripe`, `raid1` | `1` | `mirror`, `raid4` | `4`, `raid5` | `5`, `raid6` | `6`, `raid10` | `10`, `multipath` | `mp`, `faulty`, `container`; obviously some of these are synonymous).
-- `-n3` = `--raid-devices=3` tells how many drives to use for the array.
-- End with the list of devices.
+- `-l0` = `--level=0` options are:  
+`linear`,  
+`raid0` | `0` | `stripe`,  
+`raid1` | `1` | `mirror`,  
+`raid4` | `4`,  
+`raid5` | `5`,  
+`raid6` | `6`,  
+`raid10` | `10`,  
+`multipath` | `mp`,  
+`faulty`,  
+`container`.  
+Obviously, some of these are synonymous.
 
 Check the creation of the RAID array:
 
@@ -242,19 +331,14 @@ sudo mdadm --detail -vv /dev/md0
 
 
 
-
-
-
-
-
 [man-mount]: https://manpages.ubuntu.com/manpages/noble/en/man8/mount.8.html
 [man-xfs]: https://manpages.ubuntu.com/manpages/noble/en/man5/xfs.5.html
 [man-mkfs.xfs]: https://manpages.ubuntu.com/manpages/noble/en/man8/mkfs.xfs.8.html
+[man-chattr]: https://manpages.ubuntu.com/manpages/noble/en/man1/chattr.1.html
 [man-mdadm]: https://manpages.ubuntu.com/manpages/noble/en/man8/mdadm.8.html
 
 
 <!--
-[man-]: 
 [man-]: 
 -->
 
