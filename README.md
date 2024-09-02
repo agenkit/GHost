@@ -23,7 +23,7 @@ The end result is easy to maintain (including migration to any new hardware), an
 ```mermaid
 graph TB
 
-   subgraph p["Physical Machine (x86-64 PC)"]
+   subgraph p["1 Physical Machine (x86-64 PC)"]
       direction TB
 
       pgpu1["GPU 1<br>Ryzen iGPU"] --> h
