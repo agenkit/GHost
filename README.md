@@ -38,12 +38,12 @@ graph BT
       subgraph v["Virtual Machines"]
          direction BT
 
-         g(("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…"))
+         g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
 
          subgraph s["Services"]
             direction BT
-            vsrv(("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"))
-            cont(("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI    inference<br>…"))
+            vsrv["SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
+            cont["CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI inference<br>…"]
          end
 
          s --> g
