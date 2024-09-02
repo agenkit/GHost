@@ -66,48 +66,85 @@ For [ZFS](#zfs) and [Btrfs](#btrfs), these principles stand, but head over to th
 
 
 
-## Mount
-
-📘`man`: [`mount`][man-mount]
-
-Canonical form: `mount [-fnrsvw] [-t fstype] [-o options] device mountpoint`
 
 
 
-### Basic use
 
-A formatted device can be mounted to a directory using `mount` as superuser.
+
+
+
+
+
+
+
+
+
+
+
+
+## Arrays
+
+Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in device management.
+
+
+
+### `mdadm`
+
+`mdadm` *(**m**ultiple **d**evices **adm**inistration) lets us "merge" storage devices in RAID arrays, which are then seen (and formatted) as one virtual device (for increased higher size, reliability and/or performance).*
+
+📘`man`: [`mdadm`][man-mdadm]
+
+Canonical command: `mdadm [mode] <raiddevice> [options] <component-devices>`
+
+
+
+#### Installation
 
 ```bash
-sudo mount -vm /dev/md0 /mnt/data
+sudo apt update
+sudo apt install mdadm
 ```
 
-> [!Tip]
-> `-m` (`--mkdir`) creates the mount point directory if it does not exist yet.
+#### Create array
 
-### `fstab` (boot mount)
+The **create** mode (`-C`|`--create`) will make:
 
-Get the UUID of the device:
+- a Linux software **RAID device** (virtual device `/dev/md0`)
+- over **`n` component devices** (`n` physical drives)
+- set to RAID **level `l`** (`l`=`0`,`1`,`10`,`5`,`6`)
+
+Example RAID level `0` over n=`3` devices:
 
 ```bash
-sudo blkid | grep /dev/<your-device>
+sudo mdadm -Cv /dev/md0 -l0 -n3 \
+/dev/disk/by-id/nvme-Samsung_SSD*{497K,512J,528K}
 ```
 
-Edit `/etc/fstab` to add an entry for the RAID 0 array:
+- `-v` = `--verbose`
+- `-l0` = `--level=0` options are:  
+`linear`,  
+`raid0` | `0` | `stripe`,  
+`raid1` | `1` | `mirror`,  
+`raid4` | `4`,  
+`raid5` | `5`,  
+`raid6` | `6`,  
+`raid10` | `10`,  
+`multipath` | `mp`,  
+`faulty`,  
+`container`.  
+Obviously, some of these are synonymous.
+
+Check the creation of the RAID array:
 
 ```bash
-sudo nano /etc/fstab
+cat /proc/mdstat
 ```
 
-Add this line (replace `UUID` with the actual UUID from the `blkid` command):
+And further inspect the RAID:
 
-```fstab
-UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
+```bash
+sudo mdadm --detail -vv /dev/md0
 ```
-
-
-
-
 
 
 
@@ -261,68 +298,47 @@ Great blog: [Forza's ramblings](https://wiki.tnonline.net/w/Category:Btrfs)
 
 
 
-## Arrays
-
-Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in device management.
 
 
 
-### `mdadm`
 
-`mdadm` *(**m**ultiple **d**evices **adm**inistration) lets us "merge" storage devices in RAID arrays, which are then seen (and formatted) as one virtual device (for increased higher size, reliability and/or performance).*
+## Mount
 
-📘`man`: [`mdadm`][man-mdadm]
+📘`man`: [`mount`][man-mount]
 
-Canonical command: `mdadm [mode] <raiddevice> [options] <component-devices>`
-
+Canonical form: `mount [-fnrsvw] [-t fstype] [-o options] device mountpoint`
 
 
-#### Installation
+
+### Basic use
+
+A formatted device can be mounted to a directory using `mount` as superuser.
 
 ```bash
-sudo apt update
-sudo apt install mdadm
+sudo mount -vm /dev/md0 /mnt/data
 ```
 
-#### Create array
+> [!Tip]
+> `-m` (`--mkdir`) creates the mount point directory if it does not exist yet.
 
-The **create** mode (`-C`|`--create`) will make:
+### `fstab` (boot mount)
 
-- a Linux software **RAID device** (virtual device `/dev/md0`)
-- over **`n` component devices** (`n` physical drives)
-- set to RAID **level `l`** (`l`=`0`,`1`,`10`,`5`,`6`)
-
-Example RAID level `0` over n=`3` devices:
+Get the UUID of the device:
 
 ```bash
-sudo mdadm -Cv /dev/md0 -l0 -n3 \
-/dev/disk/by-id/nvme-Samsung_SSD*{497K,512J,528K}
+sudo blkid | grep /dev/<your-device>
 ```
 
-- `-v` = `--verbose`
-- `-l0` = `--level=0` options are:  
-`linear`,  
-`raid0` | `0` | `stripe`,  
-`raid1` | `1` | `mirror`,  
-`raid4` | `4`,  
-`raid5` | `5`,  
-`raid6` | `6`,  
-`raid10` | `10`,  
-`multipath` | `mp`,  
-`faulty`,  
-`container`.  
-Obviously, some of these are synonymous.
-
-Check the creation of the RAID array:
+Edit `/etc/fstab` to add an entry for the RAID 0 array:
 
 ```bash
-cat /proc/mdstat
+sudo nano /etc/fstab
 ```
 
-And further inspect the RAID:
+Add this line (replace `UUID` with the actual UUID from the `blkid` command):
 
-```bash
-sudo mdadm --detail -vv /dev/md0
+```fstab
+UUID=<your-uuid> /mnt/data xfs defaults,noatime 0 0
 ```
 
 
