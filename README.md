@@ -54,13 +54,13 @@ graph BT
 p:::trans
 v:::wht
 host:::lit
-:::wht
-:::wht
-:::wht
-:::wht
-:::wht
-:::wht
-:::wht
+pgpu1:::wht
+pmem:::wht
+pcpu:::wht
+pstor:::wht
+pnet:::wht
+pusb:::wht
+pgpu2:::wht
 s:::blu
 g:::grn
 
