@@ -19,10 +19,10 @@
 
 
 ```mermaid
-graph BT
+graph TB
 
    subgraph p["Physical Machine (x86-64 PC)"]
-      direction BT
+      direction TB
 
       pgpu1["GPU 1<br>Ryzen iGPU"] --> h
       pmem["RAM<br>"] --> h
@@ -30,18 +30,18 @@ graph BT
       pstor["storage<br>"] --> h
       pnet["Ethernet ports"] --> h
       pusb["USB ports"] --> h
-      pgpu2["GPU 2<br>Nvidia dGPU"] --> h
+      pgpu2["GPU 2<br>Nvidia PCIe"] --> h
       h{{fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>}}
 
       h ==> v
 
       subgraph v["Virtual Machines"]
-         direction BT
+         direction TB
 
          g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
 
          subgraph s["Servers"]
-            direction BT
+            direction TB
             vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
             cont["CONTAINERS<br><br>(Docker, LXC…)<br><br>• Python envs<br>• AI inference<br>…"]
          end
@@ -65,7 +65,7 @@ s:::blu
 g:::grn
 vsrv:::tr2
 cont:::tr2
-classDef main fill:#0d1117,stroke:#f0f6fc
+classDef main fill:#0d1117,stroke:#30363c
 classDef tr1 fill:#0d1117,stroke:#0d1117
 classDef tr2 fill:#000,stroke:#000
 classDef wht fill:#000,stroke:#f0f6fc
@@ -83,10 +83,10 @@ This notably includes full-fledged "native" GPU-powered workstation VMs for grap
 It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms), but is mostly designed for a single user.
 
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
-
+<!--
 > [!Tip]
 > There's a headless/CLI variant called **SHost: S*erver* Host**.[^SHost]
-
+-->
 
 ### Hardware requirements
 
@@ -247,53 +247,6 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 
 ## Resources
-
-
-### Visual Spec
-
-```mermaid
-graph LR
-
-subgraph p["[PM] Physical Machine<br>(x86-64 PC)"]
-   direction LR
-   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("<br>Linux KVM<br>Hypervisor<br><br>IOMMU<br>+<br>VFIO<br><br>")
-   pmem{{"RAM<br>"}} ---> host
-   pcpu{{"CPU<br>"}} ---> host
-   pgpu2{{"GPU 2<br>Nvidia dGPU"}} ---> host
-   pstor{{"storage<br>"}} --> host
-   
-end
-
-subgraph v["[VMs] Virtual Machines"]
-   direction LR
-
-   subgraph gui["Graphical OS"]
-      direction LR
-      vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
-   end
-   subgraph srv["Servers (headless, ssh)"]
-      direction LR
-      vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
-      vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
-      vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
-   end
-end
-
-p ==> v
-pgpu1 -.- vws
-pgpu2 -.- vsrv1
-pstor -.- vsrv2 & vsrv3
-```
-
-
-
-
-
-
-
-
-
-
 
 A-Z titles link to official project page.
 
