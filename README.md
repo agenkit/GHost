@@ -17,7 +17,7 @@
 
 **GHost** is your ad hoc collection of workstations and servers in a single PC. 
 
-Although fairly involved to setup, it's a one-off where you might learn a little about a lot of things.  
+Although fairly involved to setup, it's a one-off; and you might learn a little about a lot of things.  
 The end result is easy to maintain (including migration to any new hardware), and likely to be much more convenient to use than any regular workstation. The feature set is nearly limitless provided your hardware can accommodate it.
 
 ```mermaid
@@ -26,13 +26,13 @@ graph TB
    subgraph p["1 Physical Machine (x86-64 PC)"]
       direction TB
 
-      pnet["Ethernet ports"] --> h
-      pstor["Storage<br>"] --> h
-      pmem["RAM<br>"] --> h
-      pcpu["CPU<br>"] --> h
-      pgpu1["GPU 1<br>Ryzen iGPU"] --> h
-      pgpu2["GPU 2<br>Nvidia PCIe"] --> h
-      pusb["USB ports"] --> h
+      pnet["Ethernet<br>2× NIC"] --> h
+      pstor["Storage<br>Btrfs (OS)<br>XFS (VM, data)"] --> h
+      pmem["Memory<br>64 GB"] --> h
+      pcpu["CPU<br>16 cores"] --> h
+      pgpu1["GPU<br>Ryzen iGPU"] --> h
+      pgpu2["GPU<br>Nvidia PCIe"] --> h
+      pusb["USB<br>2× controllers"] --> h
       h{{"fa:fa-linux<br>Linux<br>kernel<br><br>"}}
 
       h ==> v
@@ -40,19 +40,21 @@ graph TB
       subgraph v["KVM Hypervisor"]
          direction LR
 
-         subgraph s["Services"]
+         subgraph s["Backend services"]
             direction LR
             vsrv["Virtual Machines<br><br>GPU+CUDA<br>GitLab<br>NextCloud<br>Matrix server<br>pfSense<br>…"]
             cont["CONTAINERS<br><br>(Docker, LXC…)<br>Python envs<br>AI inference<br>Media server<br>PiHole<br>…"]
          end
 
-         subgraph g["GUI Clients"]
+         subgraph g["Frontend GUI Clients (concurrency is GPU-bound)"]
             direction TB
-         gw("WORKSTATION<br>(main)<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
-         gn("(another)<br>WORKSTATION<br><br>clone,snapshot,<br>ad hoc env…")
-         gg("ENTERTAINMENT<br>SYSTEM<br><br>any OS<br>(Linux, Windows…)<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema…")
+         gw("WORKSTATION<br>(main)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
+         gn("(many)<br>WORKSTATIONS<br><br>clone,snapshot,<br>ad hoc env…")
+         gg("ENTERTAINMENT<br>SYSTEM<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema,<br>streaming<br>…")
          end
+
          s --> g
+
       end
    end
 
