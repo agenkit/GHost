@@ -40,10 +40,10 @@ graph BT
 
          g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
 
-         subgraph s["Services"]
+         subgraph s["Servers"]
             direction BT
-            vsrv["SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
-            cont["CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI inference<br>…"]
+            vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
+            cont["CONTAINERS<br><br>(Docker, LXC…)<br><br>• Python envs<br>• AI inference<br>…"]
          end
 
          s --> g
@@ -54,18 +54,20 @@ graph BT
 p:::main
 v:::wht
 host:::lit
-pgpu1:::trans
-pmem:::trans
-pcpu:::trans
-pstor:::trans
-pnet:::trans
-pusb:::trans
-pgpu2:::trans
+pgpu1:::tr1
+pmem:::tr1
+pcpu:::tr1
+pstor:::tr1
+pnet:::tr1
+pusb:::tr1
+pgpu2:::tr1
 s:::blu
 g:::grn
-
+vsrv:::tr2
+cont:::tr2
 classDef main fill:#0d1117,stroke:#f0f6fc
-classDef trans fill:#0d1117,stroke:#0d1117
+classDef tr1 fill:#0d1117,stroke:#0d1117
+classDef tr2 fill:#000,stroke:#000
 classDef wht fill:#000,stroke:#f0f6fc
 classDef red fill:#000,stroke:#f00
 classDef blu fill:#000,stroke:#007FFF
