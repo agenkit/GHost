@@ -4,47 +4,57 @@
 
 ## Overview
 
-```mermaid
-graph LR
-
-subgraph p["[PM] Physical Machine<br>(x86-64 PC)"]
-   direction LR
-   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("<br>Linux KVM<br>Hypervisor<br><br>IOMMU<br>+<br>VFIO<br><br>")
-   pmem{{"RAM<br>"}} ---> host
-   pcpu{{"CPU<br>"}} ---> host
-   pgpu2{{"GPU 2<br>Nvidia dGPU"}} ---> host
-   pstor{{"storage<br>"}} --> host
-   
-end
-
-subgraph v["[VMs] Virtual Machines"]
-   direction LR
-
-   subgraph gui["Graphical OS"]
-      direction LR
-      vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
-   end
-   subgraph srv["Servers (headless, ssh)"]
-      direction LR
-      vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
-      vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
-      vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
-   end
-end
-
-p ==> v
-pgpu1 -.- vws
-pgpu2 -.- vsrv1
-pstor -.- vsrv2 & vsrv3
-```
-
-
 
 
 
 
 
 ### What does it do?
+
+
+```mermaid
+graph LR
+
+subgraph p["Physical Machine<br>(x86-64 PC)"]
+   direction LR
+   pcp["PC parts<br><br>• CPUs<br>• RAM<br>• SSDs<br>• GPUs<br>• Ethernet<br>• USB ports<br>• TPUs…"]
+   host(fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>)
+   pcp--> host
+end
+
+subgraph v["Virtual Machines"]
+   direction LR
+   host ==> vws("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
+
+   subgraph Services
+   direction LR
+   vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
+   cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
+%%   host ==> vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
+%%   host ==> cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
+end
+   host ==> Services
+   Services --> vws
+end
+
+p:::wht
+host:::lit
+v:::wht
+pcp:::wht
+Services:::blu
+vws:::grn
+
+
+
+classDef red fill:#000,stroke:#f00
+classDef wht fill:#111,stroke:#fff
+classDef blu fill:#000,stroke:#00f
+classDef lit fill:#eee,stroke:#333,color:#333
+classDef grn fill:#000,stroke:#0f0
+%% classDef blu fill:#000,stroke:#00f
+```
+
+
 
 **GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations. It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms).
 
@@ -216,6 +226,53 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 
 ## Resources
+
+
+### Visual Spec
+
+```mermaid
+graph LR
+
+subgraph p["[PM] Physical Machine<br>(x86-64 PC)"]
+   direction LR
+   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("<br>Linux KVM<br>Hypervisor<br><br>IOMMU<br>+<br>VFIO<br><br>")
+   pmem{{"RAM<br>"}} ---> host
+   pcpu{{"CPU<br>"}} ---> host
+   pgpu2{{"GPU 2<br>Nvidia dGPU"}} ---> host
+   pstor{{"storage<br>"}} --> host
+   
+end
+
+subgraph v["[VMs] Virtual Machines"]
+   direction LR
+
+   subgraph gui["Graphical OS"]
+      direction LR
+      vws("Virtual workstation<br>GPU-native<br>any OS<br>(Linux, Windows, FreeBSD…)")
+   end
+   subgraph srv["Servers (headless, ssh)"]
+      direction LR
+      vsrv1["Virtual server 1<br>E.g., GPU for AI, notebooks…"]
+      vsrv2["Virtual server 2<br>E.g., GitLab, Gitea, just a Git Linux…"]
+      vsrv3["Virtual server 3<br>E.g., NextCloud, Matrix, torrent…"]
+   end
+end
+
+p ==> v
+pgpu1 -.- vws
+pgpu2 -.- vsrv1
+pstor -.- vsrv2 & vsrv3
+```
+
+
+
+
+
+
+
+
+
+
 
 A-Z titles link to official project page.
 
