@@ -51,20 +51,21 @@ graph BT
       end
    end
 
-p:::trans
+p:::main
 v:::wht
 host:::lit
-pgpu1:::wht
-pmem:::wht
-pcpu:::wht
-pstor:::wht
-pnet:::wht
-pusb:::wht
-pgpu2:::wht
+pgpu1:::trans
+pmem:::trans
+pcpu:::trans
+pstor:::trans
+pnet:::trans
+pusb:::trans
+pgpu2:::trans
 s:::blu
 g:::grn
 
-classDef trans fill:#0d1117,stroke:#f0f6fc
+classDef main fill:#0d1117,stroke:#f0f6fc
+classDef trans fill:#0d1117,stroke:#0d1117
 classDef wht fill:#000,stroke:#f0f6fc
 classDef red fill:#000,stroke:#f00
 classDef blu fill:#000,stroke:#007FFF
