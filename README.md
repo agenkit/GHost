@@ -2,16 +2,20 @@
 
 > **GHost: G*raphical* Host**
 
+
+
+
+
+
+
+
+
+
 ## Overview
-
-
-
-
-
 
 ### What does it do?
 
-**GHost** lets you setup and run your ad hoc collection of workstations and servers within your own PC. 
+**GHost** is your ad hoc collection of workstations and servers in a single PC. 
 
 Although fairly involved to setup, it's a one-off where you might learn a little about a lot of things.  
 The end result is easy to maintain (including migration to any new hardware), and likely to be much more convenient to use than any regular workstation. The feature set is nearly limitless provided your hardware can accommodate it.
@@ -38,13 +42,13 @@ graph TB
 
          g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
          gn("(another)<br>GUI WORKSTATION<br><br>clone,snapshot,<br>ad hoc env…")
-         gg("GAMING SYSTEM <br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
+         gg("ENTERTAINMENT<br>SYSTEM<br><br>any OS<br>(Linux, Windows…)<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema…")
          subgraph s["Servers"]
             direction TB
-            vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
-            cont["CONTAINERS<br><br>(Docker, LXC…)<br><br>• Python envs<br>• AI inference<br>…"]
+            vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>• Minecraft server<br>…"]
+            cont["CONTAINERS<br><br>(Docker, LXC…)<br>• Python envs<br>• AI inference<br>• Jellyfin server<br>• PiHole<br>…"]
          end
-         s --> g & gn
+         s --> g & gn & gg
       end
    end
 
@@ -61,6 +65,7 @@ pgpu2:::tr1
 s:::blu
 g:::grn
 gn:::grn
+gg:::grn
 vsrv:::tr2
 cont:::tr2
 classDef main fill:#0d1117,stroke:#30363c
@@ -115,13 +120,13 @@ This procedure gets you there *as fast as possible*.
 >
 > — Donald Knuth
 
-- **Great defaults**  
-   Need variations? 🡪 See [Resources](#resources) for links to docs, repos, guides, discussions…
-- **Terse** (no discussion)
-- Formatting:
+- **Great defaults** (battle-hardened)  
+   *Need variations?* 🡪 *See [Resources](#resources) for docs, guides, discussions, repos…*
+- **Terse** (no talk)
+- **Glance**-friendly formatting:
    - Bold **keywords**
    - *You can **skip** all sentences in **italics**!*
-- **Atomic** steps (do **ONE thing**)
+- **Atomic** steps: do **ONE thing** (easy to do it well; hard to miss)
 - **Direct links** (marked with 🔽)
 
 <!--
@@ -138,6 +143,13 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > - GPU 1: Nvidia RTX 3090 (24 GB)
 > - NVMe 0: host OS (2 TB)
 > - NVMe 1-3: ZFS datasets for VMs & data (12 TB)
+
+
+
+
+
+
+
 
 
 
@@ -250,6 +262,7 @@ From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https
 
 
 
+
 ## Resources
 
 A-Z titles link to official project page.
@@ -297,6 +310,9 @@ https://man7.org/linux/man-pages/man1/lsattr.1.html
 
 - [Repository](https://github.com/RsyncProject/rsync)
 - [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
+
+
+
 
 
 
