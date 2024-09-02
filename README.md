@@ -21,32 +21,35 @@
 ```mermaid
 graph BT
 
-subgraph p["Physical Machine (x86-64 PC)"]
-   direction BT
-
-   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host
-   pmem{{"RAM<br>"}} --> host
-   pcpu{{"CPU<br>"}} --> host
-   pstor{{"storage<br>"}} --> host
-   pnet["Ethernet ports"] --> host
-   pusb["USB ports"] --> host
-   pgpu2{{"GPU 2<br>Nvidia dGPU"}} --> host
-   host(fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>)
-host ==> v
-
-   subgraph v["Virtual Machines"]
+   subgraph p["Physical Machine (x86-64 PC)"]
       direction BT
-      g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
 
-      subgraph s["Services"]
+      pgpu1["GPU 1<br>Ryzen iGPU"] --> host
+      pmem["RAM<br>"] --> host
+      pcpu["CPU<br>"] --> host
+      pstor["storage<br>"] --> host
+      pnet["Ethernet ports"] --> host
+      pusb["USB ports"] --> host
+      pgpu2["GPU 2<br>Nvidia dGPU"] --> host
+      host{{fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>}}
+
+      host ==> v
+
+      subgraph v["Virtual Machines"]
          direction BT
-         vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
-         cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI inference<br>…")
-      end
-      s --> g
-   end
-end
 
+         g(("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…"))
+
+         subgraph s["Services"]
+            direction BT
+            vsrv(("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"))
+            cont(("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI    inference<br>…"))
+         end
+
+         s --> g
+
+      end
+   end
 
 p:::trans
 v:::wht
@@ -62,20 +65,6 @@ classDef blu fill:#000,stroke:#007FFF
 classDef lit fill:#eee,stroke:#333,color:#333
 classDef grn fill:#000,stroke:#0f0
 ```
-
-subgraph v["Virtual Machines"]
-   direction RL
-   vws("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
-
-   subgraph Services
-      direction TB
-      vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
-      cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
-   end
-
-   host ==> Services
-   Services --> vws
-end
 
 
 
