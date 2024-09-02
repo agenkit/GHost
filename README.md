@@ -26,31 +26,52 @@ graph TB
    subgraph p["1 Physical Machine (x86-64 PC)"]
       direction TB
 
-      pgpu1["GPU 1<br>Ryzen iGPU"] --> h
+      pnet["Ethernet ports"] --> h
+      pstor["Storage<br>"] --> h
       pmem["RAM<br>"] --> h
       pcpu["CPU<br>"] --> h
-      pstor["storage<br>"] --> h
-      pnet["Ethernet ports"] --> h
-      pusb["USB ports"] --> h
+      pgpu1["GPU 1<br>Ryzen iGPU"] --> h
       pgpu2["GPU 2<br>Nvidia PCIe"] --> h
-      h{{fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>}}
+      pusb["USB ports"] --> h
+      h{{"fa:fa-linux<br>Linux<br>kernel<br><br>"}}
 
       h ==> v
 
-      subgraph v["Virtual Machines"]
-         direction TB
+      subgraph v["KVM Hypervisor"]
+         direction LR
 
-         g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
-         gn("(another)<br>GUI WORKSTATION<br><br>clone,snapshot,<br>ad hoc env…")
-         gg("ENTERTAINMENT<br>SYSTEM<br><br>any OS<br>(Linux, Windows…)<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema…")
-         subgraph s["Servers"]
-            direction TB
-            vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>• Minecraft server<br>…"]
-            cont["CONTAINERS<br><br>(Docker, LXC…)<br>• Python envs<br>• AI inference<br>• Jellyfin server<br>• PiHole<br>…"]
+         subgraph s["Services"]
+            direction LR
+            vsrv["Virtual Machines<br><br>GPU+CUDA<br>GitLab<br>NextCloud<br>Matrix server<br>pfSense<br>…"]
+            cont["CONTAINERS<br><br>(Docker, LXC…)<br>Python envs<br>AI inference<br>Media server<br>PiHole<br>…"]
          end
-         s --> g & gn & gg
+
+         subgraph g["GUI Clients"]
+            direction TB
+         gw("WORKSTATION<br>(main)<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
+         gn("(another)<br>WORKSTATION<br><br>clone,snapshot,<br>ad hoc env…")
+         gg("ENTERTAINMENT<br>SYSTEM<br><br>any OS<br>(Linux, Windows…)<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema…")
+         end
+         s --> g
       end
    end
+
+net("Network interfaces<br><br><br>")
+
+subgraph n
+   pn("Public internet<br><br>self-hosted<br>services")
+   sn("Secure networks<br><br>LAN, VLAN,<br>VPNs, SSH…")
+end
+
+net --- pn & sn
+pn --- o(("other people<br><br>family, friends, comm.,<br>collab, clients<br>…"))
+sn --- you
+
+uip("Peripherals<br><br>(Display,<br>keyboard, mouse,<br>sound, gamepad…)")
+p --- net
+p --- uip ---- you(("You<br>(user/seat)<br>😎"))
+
+
 
 p:::main
 v:::wht
@@ -64,18 +85,27 @@ pusb:::tr1
 pgpu2:::tr1
 s:::blu
 g:::grn
-gn:::grn
-gg:::grn
+gw:::main
+gn:::main
+gg:::main
 vsrv:::tr2
 cont:::tr2
+uip:::tr1
+net:::tr1
+
+sn:::cyan
+pn:::red
+o:::grn
+you:::grn
 classDef main fill:#0d1117,stroke:#30363c
 classDef tr1 fill:#0d1117,stroke:#0d1117
 classDef tr2 fill:#000,stroke:#000
 classDef wht fill:#000,stroke:#f0f6fc
-classDef red fill:#000,stroke:#f00
+classDef cyan fill:#000,stroke:#0ff
 classDef blu fill:#000,stroke:#007FFF
 classDef lit fill:#eee,stroke:#333,color:#333
 classDef grn fill:#000,stroke:#0f0
+classDef red fill:#000,stroke:#f00
 ```
 
 Formally:
