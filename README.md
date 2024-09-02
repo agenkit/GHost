@@ -24,16 +24,16 @@ graph BT
    subgraph p["Physical Machine (x86-64 PC)"]
       direction BT
 
-      pgpu1["GPU 1<br>Ryzen iGPU"] --> host
-      pmem["RAM<br>"] --> host
-      pcpu["CPU<br>"] --> host
-      pstor["storage<br>"] --> host
-      pnet["Ethernet ports"] --> host
-      pusb["USB ports"] --> host
-      pgpu2["GPU 2<br>Nvidia dGPU"] --> host
-      host{{fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>}}
+      pgpu1["GPU 1<br>Ryzen iGPU"] --> h
+      pmem["RAM<br>"] --> h
+      pcpu["CPU<br>"] --> h
+      pstor["storage<br>"] --> h
+      pnet["Ethernet ports"] --> h
+      pusb["USB ports"] --> h
+      pgpu2["GPU 2<br>Nvidia dGPU"] --> h
+      h{{fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>}}
 
-      host ==> v
+      h ==> v
 
       subgraph v["Virtual Machines"]
          direction BT
@@ -53,7 +53,7 @@ graph BT
 
 p:::main
 v:::wht
-host:::lit
+h:::lit
 pgpu1:::tr1
 pmem:::tr1
 pcpu:::tr1
