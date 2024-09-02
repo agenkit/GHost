@@ -11,55 +11,79 @@
 
 ### What does it do?
 
+**GHost** is 
+- a type-2 hypervisor
+- designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…),
+- across ad hoc environments (Python, Windows, servers…),
+- in both combined and discrete operations.
+
 
 ```mermaid
-graph LR
+graph BT
 
-subgraph p["Physical Machine<br>(x86-64 PC)"]
-   direction LR
-   pcp["PC parts<br><br>• CPUs<br>• RAM<br>• SSDs<br>• GPUs<br>• Ethernet<br>• USB ports<br>• TPUs…"]
+subgraph p["Physical Machine (x86-64 PC)"]
+   direction BT
+
+   pgpu1{{"GPU 1<br>Ryzen iGPU"}} --> host("<br>Linux KVM<br>Hypervisor<br><br>IOMMU<br>+<br>VFIO<br><br>")
+   pmem{{"RAM<br>"}} --> host
+   pcpu{{"CPU<br>"}} --> host
+   pgpu2{{"GPU 2<br>Nvidia dGPU"}} --> host
+   pstor{{"storage<br>"}} --> host
+   pnet["Ethernet ports"] --> host
+   pusb["USB ports"] --> host
    host(fa:fa-linux<br>Linux KVM<br>Hypervisor<br><br>)
-   pcp--> host
+
+   subgraph v["Virtual Machines"]
+      direction BT
+      g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
+
+      subgraph s["Services"]
+         direction BT
+         vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
+         cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• AI inference<br>…")
+      end
+      s --> g
+   end
+host ==> v
 end
+
+
+
+p:::trans
+v:::wht
+host:::lit
+pcp:::wht
+s:::blu
+g:::grn
+
+classDef trans fill:#0d1117,stroke:#f0f6fc
+classDef wht fill:#000,stroke:#f0f6fc
+classDef red fill:#000,stroke:#f00
+classDef blu fill:#000,stroke:#007FFF
+classDef lit fill:#eee,stroke:#333,color:#333
+classDef grn fill:#000,stroke:#0f0
+```
 
 subgraph v["Virtual Machines"]
-   direction LR
-   host ==> vws("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
+   direction RL
+   vws("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>'native' GPU<br>with display,<br>keyboard, USB, NIC…")
 
    subgraph Services
-   direction LR
-   vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
-   cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
-%%   host ==> vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
-%%   host ==> cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
-end
+      direction TB
+      vsrv("SERVERS<br><br>• GPU for AI<br>• GitLab<br>• NextCloud<br>• Matrix<br>…")
+      cont("CONTAINERS<br><br>Docker, LXC…<br><br>• Python envs<br>• Services<br>…")
+   end
+
    host ==> Services
    Services --> vws
 end
 
-p:::wht
-host:::lit
-v:::wht
-pcp:::wht
-Services:::blu
-vws:::grn
 
 
+In plain English, it's an always-on single-box machine, that virtualizes whatever infrastructure you want to throw at it, whether 'headless' servers or rich GUI workstations (with their own display, keyboard, mouse). This guide offers a number of working examples.  
+This notably includes full-fledged "native" GPU-powered workstation VMs for graphical applications, ; or AI GPU/TPU servers.
 
-classDef red fill:#000,stroke:#f00
-classDef wht fill:#111,stroke:#fff
-classDef blu fill:#000,stroke:#00f
-classDef lit fill:#eee,stroke:#333,color:#333
-classDef grn fill:#000,stroke:#0f0
-%% classDef blu fill:#000,stroke:#00f
-```
-
-
-
-**GHost** is a type-2 hypervisor-workstation (*hyperstation?* 🫣) designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…), across ad hoc environments (Python, Windows, servers…), in both combined and discrete operations. It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms).
-
-In plain English, it's an always-on single box that virtualizes whatever infrastructure you want to throw at it. This guide offers a number of working examples.  
-This notably includes full-fledged "native" GPU-powered workstation VMs for graphical applications, with their own display, keyboard, mouse; or AI GPU/TPU servers.
+It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms), but is mostly designed for a single user.
 
 Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based distros.
 
