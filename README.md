@@ -11,12 +11,10 @@
 
 ### What does it do?
 
-**GHost** is 
-- a type-2 hypervisor
-- designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…),
-- across ad hoc environments (Python, Windows, servers…),
-- in both combined and discrete operations.
+**GHost** lets you setup and run your ad hoc collection of workstations and servers within your own PC. 
 
+Although fairly involved to setup, it's a one-off where you might learn a little about a lot of things.  
+The end result is easy to maintain (including migration to any new hardware), and likely to be much more convenient to use than any regular workstation. The feature set is nearly limitless provided your hardware can accommodate it.
 
 ```mermaid
 graph TB
@@ -39,15 +37,14 @@ graph TB
          direction TB
 
          g("GUI WORKSTATION<br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
-
+         gn("(another)<br>GUI WORKSTATION<br><br>clone,snapshot,<br>ad hoc env…")
+         gg("GAMING SYSTEM <br><br>any OS<br>(Linux, Windows…)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
          subgraph s["Servers"]
             direction TB
             vsrv["VMs<br><br>• GPU, CUDA<br>• GitLab<br>• NextCloud<br>• Matrix<br>…"]
             cont["CONTAINERS<br><br>(Docker, LXC…)<br><br>• Python envs<br>• AI inference<br>…"]
          end
-
-         s --> g
-
+         s --> g & gn
       end
    end
 
@@ -63,6 +60,7 @@ pusb:::tr1
 pgpu2:::tr1
 s:::blu
 g:::grn
+gn:::grn
 vsrv:::tr2
 cont:::tr2
 classDef main fill:#0d1117,stroke:#30363c
@@ -75,9 +73,14 @@ classDef lit fill:#eee,stroke:#333,color:#333
 classDef grn fill:#000,stroke:#0f0
 ```
 
+Formally:
+- type-2 hypervisor
+- designed to seamlessly orchestrate multiple PCIe devices (GPU, TPU…)
+- across ad hoc environments (Python, Windows, servers…)
+- in both combined and discrete operations (hardware permitting)
 
 
-In plain English, it's an always-on single-box machine, that virtualizes whatever infrastructure you want to throw at it, whether 'headless' servers or rich GUI workstations (with their own display, keyboard, mouse). This guide offers a number of working examples.  
+In plain English, it's an always-on single-box machine, that virtualizes any hardware you want to throw at it, whether as 'headless' servers or rich GUI workstations (with their own display, keyboard, mouse). This guide offers a number of working examples.  
 This notably includes full-fledged "native" GPU-powered workstation VMs for graphical applications, ; or AI GPU/TPU servers.
 
 It can power as many seats as you can fit GPUs (2 is a good maximum on most consumer platforms), but is mostly designed for a single user.
@@ -171,16 +174,17 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
 
-   *In this guide, the AMD iGPU is dedicated to the host.  
-   So at this point, we remove all video cables going out of the Nvidia GPU.*[^2]
+   *In this guide, the Ryzen iGPU is dedicated to the host.  
+   So we unplug all video cables going out of the Nvidia GPU.*[^2]
 
 1. Boot to USB to setup Kubuntu. Two requirements:
 
-   1. **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]  
-      *NOTE: **NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.*  
+   - **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]
+      
+      *NOTE:* ⛔ ***NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.*  
       *All manners of RAID 1 and 0 (1c3, 1c4, 10) are perfectly fine however.*
       
-   1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
+   - Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
 
@@ -199,7 +203,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
 
-
+  
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
 
