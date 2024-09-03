@@ -58,21 +58,21 @@ graph TB
       end
    end
 
-
 subgraph n["Network interfaces"]
    net("Routing<br>Reverse proxy<br>Firewall<br>")
    pn("Public internet<br><br>self-hosted<br>services")
    sn("Secure networks<br><br>LAN, VLAN,<br>VPNs, SSH…")
-net --> pn & sn
+   net --> pn & sn
 end
+
+p --- net
 
 pn --- o(("other people<br><br>family, friends, comm.,<br>collab, clients<br>…"))
 sn -.- o
 sn --"Remote"--- you
 
 uip("Peripherals<br><br>(Display,<br>keyboard, mouse,<br>sound, gamepad…)")
-p --- net
-p --- uip --"Local"---- you(("You<br>(user/seat)<br>😎"))
+p === uip =="Local"==== you(("You<br>(user/seat)<br>😎"))
 
 
 
