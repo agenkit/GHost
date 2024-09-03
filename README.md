@@ -58,20 +58,21 @@ graph TB
       end
    end
 
-net("Network interfaces<br><br><br>")
 
-subgraph n
+subgraph n["Network interfaces"]
+   net("Routing<br>Reverse proxy<br>Firewall<br>")
    pn("Public internet<br><br>self-hosted<br>services")
    sn("Secure networks<br><br>LAN, VLAN,<br>VPNs, SSH…")
+net --> pn & sn
 end
 
-net --- pn & sn
 pn --- o(("other people<br><br>family, friends, comm.,<br>collab, clients<br>…"))
-sn --- you
+sn -.- o
+sn --"Remote"--- you
 
 uip("Peripherals<br><br>(Display,<br>keyboard, mouse,<br>sound, gamepad…)")
 p --- net
-p --- uip ---- you(("You<br>(user/seat)<br>😎"))
+p --- uip --"Local"---- you(("You<br>(user/seat)<br>😎"))
 
 
 
@@ -94,7 +95,7 @@ vsrv:::tr2
 cont:::tr2
 uip:::tr1
 net:::tr1
-
+n:::main
 sn:::cyan
 pn:::red
 o:::grn
