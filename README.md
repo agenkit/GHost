@@ -220,7 +220,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
 
    *In this guide, the Ryzen iGPU is dedicated to the host.  
-   So we unplug all video cables going out of the Nvidia GPU.*[^2]
+   So we unplug all video cables going out of the Nvidia GPU.*[^unplug]
 
 1. Boot to USB to setup Kubuntu. Two requirements:
 
@@ -355,31 +355,32 @@ https://man7.org/linux/man-pages/man1/lsattr.1.html
 
 work-in-progress \[2024.09.01\]
 
-[^footnote]: Click the ending link to go back up where you were:
-
 [^synergy]: Control multiple machines (Linux, Mac, Windows) with one keyboard+mouse combo, as if they were multiple displays connected to the same PC.  
   License cost per user (pay once, keep forever): \$29 for up to 3 machines, or \$49 for 15.
 
-[^SHost]: `SHost` (Server Host) is the **CLI/headless** variant.
-     - It's closer to a Type-I hypervisor.
-     - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…
-     - Both are part of my tentative [***Ultra***structure]() computing paradigm.
+[^footnote]: Click the ending link to go back up where you were:
+
+[^unplug]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:  
+      - proper graphics drivers will get installed on the host (*AMD in this guide*);  
+      - auto-configs (Xorg…) work well;  
+      - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*  
+
+[^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
 
 
 
-[^2]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:
-      - proper *graphics* drivers will get installed on the host;
-      - auto-configs (Xorg…) work well;
-      - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*
 
 
 
+
+[^SHost]: `SHost` (Server Host) is the **CLI/headless** variant.  
+     - It's closer to a Type-I hypervisor.  
+     - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…  
+     - Both are part of my tentative [***Ultra***structure]() computing paradigm.  
 
 [^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
 
-
-[^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
 [^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.
 
