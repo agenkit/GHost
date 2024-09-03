@@ -175,7 +175,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) â€
 > - GPU 0: AMD Raphael (integrated, shared memory)
 > - GPU 1: Nvidia RTX 3090 (24 GB)
 > - NVMe 0: host OS (2 TB)
-> - NVMe 1-3: ZFS datasets for VMs & data (12 TB)
+> - NVMe 1-3: ZFS datasets for VMs & data (3Ã— 4TB)
 
 
 
