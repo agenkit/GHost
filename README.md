@@ -192,10 +192,15 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > Footnote = **Help!**
 > 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
-### Linux
+### Host OS
 
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
+
+> [!Note]
+> This host OS, though perfectly usable as a workstation, will eventually operate as the lowest layer (the "hypervisor") in our single-PC virtualized infrastructure. It will sit 'underneath it all' from the standpoint of our ultimate virtual workstation. We give it GUI capabilities because it's cheap (integrated in most consumer CPUs), convenient for setup and use (as you're experiencing right now), and actually harder to avoid than not on consumer platform, whose default specs are optimized for workstation/desktop use as opposed to server (no dumb VGA or serial outputs, or adapters & devices to leverage those).  
+> If you use a Epyc, Thunderbolt, or Xeon platform, YMMV; consider doing the hypervisor as a pure 'headless' server.
+
 
 #### Make a bootable device
 
@@ -215,21 +220,23 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. Shutdown the PC.
 
-#### Install OS
+#### Install Linux
 
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
 
    *In this guide, the Ryzen iGPU is dedicated to the host.  
    So we unplug all video cables going out of the Nvidia GPU.*[^unplug]
 
-1. Boot to USB to setup Kubuntu. Two requirements:
+1. Boot to USB to setup Kubuntu.
 
-   - **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]
+1. Follow the steps (language, time, keyboard layout, network…) until it asks you about storage.  
+
+1. Choose **Btrfs** on the OS root partition ("`/`") for some neat features.[^btrfs-root]
       
-      *NOTE:* ⛔ ***NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.*  
-      *All manners of RAID 1 and 0 (1c3, 1c4, 10) are perfectly fine however.*
+      NOTE: ⛔ **NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.  
+      All manners of RAID 1 and 0 (1c3, 1c4, 10) are perfectly fine however.
       
-   - Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
+1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
 
@@ -251,6 +258,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
   
 
 1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
+   Instructions as of Sept. 2024:
 
    ```bash
    sudo apt install curl
@@ -260,7 +268,6 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
    sudo apt update
-
    sudo apt install brave-browser
    ```
 
@@ -268,11 +275,22 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 #### Secrets
 
-You should probably have some solution to manage secrets, such as a password management system of sorts.
+1. Setup whatever means you use to **store and access secrets**.  
+   *Software, pen and paper, savant memory… it's up to you.*[^secrets]
+
+1. Fill in all **credentials for this workstation**. User password, any filesystem encryption passphrase, browser sync, etc.
+
+
 
 #### SSH server
 
-OpenSSH 
+
+
+1. Install OpenSSH.
+
+   ```bash
+   sudo apt install sshd
+   ```
 
 ### Terminal (1)
 
@@ -367,8 +385,13 @@ work-in-progress \[2024.09.01\]
 
 [^btrfs-root]: Easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
 
-
-
+[^secrets]: This guide doesn't have general opinions about which solution best fits **you**, as security depends on threat profile; but most people should use **something** fitting their personal needs. Here are a few suggestions I'm using concurrently for different purposes.
+      - [Proton Pass](https://proton.me/pass) as part of a [secure suite of services](https://proton.me/) including email with domain, VPN, cloud storage, doc writing, password management; and combined features such as uniquely generated email addresses per account. *Note that Proton services lack many Linux clients (Drive, Pass…), forcing you to the web interface. They notably has little to no CLI tools. That's too bad, but it's not like there are many alternatives at that level of security and privacy.*
+      - [1Password](https://1password.com/) for a standalone, comprehensive secrets solution. It has extensive comfort features to store all manners of secrets, including ssh keys, payment credentials, social security and ID scans, etc.  
+      - [`pass`](https://www.passwordstore.org/) (CLI tool), and [compatible](https://www.passwordstore.org/#other) apps.  
+      
+      Both Proton and 1Password are good for org and family admins: pass sharing, account management & retrieval…  
+      You know who you are if you want/need `pass` (I consider it a better but harder solution for most purposes).
 
 
 
