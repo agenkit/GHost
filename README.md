@@ -243,7 +243,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
-#### Post-install: first boot
+#### First boot
 
 1. Upgrade packages.
 
@@ -251,6 +251,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt update
    sudo apt upgrade
    ```
+
 
 #### Shell
 
