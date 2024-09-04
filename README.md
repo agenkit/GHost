@@ -243,7 +243,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
    You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
 
-#### Post-install
+#### Post-install: first boot
 
 1. Upgrade packages.
 
@@ -252,7 +252,16 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
-1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs and AI models.
+#### Shell
+
+1. Install your preferred CLI shell.[^shell]
+
+1. *(Optional) Play with OS & DE settings to your liking.  
+Custom DNS, packages like `htop`, theme, etc.*
+
+#### Additional devices
+
+1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and fast storage for large static files like AI models.
 
    *It's hard to generalize for all users.*  
     *See* 📜 **[Storage](doc/storage.md)** *if needed.*
@@ -285,6 +294,8 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    ```
    
 
+#### Browser
+
 1. *(Optional) Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).*  
   *Instructions as of Sept. 2024:*
 
@@ -299,12 +310,6 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt install brave-browser
    ```
 
-
-### Terminal (1)
-
-1. Install your preferred shell for IT/admin.[^shell]
-
-1. *(Optional) Play with OS & DE settings to your liking. Custom DNS, packages like `htop`, etc.*
 
 
 ### Security (1)

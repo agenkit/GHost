@@ -1,6 +1,6 @@
 # Storage
 
-*Since YMMV, this doc is more general than most. It contains basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
+*Basic procedures to manage filesystems relevant to GHost (XFS, Btrfs, and ZFS) in a number of ways including software RAID.*
 
 > [!Note]
 > In this doc, we manage a hypothetical  
