@@ -42,19 +42,20 @@ graph TB
 
          subgraph s["Backend services"]
             direction LR
+
             vsrv["Virtual Machines<br><br>GPU+CUDA<br>GitLab<br>NextCloud<br>Matrix server<br>pfSense<br>…"]
             cont["CONTAINERS<br><br>(Docker, LXC…)<br>Python envs<br>AI inference<br>Media server<br>PiHole<br>…"]
          end
 
          subgraph g["Frontend GUI Clients (concurrency is GPU-bound)"]
             direction TB
-         gw("WORKSTATION<br>(main)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
-         gn("(many)<br>WORKSTATIONS<br><br>clone,snapshot,<br>ad hoc env…")
-         gg("ENTERTAINMENT<br>SYSTEM<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema,<br>streaming<br>…")
+
+            gw("WORKSTATION<br>(main)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
+            gn("(many)<br>WORKSTATIONS<br><br>clone,snapshot,<br>ad hoc env…")
+            gg("ENTERTAINMENT<br>SYSTEM<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema,<br>streaming<br>…")
          end
 
          s --> g
-
       end
    end
 
@@ -251,14 +252,41 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt upgrade
    ```
 
-1. \[Optional\] Play with OS & DE settings to your liking.
+1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs and AI models.
 
-1. **(Recommended)** Setup additional devices meant to be used by the host, such as fast storage for VMs and AI models.
+   *It's hard to generalize for all users.*  
+    *See* 📜 **[Storage](doc/storage.md)** *if needed.*
 
-  
+   *Example: array of n=`3` drives; in RAID level `0`; XFS filesystem.*
 
-1. \[Optional\] Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).
-   Instructions as of Sept. 2024:
+   ```bash
+   sudo apt install mdadm                    # Multiple Devices ADMinistration
+   sudo mdadm -Cv /dev/md0 -l0 -n3 $disk{1,2,3}          # Create RAID level 0
+
+   cat /proc/mdstat                                          # Check the array
+   sudo mdadm --detail -vv /dev/md03
+
+   sudo mkfs.xfs -L mass /dev/md0                              # Format to XFS
+
+   sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/mass          # Mount it
+   ```
+
+   *To setup boot mount, get the UUID…*
+
+   ```bash
+   sudo blkid | grep md0
+   sudo nano /etc/fstab
+   ```
+
+   *… and add it to `fstab`.*
+
+   ```
+   UUID=<your-uuid> /mnt/mass xfs defaults,noatime,logbsize=256k 0 0
+   ```
+   
+
+1. *(Optional) Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).*  
+  *Instructions as of Sept. 2024:*
 
    ```bash
    sudo apt install curl
@@ -271,6 +299,17 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt install brave-browser
    ```
 
+
+### Terminal (1)
+
+1. Install your preferred shell for IT/admin.  
+*I use [Zsh](https://zsh.sourceforge.io/) with [Oh My Zsh](https://ohmyz.sh/), and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (I like [`SauceCodePro 🔽`](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/SourceCodePro.tar.xz)).*
+
+1. *(Optional) Play with OS & DE settings to your liking. Custom DNS, packages like `htop`, etc.*
+
+1. Whenever you install a new terminal tool, check for a OMZ plugin (e.g., `git`). Don't add too many, as it may slow down shell startup.
+
+
 ### Security (1)
 
 #### Secrets
@@ -281,10 +320,29 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 1. Fill in all **credentials for this workstation**. User password, any filesystem encryption passphrase, browser sync, etc.
 
 
+#### Firewall
+
+**`ufw`**, the **U**ncomplicated **F**ire**w**all,[^ufw] is preinstalled with Ubuntu.
+
+GUI setup:
+
+1. Open the Settings > **Firewall** app  
+
+1. Tick the top box to **enable** it.
+
+1. Check that "Default **Incoming** Policy" is set to **`Ignore`**.
+
+1. Check that "Default **Outgoing** Policy" is set to **`Allow`**.
+
+[CLI setup](https://documentation.ubuntu.com/server/how-to/security/firewalls/):
+
+```bash
+sudo ufw enable
+sudo ufw status verbose
+```
+
 
 #### SSH server
-
-
 
 1. Install OpenSSH.
 
@@ -292,7 +350,8 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    sudo apt install sshd
    ```
 
-### Terminal (1)
+1. 
+
 
 ### IOMMU
 
@@ -393,6 +452,10 @@ work-in-progress \[2024.09.01\]
       Both Proton and 1Password are good for org and family admins: pass sharing, account management & retrieval…  
       You know who you are if you want/need `pass` (I consider it a better but harder solution for most purposes).
 
+[^ufw]: 📘`man`: [`ufw(8)`][man-ufw]
+
+
+
 
 
 
@@ -415,4 +478,4 @@ work-in-progress \[2024.09.01\]
 
 
 
-
+[man-ufw]: https://manpages.ubuntu.com/manpages/noble/en/man8/ufw.8.html
