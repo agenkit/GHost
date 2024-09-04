@@ -13,46 +13,81 @@
 Setup XFS in RAID `0` over `n` drives.  
 *Just change RAID level (`0`) for variations.*
 
-1. Install [`mdadm`][#mdadm].
+1. Install [`mdadm`](#mdadm).
 
-```bash
-sudo apt install mdadm
-```
+   ```sh
+   sudo apt install mdadm
+   ```
 
-1. Refence target disks in a zsh array variable.
+1. Identify target disks. Notice unique names:
 
-1. Create a RAID `0` array with `3` drives.
+   ```sh
+   l /dev/disk/by-id
+   ```
 
-```bash
-sudo mdadm -Cv /dev/md0 -l0 -n3 $disk{1,2,3}
-```
+   You may see files like this:
+
+   ```
+   … nvme-eui.e8238fa6bf530001001b448b4566aa1a -> ../../nvme0n1
+   … nvme-eui.002538570142d716 -> ../../nvme1n1
+   … nvme-WDS100T1X0E-00AFY0_21455A801268 -> ../../nvme0n1
+   … nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NJ0N704064T -> ../../nvme1n1
+   ```
+
+   The symlinks tell you which is which: here we have two drives (`nvme0n1` & `nvme1n1`), with *two ways* to uniquely identify each: 
+   - *either* by `eui`
+   - *or* by vendor + model + serial number
+   
+   The latter is much more convenient to maintain (notably locate the physical disk).
+   
+1. Put these names in a zsh variable.
+
+   ```zsh
+   disks=(
+   '/dev/disk/by-id/nvme-WDS100T1X0E-00AFY0_21455A801268'
+   '/dev/disk/by-id/nvme-WDS100T1X0E-00AFY0_235409743934'
+   '/dev/disk/by-id/nvme-WDS100T1X0E-00AFY0_294037618901'
+   )
+   ```
+
+1. Create the RAID `0` with .
+
+   ```zsh
+   sudo mdadm -Cv /dev/md0 -l0 -n${#disks[@]} "${(@)disks}"
+   ```
+
+   - `-n${#disks[@]}`: Specifies the number of devices in the RAID, dynamically determined by the number of elements in the `disks` array.
+   - `"${(@)disks}"`: Expands the array elements into a space-separated string that `mdadm` can use.
 
 1. Check up. <= do this often!
 
-```bash
-cat /proc/mdstat
-sudo mdadm --detail -vv /dev/md0
-```
+   ```sh
+   cat /proc/mdstat
+   sudo mdadm --detail -vv /dev/md0
+   ```
 
 1. Format the RAID device.
 
-```bash
-sudo mkfs.xfs -L data /dev/md0
-```
+   ```sh
+   sudo mkfs.xfs -L data /dev/md0
+   ```
 
 1. Mount the RAID device to a new directory.
 
-```bash
-sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/data
-```
+   ```sh
+   sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/data
+   ```
 
 1. Setup mounting at boot time.
 
-```bash
-sudo blkid | grep md0
-sudo nano /etc/fstab
-UUID=<your-uuid> /mnt/data xfs defaults,noatime,logbsize=256k 0 0
-```
+   ```sh
+   sudo blkid | grep md0
+   sudo nano /etc/fstab
+   ```
+
+   ```
+   UUID=<your-uuid> /mnt/data xfs defaults,noatime,logbsize=256k 0 0
+   ```
 
 
 
