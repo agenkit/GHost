@@ -291,9 +291,9 @@ Custom DNS, packages like `htop`, theme, etc.*
    cat /proc/mdstat                                          # Check the array
    sudo mdadm --detail -vv /dev/md03
 
-   sudo mkfs.xfs -L mass /dev/md0                              # Format to XFS
+   sudo mkfs.xfs -L fs /dev/md0                              # Format to XFS
 
-   sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/mass          # Mount it
+   sudo mount -mo noatime,logbsize=256k /dev/md0 /fs          # Mount it
    ```
 
    *To setup boot mount, get the UUID…*
@@ -306,7 +306,7 @@ Custom DNS, packages like `htop`, theme, etc.*
    *… and add it to `fstab`.*
 
    ```
-   UUID=<your-uuid> /mnt/mass xfs defaults,noatime,logbsize=256k 0 0
+   UUID=<your-uuid> /fs xfs defaults,noatime,logbsize=256k 0 0
    ```
    
 
