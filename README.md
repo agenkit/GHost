@@ -302,12 +302,9 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 ### Terminal (1)
 
-1. Install your preferred shell for IT/admin.  
-*I use [Zsh](https://zsh.sourceforge.io/) with [Oh My Zsh](https://ohmyz.sh/), and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (I like [`SauceCodePro 🔽`](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/SourceCodePro.tar.xz)).*
+1. Install your preferred shell for IT/admin.[^shell]
 
 1. *(Optional) Play with OS & DE settings to your liking. Custom DNS, packages like `htop`, etc.*
-
-1. Whenever you install a new terminal tool, check for a OMZ plugin (e.g., `git`). Don't add too many, as it may slow down shell startup.
 
 
 ### Security (1)
@@ -453,6 +450,28 @@ work-in-progress \[2024.09.01\]
       You know who you are if you want/need `pass` (I consider it a better but harder solution for most purposes).
 
 [^ufw]: 📘`man`: [`ufw(8)`][man-ufw]
+
+[^shell]: Ricing: I use [Zsh](https://zsh.org/),  
+with [Oh My Zsh](https://ohmyz.sh/) (OMZ),  
+the [Spaceship Prompt](https://spaceship-prompt.sh/) theme,  
+and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](https://www.nerdfonts.com/font-downloads)).  
+
+  Whenever you install a new terminal tool on a machine, check for its [OMZ plugin](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).  
+E.g., 
+[`sudo`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo), 
+[`git`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git), 
+[`1password`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/1password), 
+[`pip`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/pip), 
+[`ssh`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh), 
+[`ssh-agent`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent), 
+[`systemd`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/systemd) 
+[`ufw`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ufw), 
+[`ubuntu`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ubuntu), 
+[`vscode`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vscode)…  
+Don't add too many (strict need-to basis), as it may slow down shell startup.
+
+
+
 
 
 
