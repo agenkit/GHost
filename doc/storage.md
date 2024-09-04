@@ -10,41 +10,43 @@
 
 ## Quick Start (TL;DR)
 
-Setup XFS in RAID `0` over `3` drives.  
-*Just change these values (`0`, `3`) for variations.*
+Setup XFS in RAID `0` over `n` drives.  
+*Just change RAID level (`0`) for variations.*
 
-1. Install `mdadm`.
+1. Install [`mdadm`][#mdadm].
 
 ```bash
 sudo apt install mdadm
 ```
 
-2. Create a RAID `0` array with `3` drives.
+1. Refence target disks in a zsh array variable.
+
+1. Create a RAID `0` array with `3` drives.
 
 ```bash
 sudo mdadm -Cv /dev/md0 -l0 -n3 $disk{1,2,3}
 ```
 
-3. Check up. <= do this often!
+1. Check up. <= do this often!
 
 ```bash
 cat /proc/mdstat
 sudo mdadm --detail -vv /dev/md0
 ```
 
-4. Format the RAID device.
+1. Format the RAID device.
 
 ```bash
 sudo mkfs.xfs -L data /dev/md0
 ```
 
-5. Mount the RAID device to a new directory.
+1. Mount the RAID device to a new directory.
 
 ```bash
 sudo mount -mo noatime,logbsize=256k /dev/md0 /mnt/data
 ```
 
-6. Setup mounting at boot time.
+1. Setup mounting at boot time.
 
 ```bash
 sudo blkid | grep md0
