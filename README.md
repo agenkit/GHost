@@ -256,6 +256,8 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 1. Install your preferred CLI shell.[^shell]
 
+   *See* **[`Shell`](doc/shell.md)** *for more details.*
+
 1. *(Optional) Play with OS & DE settings to your liking.  
 Custom DNS, packages like `htop`, theme, etc.*
 
