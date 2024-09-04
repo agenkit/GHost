@@ -259,9 +259,9 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 1. *(Optional) Play with OS & DE settings to your liking.  
 Custom DNS, packages like `htop`, theme, etc.*
 
-#### Additional devices
+#### Additional storage
 
-1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and fast storage for large static files like AI models.
+1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and large fast storage for large static file collections like AI models.
 
    *It's hard to generalize for all users.*  
     *See* 📜 **[Storage](doc/storage.md)** *if needed.*
