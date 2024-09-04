@@ -17,18 +17,20 @@ A shell (`bash`, `zsh`…) within a terminal emulator (Konsole, urxvt, Kitty…)
 
 ### Change default user shell
 
-Use `chsh -s path/to/shell` .
+1. Use `chsh -s path/to/shell`
 
-For instance, to set Zsh as default:
+   For instance, to set Zsh as default:
 
-```sh
-chsh -s $(which zsh)
-```
+   ```sh
+   chsh -s $(which zsh)
+   ```
 
-You may also want to change the startup command, for instance in your Konsole profile:  
-**replace `/bin/bash` with `/bin/zsh`**.
+2. You may also want to change the startup command.
 
-Then logout ( <kbd>Ctrl</kbd> + <kbd>D</kbd> ),  
+   For instance in your Konsole profile:  
+**change `/bin/bash` to `/bin/zsh`**
+
+3. Then logout ( <kbd>Ctrl</kbd> + <kbd>D</kbd> ),  
 and login again (relaunch your terminal emulator).
 
 
@@ -42,7 +44,7 @@ and login again (relaunch your terminal emulator).
 
 ## Zsh
 
-[Zsh](https://zsh.sourceforge.io/) is great for IT people and programmers.
+[Zsh](https://zsh.sourceforge.io/) is great for IT people and programmers. Productivity is increased by great plugins like `zsh-autosuggestions` (helps reuse & do variations on history commands).
 
 ### Installation
 
@@ -58,6 +60,19 @@ You will be greeted by the Z Shell config function for new users, `zsh-newuser-i
 *Hit <kbd>q</kbd> to quit if you're going to install Oh My Zsh next.*
 
 
+### Configuration
+
+📚 https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters-Used-By-The-Shell
+
+In your `.zshrc`, you may want to change history size.
+
+```sh
+# Number of commands to keep in memory
+HISTSIZE=1000000
+
+# Number of commands to save to the history file    
+SAVEHIST=1000000
+```
 
 ### Oh My Zsh!
 
