@@ -60,7 +60,7 @@ graph TB
          subgraph g["Frontend GUI Clients (concurrency is GPU-bound)"]
             direction TB
 
-            gw("WORKSTATION<br>(main)<br><br>PCIe GPU passthrough<br>with display,<br>keyboard, USB, NIC…")
+            gw("WORKSTATION<br>(main)<br><br>PCIe GPU passthrough<br>with display out,<br>keyboard, mouse, USB…")
             gn("(n)<br>WORKSTATIONS<br><br>clone,snapshot,<br>ad hoc env…")
             gg("ENTERTAINMENT<br>SYSTEM<br><br>Gaming GPU,<br>VR, Hi-Fi, <br>home cinema,<br>streaming<br>…")
          end
