@@ -1,11 +1,17 @@
 # GHost
 
-> **GHost: G*raphical* Host**
+> **GHost: the G*raphical* Host.**  
+Whole infrastructure in 1 PC.
 
+Three guides are planned, plus an automated script.
 
+1. (This file) **Basic guide**. Terse, instructions-only, fastest path.
 
+2. **Advanced guide**. Much longer, more involved.
 
+3. **A discussion**. Explains most of what was left out of procedural guides.
 
+4. The automated script needs human intervention (to change UEFI settings, select storage, etc.)
 
 
 
@@ -15,10 +21,14 @@
 
 ### What does it do?
 
-**GHost** is your ad hoc collection of workstations and servers in a single PC. 
+Functionally, it lets you deploy multiple workstations and servers in a single PC. It's a SOHO-in-a-box, an all-in-one micro information system, your tiny enterprise infrastructure, your personal home-based 'cloud'. Atop which, as expected with a PC, sits your collection of glorious desktop workstations, complete with 'native' GPU for intensive graphics, hi-res display, hi-fps gaming, AI, compute…
 
-Although fairly involved to setup, it's a one-off; and you might learn a little about a lot of things.  
-The end result is easy to maintain (including migration to any new hardware), and likely to be much more convenient to use than any regular workstation. The feature set is nearly limitless provided your hardware can accommodate it.
+> [!Note]
+> Although fairly involved to setup, **it really is a one-off**. My first such setup in 2017 on dual Xeons lasted well into the 2020s, until I voluntarily shifted to this much denser Ryzen platform. And you might learn a little about a lot of things in going through the journey.  
+>
+> The end result is **easy to maintain** (including migration to any new hardware or OS version). If you're like me, it'll likely be much more **convenient to use** than any regular workstation, as you live in the 'meta-OS' space of core infrastructure where you feel more like a realm admin than a basic user on a lone machine. The feature set is nearly limitless, provided you buy the hardware to accommodate it.
+
+The following visual spec gives an example idea of what sxervices could be deployed in the GHost infrastructure.
 
 ```mermaid
 graph TB
@@ -146,7 +156,7 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 - A second computer to SSH into the host.
 
 
-### About this guide
+### About this basic guide
 
 This procedure gets you there *as fast as possible*.
 
@@ -194,6 +204,9 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 > 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
 ### Host OS
+
+> [!Note]
+> In GHost, the Host is 
 
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
