@@ -37,7 +37,7 @@ graph TB
       direction TB
 
       pnet["Ethernet<br>2× NIC"] --> h
-      pstor["Storage<br>NVMe (OS, VMs, data…)"] --> h
+      pstor["Storage<br>NVMe"] --> h
       pmem["Memory<br>64 GB"] --> h
       pcpu["CPU<br>16 cores"] --> h
       pgpu1["GPU<br>Ryzen iGPU"] --> h
