@@ -36,7 +36,7 @@ graph TB
    subgraph p["1 Physical Machine (x86-64 PC)"]
       direction TB
 
-      pnet["Ethernet<br>2× NIC"] --> h
+      pnet["Ethernet<br>2× NIC<br>10GbE 'users'<br>+ OOB 'admin'"] --> h
       pstor["Storage<br>NVMe"] --> h
       pmem["Memory<br>64 GB"] --> h
       pcpu["CPU<br>16 cores"] --> h
