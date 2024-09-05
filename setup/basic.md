@@ -316,7 +316,6 @@ sudo ufw status verbose
 # The strategy used for options is to override the defaults at
 # /etc/ssh/sshd_config with the following.
 
-
 Port 60000
 AddressFamily inet
 ListenAddress 127.0.0.1
@@ -327,10 +326,10 @@ AllowUsers kit
 PermitRootLogin no
 
 PasswordAuthentication no
-
 ```
 
-
+> [!Note]
+> At this point, the ssh server isn't accessible from the outside world.
 
 
 
@@ -341,7 +340,10 @@ PasswordAuthentication no
 
 ## 3 — IOMMU
 
-From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/).
+For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
+**Check it first** if my copycat doesn't get you through!
+
+
 
 ## Libvirt hooks
 
