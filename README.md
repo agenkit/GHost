@@ -150,7 +150,7 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 1. Exactly **1 PC** (x64) whose motherboard:
    - supports **IOMMU** virtualization features,
-   - has *enough™* **PCIe ≥ 4.0 lanes** (usually **20** on consumer platforms),
+   - has *enough™* **PCIe 4.0 lanes** (usually **20** on consumer platforms),
    - and *enough™* **RAM** & CPU **cores** (I like **≥ 48 GB** over **≥ 12** physical cores)
 2. At least **2 GPU** (counting iGPU, if any)
 3. *Enough™* NVMe storage (say 50GB per OS + userland + pro use case like data, models, content, audio/video, samples...), ideally two physical drives or more (one for the host; others for VMs).
