@@ -154,13 +154,13 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > Disk names should be sourced from `/dev/disk/by-id/`  
 🡢 Select names with a unique **serial_number** or `eui`
 
-1. Install `mdadm` (**m**ultiple **d**evices **adm**inistration).
+1. Install `mdadm` — **m**ultiple **d**evices **adm**inistration.
 
    ```sh
    sudo apt install mdadm
    ```
 
-1. Create RAID level 0 virtual DEVice 'md0' with 3 disks.
+1. Create RAID level `0` virtual device `md0` with `3` disks.
 
    ```sh
    sudo mdadm -Cv /dev/md0 -l0 -n3 \
@@ -182,13 +182,13 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
    sudo mkfs.xfs -L fs /dev/md0
    ```
 
-1. Mount the RAID virtual device to a newly created (-m = mkdir) directory '/fs' .
+1. Mount the RAID virtual device to a newly created (`-m` for mkdir) directory `/fs` .
 
    ```sh
    sudo mount -mo defaults,noatime,logbsize=256k /dev/md0 /fs
    ```
 
-1. Then to setup boot mount, get the RAID virtual device UUID…
+1. Then to setup boot mount, get the RAID virtual device UUID.
 
    ```sh
    sudo blkid | grep md0
@@ -202,7 +202,7 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
    >                            This is your UUID number.
    > ```
 
-1. Copy the UUID number.
+1. Copy that UUID number.
 
 1. Open `fstab`.
 
@@ -328,8 +328,19 @@ PermitRootLogin no
 PasswordAuthentication no
 ```
 
+*You may need to reboot for OpenSSH to work properly and accept your settings. We don't need it yet though, so it can wait.*
+
+1. Enable `ssh` in systemd.
+
+   ```sh
+   sudo systemctl enable ssh
+   ```
+
 > [!Note]
-> At this point, the ssh server isn't accessible from the outside world.
+> At this point, the ssh server isn't accessible from the outside world, on purpose.
+> We'll set it up properly, along with `ufw`, later.
+
+
 
 
 
