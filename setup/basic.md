@@ -3,9 +3,9 @@
 Status: `v0.1` **work-in-progress**  
 Target: complete PoC (1); then proper writing (2).
 
-- [x] 1 — Install Linux (I use Kubuntu 24.04)
-- [x] 2 — Terminal (1): Zsh, OMZ, bat, tldr, etc.
-- [ ] 3 — Security (1): browser, secrets, SSH server
+- [x] 1 — Install Linux (Kubuntu 24.04)
+- [x] 2 — Terminal: Zsh, OMZ, bat, tldr, etc.
+- [ ] 3 — Security: browser, secrets, SSH server
 - [ ] 4 — IOMMU
 - [ ] . — Libvirt hooks (PCIe hand-off)
 - [ ] . — VM (1) creation (VirtManager)
@@ -105,19 +105,29 @@ until it asks you about **storage**.
    sudo apt upgrade
    ```
 
+1. Open KDE Settings.
+
+   Remember: this isn't "your" workstation; 
+
+   1. Ensure **Display** is fine (Xorg|Wayland; resolution, refresh rate, scaling; **Fonts**, antialiasing…)  
+   *Reboot if needed.*
+
+   1. Check the **Driver Manager** for your currently in-use GPU otherwise.
+   
+   1. Do stuff needed for you (appearance, behaviors, shortcuts, Bluetooth, etc.)
 
 
 
 ### Shell
 
-1. Install your preferred CLI shell.[^shell]
+1. Install your preferred **CLI shell**.[^shell]
 
    *Suggestion:* [**Zsh**](https://github.com/agenkit/GHost/blob/main/doc/shell.md#zsh)  
    *It's easier for admin duties; allows advanced scripting (like Perl); transfers to BSD (including MacOS).*  
    *See* **[`Shell`](doc/shell.md)** *for more details.*
 
 1. *(Optional) Play with OS & DE settings to your liking.  
-Custom DNS, packages like `htop`, theme, etc.*
+Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 
 
@@ -129,35 +139,65 @@ Custom DNS, packages like `htop`, theme, etc.*
    *It's hard to generalize for all users.*  
     *See* 📜 **[Storage](doc/storage.md)** *if needed.*
 
-   *Example: array of n=`3` drives; in RAID level `0`; XFS filesystem named `fs` mounted at `/fs`.*
+   *Example:*  
+   - *array of n=*`3` *drives*
+   - *RAID level* `0`
+   - *XFS filesystem label* `fs`
+   - *mounted at* `/fs`
+
+   *Disk names should be sourced from* `/dev/disk/by-id/`  
+   🡢 *select those with a unique* **serial_number** *or* `eui`
 
    ```bash
    sudo apt install mdadm                    # Multiple Devices ADMinistration
-   sudo mdadm -Cv /dev/md0 -l0 -n3 $disk{1,2,3}          # Create RAID level 0
 
-   cat /proc/mdstat                                          # Check the array
-   sudo mdadm --detail -vv /dev/md03
+   # Create RAID level 0 virtual DEVice 'md0' with 3 disks
+   sudo mdadm -Cv /dev/md0 -l0 -n3 \
+   /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number> \
+   /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number> \
+   /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number>
 
-   sudo mkfs.xfs -L fs /dev/md0                                # Format to XFS
+   # Check the array
+   cat /proc/mdstat
+   sudo mdadm --detail /dev/md0
 
-   sudo mount -mo defaults,noatime,logbsize=256k /dev/md0 /fs       # Mount it
+   # Format to XFS
+   sudo mkfs.xfs -L fs /dev/md0
+
+   # Mount the RAID virtual device to a newly created (-m = mkdir) directory '/fs'
+   sudo mount -mo defaults,noatime,logbsize=256k /dev/md0 /fs
    ```
 
-   *To setup boot mount, get the UUID…*
+   *Then to setup boot mount, get the RAID virtual device UUID…*
 
    ```bash
    sudo blkid | grep md0
+   ```
+
+   > 🡳 *output* 
+   >
+   > ```
+   > /dev/md0: LABEL="fs" UUID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" BLOCK_SIZE="512" TYPE="xfs"
+   >                            🡡                                  🡡
+   >                            This is the part you want.
+   > ```
+
+   🡢 *Copy your UUID number.*
+
+   *Open `fstab`.*
+
+   ```
    sudo nano /etc/fstab
    ```
-
-   *… and add it to `fstab`.*
-
-   ```
-   UUID=<your-uuid> /fs xfs defaults,noatime,logbsize=256k 0 0
-   ```
    
+   *Add this line, presumably last.*
 
+   ```
+   UUID=<your UUID number> /fs xfs defaults,noatime,logbsize=256k 0 0
+   ```
 
+   ***Reboot** to check that it works.*  
+   🡢 *remember: the* `/dev/md0` *name MAY have changed to* `mdNNN` *— e.g.,* `md127` .
 
 ### Browser
 

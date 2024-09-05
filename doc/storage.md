@@ -94,6 +94,7 @@ Setup XFS in RAID `0` over `n` drives.
    UUID=<your-uuid> /mnt/data xfs defaults,noatime,logbsize=256k 0 0
    ```
 
+   Note that I'm not sure about the `largeio` option yet; testing required.
 
 ## What you need to know
 
