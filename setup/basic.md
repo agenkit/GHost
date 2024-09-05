@@ -353,3 +353,79 @@ For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutori
 
 
 
+
+
+
+
+
+
+
+
+
+
+[^footnote]: Click the ending link to go back up where you were:
+
+[^unplug]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:  
+      - proper graphics drivers will get installed on the host (*AMD in this guide*);  
+      - auto-configs (Xorg…) work well;  
+      - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*  
+
+[^btrfs-root]: Gives us neat features, like easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
+
+[^secrets]: This guide doesn't have general opinions about which solution best fits **you**, as security depends on threat profile; but most people should use **something** fitting their personal needs. Here are a few suggestions I'm using concurrently for different purposes.
+      - [Proton Pass](https://proton.me/pass) as part of a [secure suite of services](https://proton.me/) including email with domain, VPN, cloud storage, doc writing, password management; and combined features such as uniquely generated email addresses per account. *Note that Proton services lack many Linux clients (Drive, Pass…), forcing you to the web interface. They notably has little to no CLI tools. That's too bad, but it's not like there are many alternatives at that level of security and privacy.*
+      - [1Password](https://1password.com/) for a standalone, comprehensive secrets solution. It has extensive comfort features to store all manners of secrets, including ssh keys, payment credentials, social security and ID scans, etc.  
+      - [`pass`](https://www.passwordstore.org/) (CLI tool), and [compatible](https://www.passwordstore.org/#other) apps.  
+      
+      Both Proton and 1Password are good for org and family admins: pass sharing, account management & retrieval…  
+      You know who you are if you want/need `pass` (I consider it a better but harder solution for most purposes).
+
+[^ufw]: 📘`man`: [`ufw(8)`][man-ufw]
+
+[^shell]: Ricing: I use [Zsh](https://zsh.org/),  
+with [Oh My Zsh](https://ohmyz.sh/) (OMZ),  
+the [Spaceship Prompt](https://spaceship-prompt.sh/) theme,  
+and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](https://www.nerdfonts.com/font-downloads)).  
+
+  Whenever you install a new terminal tool on a machine, check for its [OMZ plugin](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).  
+E.g., 
+[`sudo`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo), 
+[`git`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git), 
+[`1password`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/1password), 
+[`pip`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/pip), 
+[`ssh`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh), 
+[`ssh-agent`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent), 
+[`systemd`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/systemd) 
+[`ufw`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ufw), 
+[`ubuntu`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ubuntu), 
+[`vscode`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vscode)…  
+Don't add too many (strict need-to basis), as it may slow down shell startup.
+
+
+
+
+
+
+
+
+
+
+[^SHost]: `SHost` (Server Host) is the **CLI/headless** variant.  
+     - It's closer to a Type-I hypervisor.  
+     - Both `GHost` & `SHost` allow for 'native' graphical guests with plugged-in display, keyboard, mouse…  
+     - Both are part of my tentative [***Ultra***structure]() computing paradigm.  
+
+[^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
+
+
+[^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.
+
+[^xfs]: 
+
+
+
+
+
+
+
+[man-ufw]: https://manpages.ubuntu.com/manpages/noble/en/man8/ufw.8.html
