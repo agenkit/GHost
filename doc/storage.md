@@ -130,7 +130,7 @@ Create the `mdadm` array first, except for ZFS and Btrfs which feature built-in 
 
 ### `mdadm`
 
-`mdadm` *(**m**ultiple **d**evices **adm**inistration) lets us "merge" storage devices in RAID arrays, which are then seen (and formatted) as one virtual device (for increased higher size, reliability and/or performance).*
+`mdadm` *(**m**ultiple **d**evices **adm**inistration) lets us "merge" storage devices in RAID arrays, which are then seen (and formatted) as one virtual device (for increased capacity, reliability, and/or performance).*
 
 📘`man`: [`mdadm`][man-mdadm]
 
