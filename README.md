@@ -5,13 +5,13 @@ Whole infrastructure in 1 PC.
 
 Three guides are planned, plus an automated script.
 
-1. (This file) **Basic guide**. Terse, instructions-only, fastest path.
+1. (This file) [**Basic guide**](#setup-guide-basic). Terse, instructions-only, fastest path.
 
-2. **Advanced guide**. Much longer, more involved.
+2. **Advanced guide**. Much longer, more involved, broader scope.
 
 3. **A discussion**. Explains most of what was left out of procedural guides.
 
-4. The automated script needs human intervention (to change UEFI settings, select storage, etc.)
+4. The automated script will always need human intervention (to change UEFI settings, select storage, etc.), so the eventual plan is to make a dashboard-wizard GUI (web site served locally, possibly bundled as an OS app using `pywebview` or something like that). It would serve initial setup, monitoring, and maintenance (troubleshooting, upgrades).
 
 
 
@@ -156,9 +156,9 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 - A second computer to SSH into the host.
 
 
-### About this basic guide
+### About this guide
 
-This procedure gets you there *as fast as possible*.
+This basic procedure gets you there *as fast as possible*.
 
 > ***"Premature optimization is the root of all evil."***
 >
@@ -197,7 +197,7 @@ To make sense of these instructions, and dig deeper, see [`disc.md`](disc.md) �
 
 
 
-## Setup
+## Setup Guide (basic)
 
 > [!Tip]
 > Footnote = **Help!**
@@ -282,7 +282,7 @@ Custom DNS, packages like `htop`, theme, etc.*
    *It's hard to generalize for all users.*  
     *See* 📜 **[Storage](doc/storage.md)** *if needed.*
 
-   *Example: array of n=`3` drives; in RAID level `0`; XFS filesystem.*
+   *Example: array of n=`3` drives; in RAID level `0`; XFS filesystem named `fs` mounted at `/fs`.*
 
    ```bash
    sudo apt install mdadm                    # Multiple Devices ADMinistration

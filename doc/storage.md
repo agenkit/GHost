@@ -59,12 +59,17 @@ Setup XFS in RAID `0` over `n` drives.
    - `-n${#disks[@]}`: Specifies the number of devices in the RAID, dynamically determined by the number of elements in the `disks` array.
    - `"${(@)disks}"`: Expands the array elements into a space-separated string that `mdadm` can use.
 
-1. Check up. <= do this often!
+1. Check up. <= Do this often! Log it!
 
    ```sh
    cat /proc/mdstat
-   sudo mdadm --detail -vv /dev/md0
+   sudo mdadm --detail /dev/md0
    ```
+
+> [!Warning]
+> After reboot, the `mdadm` RAID virtual device MAY have a different name, e.g. to `md127` instead of `md0`.
+>
+> Easy fix: `sudo mdadm --detail /dev/md*`.
 
 1. Format the RAID device.
 
@@ -88,8 +93,6 @@ Setup XFS in RAID `0` over `n` drives.
    ```
    UUID=<your-uuid> /mnt/data xfs defaults,noatime,logbsize=256k 0 0
    ```
-
-
 
 
 ## What you need to know
@@ -180,9 +183,20 @@ cat /proc/mdstat
 And further inspect the RAID:
 
 ```bash
-sudo mdadm --detail -vv /dev/md0
+sudo mdadm --detail /dev/md0
 ```
 
+
+> [!Warning]
+> After reboot, the `mdadm` RAID virtual device MAY have a different name.
+>
+> ```
+> /dev/md127 on /fs type xfs (rw,noatime,attr2,inode64,logbufs=8,logbsize=256k,sunit=1024,swidth=3072,noquota)
+> ```
+>
+> Here `md127` instead of `md0`. Same `udev` behavior observed with `sda` or `nvme0` not being reliable names across boots; hence why we MUST use the `UUID` or some custom `LABEL` in deterministic scripts or configs like `fstab` or filesystem tools.
+>
+> Generally, if you only have the one of a couple `md` devices, using `/dev/md*` will do the trick and work across any minor name change (these are predictable to some extent).
 
 
 
