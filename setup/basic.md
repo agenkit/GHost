@@ -107,14 +107,13 @@ until it asks you about **storage**.
 
 1. Open KDE Settings.
 
-   Remember: this isn't "your" workstation; 
-
    1. Ensure **Display** is fine (Xorg|Wayland; resolution, refresh rate, scaling; **Fonts**, antialiasing…)  
    *Reboot if needed.*
 
    1. Check the **Driver Manager** for your currently in-use GPU otherwise.
    
    1. Do stuff needed for you (appearance, behaviors, shortcuts, Bluetooth, etc.)
+
 
 
 
@@ -134,43 +133,57 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 ### Additional storage
 
-1. **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and large fast storage for large static file collections like AI models.
+**Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and large fast storage for large static file collections like AI models.
 
-   *It's hard to generalize for all users.*  
-    *See* 📜 **[Storage](doc/storage.md)** *if needed.*
+It's hard to generalize for all users.  
+See 📜 **[Storage](doc/storage.md)** if needed.
 
-   *Example:*  
+Example:
    - *array of n=*`3` *drives*
    - *RAID level* `0`
    - *XFS filesystem label* `fs`
    - *mounted at* `/fs`
 
-   *Disk names should be sourced from* `/dev/disk/by-id/`  
-   🡢 *select those with a unique* **serial_number** *or* `eui`
+Disk names should be sourced from `/dev/disk/by-id/`  
+🡢 select those with a unique **serial_number** or `eui`
 
-   ```bash
-   sudo apt install mdadm                    # Multiple Devices ADMinistration
+1. Install `mdadm` (**m**ultiple **d**evices **adm**inistration).
 
-   # Create RAID level 0 virtual DEVice 'md0' with 3 disks
+   ```sh
+   sudo apt install mdadm
+   ```
+
+1. Create RAID level 0 virtual DEVice 'md0' with 3 disks.
+
+   ```sh
    sudo mdadm -Cv /dev/md0 -l0 -n3 \
    /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number> \
    /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number> \
    /dev/disk/by-id/nvme-Samsung_SSD_XXX_PRO_1TB_<serial_number>
+   ```
 
-   # Check the array
+1. Check the array.
+
+   ```sh
    cat /proc/mdstat
    sudo mdadm --detail /dev/md0
+   ```
 
-   # Format to XFS
+1. Format to XFS.
+
+   ```sh
    sudo mkfs.xfs -L fs /dev/md0
+   ```
 
-   # Mount the RAID virtual device to a newly created (-m = mkdir) directory '/fs'
+1. Mount the RAID virtual device to a newly created (-m = mkdir) directory '/fs' .
+
+   ```sh
    sudo mount -mo defaults,noatime,logbsize=256k /dev/md0 /fs
    ```
 
-   *Then to setup boot mount, get the RAID virtual device UUID…*
+1. Then to setup boot mount, get the RAID virtual device UUID…
 
-   ```bash
+   ```sh
    sudo blkid | grep md0
    ```
 
@@ -182,22 +195,27 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
    >                            This is the part you want.
    > ```
 
-   🡢 *Copy your UUID number.*
+1. Copy your UUID number.
 
-   *Open `fstab`.*
+1. Open `fstab`.
 
    ```
    sudo nano /etc/fstab
    ```
    
-   *Add this line, presumably last.*
+1. Add this line, presumably last.
 
    ```
    UUID=<your UUID number> /fs xfs defaults,noatime,logbsize=256k 0 0
    ```
 
-   ***Reboot** to check that it works.*  
-   🡢 *remember: the* `/dev/md0` *name MAY have changed to* `mdNNN` *— e.g.,* `md127` .
+1. **Reboot** to check that it works.  
+
+> [!Warning]
+> After reboot, the `mdadm` RAID virtual device MAY have a different name, e.g. to `md127` instead of `md0`.
+
+
+
 
 ### Browser
 
