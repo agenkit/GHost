@@ -5,13 +5,16 @@ Whole infrastructure in 1 PC.
 
 Three guides are planned, plus an automated script.
 
-1. (This file) [**Basic guide**](#setup-guide-basic). Terse, instructions-only, fastest path.
+1. [**Basic guide**](setup/basic.md). *Terse, instructions-only, shortest path.*  
+Status: **work-in-progress**
 
-2. **Advanced guide**. Much longer, more involved, broader scope.
+2. **Advanced guide**. *Much longer, more involved, broader scope.*  
+Status: Not started yet.
 
-3. **A discussion**. Explains most of what was left out of procedural guides.
+3. **A discussion**. *Explains most of what was left out of procedural guides.*  
+Status: Not started yet.
 
-4. The automated script will always need human intervention (to change UEFI settings, select storage, etc.), so the eventual plan is to make a dashboard-wizard GUI (web site served locally, possibly bundled as an OS app using `pywebview` or something like that). It would serve initial setup, monitoring, and maintenance (troubleshooting, upgrades).
+*An automated script would always require human intervention (to change UEFI settings, select storage, etc.), so the eventual plan is to make a dashboard-wizard GUI (web site served locally, possibly bundled as an OS app using `pywebview` for instance). It would serve initial setup, monitoring, and maintenance (troubleshooting, upgrades).*
 
 
 
