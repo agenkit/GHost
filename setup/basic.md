@@ -13,7 +13,7 @@
 
 
 
-## 1 ··· Host OS installation
+## 1 — Host OS installation
 
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
