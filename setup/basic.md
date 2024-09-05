@@ -135,22 +135,24 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 ### Additional storage
 
-**Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and large fast storage for large static file collections like AI models.
+**(Recommended)** 
+
+Setup additional storage: **high IOPS** for virtualization; **large/fast** for big static files (like AI models, videos, games).
 
 See 📜 **[Storage](doc/storage.md)** if needed, as it's hard to generalize for all cases.
 
 Example below:
 
-   - *array of n=*`3` *drives*
-   - *RAID level* `0`
-   - *XFS filesystem label* `fs`
-   - *mounted at* `/fs`
+   - array of `n = 3` drives
+   - RAID level `0`
+   - XFS filesystem label `fs`
+   - mount point `/fs`
 
-You most likely only have to change `n` and RAID level to fit your case.
+To fit your case, you likely need to change `n`, and optionally the RAID level.
 
 > [!Important]
 > Disk names should be sourced from `/dev/disk/by-id/`  
-🡢 select those with a unique **serial_number** or `eui`
+🡢 Select names with a unique **serial_number** or `eui`
 
 1. Install `mdadm` (**m**ultiple **d**evices **adm**inistration).
 
@@ -197,10 +199,10 @@ You most likely only have to change `n` and RAID level to fit your case.
    > ```
    > /dev/md0: LABEL="fs" UUID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" BLOCK_SIZE="512" TYPE="xfs"
    >                            🡡                                  🡡
-   >                            This is the part you want.
+   >                            This is your UUID number.
    > ```
 
-1. Copy your UUID number.
+1. Copy the UUID number.
 
 1. Open `fstab`.
 
@@ -216,16 +218,18 @@ You most likely only have to change `n` and RAID level to fit your case.
 
 1. **Reboot** to check that it works.  
 
-> [!Warning]
-> After reboot, the `mdadm` RAID virtual device MAY have a different name, e.g. to `md127` instead of `md0`.
+> [!Info]
+> After reboot, the `mdadm` RAID virtual device MAY be given a different name by **udev**.  
+*In my case, it's `md127` instead of `md0`.*
 
 
 
 
 ### Browser
 
-1. *(Optional) Install your browser of choice (I use [Brave](https://brave.com/linux/#debian-ubuntu-mint)).*  
-  *Instructions as of Sept. 2024:*
+1. (Optional) *Install your browser of choice.*
+    
+    *I use [Brave](https://brave.com/linux/#debian-ubuntu-mint). Instructions as of Sept. 2024:*
 
    ```bash
    sudo apt install curl
@@ -288,19 +292,43 @@ sudo ufw status verbose
 
 ### SSH server
 
-1. Install OpenSSH.
-
-   ```bash
-   sudo apt install sshd
-   ```
-
-1. Setup the config file.
+1. Install OpenSSH, both `client` and `server`.
 
    ```sh
-   sudo nano /etc/sshd/
+   sudo apt install openssh-client openssh-server
    ```
 
-1. 
+1. Create and edit a new config file.
+
+   ```sh
+   sudo nano /etc/ssh/sshd_config.d/nexus.conf 
+   ```
+
+1. We'll only take care of a few security aspects for now.  
+
+   It's a good idea to document your systems, so I add a short intro.
+
+```
+
+# This is the sshd server nexus-wide configuration file.  See
+# /fs/nexus.md for more information.
+
+# The strategy used for options is to override the defaults at
+# /etc/ssh/sshd_config with the following.
+
+
+Port 60000
+AddressFamily inet
+ListenAddress 127.0.0.1
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+AllowUsers kit
+PermitRootLogin no
+
+PasswordAuthentication no
+
+```
 
 
 
