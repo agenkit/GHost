@@ -3,7 +3,7 @@
 > **GHost: the G*raphical* Host.**  
 Whole infrastructure in 1 PC.
 
-Three guides are planned, plus an automated script.
+Here are the setup guides for GHost:
 
 1. [**Basic guide**](setup/basic.md). *Terse, instructions-only, shortest path.*  
 Status: **work-in-progress**
