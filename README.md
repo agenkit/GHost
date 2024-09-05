@@ -78,11 +78,11 @@ end
 
 p --- net
 
-pn --- o(("other people<br><br>family, friends, comm.,<br>collab, clients<br>…"))
+pn --- o(("other people<br><br>family, friends, comms,<br>collabs, clients<br>…"))
 sn -.- o
 sn --"Remote"--- you
 
-uip("Peripherals<br><br>(Display,<br>keyboard, mouse,<br>sound, gamepad…)")
+uip("Peripherals<br><br>(Display, disk,<br>keyboard, mouse,<br>sound, gamepad…)")
 p === uip =="Local"==== you(("You<br>(user/seat)<br>😎"))
 
 
