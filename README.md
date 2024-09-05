@@ -33,7 +33,7 @@ The following visual spec gives an example idea of what sxervices could be deplo
 ```mermaid
 graph TB
 
-   subgraph p["1 Physical Machine (x86-64 PC)"]
+   subgraph p["1 Physical Machine<br>(x86-64 PC)"]
       direction TB
 
       pnet["Ethernet<br>2× NIC<br>10GbE 'users'<br>+ OOB 'admin'"] --> h
