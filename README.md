@@ -160,9 +160,11 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 - A second computer to SSH into the host.
 
 
-### About this guide
+### About these guides
 
-This basic procedure gets you there *as fast as possible*.
+#### Basic
+
+The [basic procedure](setup/basic.md) gets you there *as fast as possible*.
 
 > ***"Premature optimization is the root of all evil."***
 >
