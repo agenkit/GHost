@@ -77,16 +77,23 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 1. **Follow the steps** (language, kbd. layout, time zone, network, `$HOST`, `$USERNAME`…)  
 until it asks you about **storage**.
 
+1. If you have multiple drives: 
+   - pick a **SSD for the host OS**
+   - but **leave the fastest drive for virtualization** (later).
+
 1. Choose **Btrfs** for the OS root partition ("`/`").[^btrfs-root]
       
-      NOTE: ⛔ **NEVER** use **RAID 5** or **6** with Btrfs, it's **fatally flawed**.  
-      All manners of RAID 1 and 0 (1c3, 1c4, 10) are perfectly fine however.
+      ⛔ **WARNING: NEVER use RAID `5` or `6` with Btrfs!**  
+      🡢 It's **fatally flawed**.  
+      All manners of RAID `0` and `1` ( `1c3`, `1c4`, `10` ) are perfectly fine, however.
       
+      We'll setup any other drives later.
+
 1. Agree to install **`virt-manager`** to get the KVM/QEMU stack properly installed.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
 
-   *You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.*
+*You'll reboot on the freshly installed Ubuntu system, to be greeted by the KDE Welcome wizard.*
 
 
 
@@ -133,11 +140,14 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 
 
-### Additional storage
+### NVMe Storage
 
 **(Recommended)** 
 
-Setup additional storage: **high IOPS** for virtualization; **large/fast** for big static files (like AI models, videos, games).
+Setup additional storage: 
+
+- **High IOPS** drives for virtualization 
+- If you need more space for big static files (like AI models, videos, games…), consider yet another **large** volume (spinners are fine).
 
 See 📜 **[Storage](doc/storage.md)** if needed, as it's hard to generalize for all cases.
 
@@ -221,6 +231,31 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > [!Info]
 > After reboot, the `mdadm` RAID virtual device MAY be given a different name by **udev**.  
 *In my case, it's `md127` instead of `md0`.*
+
+
+
+
+### Nexus directories
+
+> [!Important]
+> This is entirely optional, do as you wish.  
+> 
+> This GHost spec however expects a local directory (default below: `/cfg` ) wherein to  
+> **centralize**,  
+> **externalize**,  
+> and **version**  
+> all config files in a **`git` repository**.
+
+1. Create the following root-level `/cfg` directory structure.
+
+   ```sh
+   sudo mkdir -p /cfg/
+   ```
+
+1. 
+
+
+
 
 
 
@@ -438,7 +473,7 @@ PasswordAuthentication no
       - auto-configs (Xorg…) work well;  
       - guest GPU is available for passthrough. *In this guide, it's the Nvidia dGPU.*  
 
-[^btrfs-root]: Gives us neat features, like easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more.
+[^btrfs-root]: Gives us neat features like easy system rollback/versioning, remote backup, later conversion of a single device to RAID 1, and more. Facilitated by tools like `btrbk` or Timeshift.
 
 [^secrets]: This guide doesn't have general opinions about which solution best fits **you**, as security depends on threat profile; but most people should use **something** fitting their personal needs. Here are a few suggestions I'm using concurrently for different purposes.
       - [Proton Pass](https://proton.me/pass) as part of a [secure suite of services](https://proton.me/) including email with domain, VPN, cloud storage, doc writing, password management; and combined features such as uniquely generated email addresses per account. *Note that Proton services lack many Linux clients (Drive, Pass…), forcing you to the web interface. They notably has little to no CLI tools. That's too bad, but it's not like there are many alternatives at that level of security and privacy.*
