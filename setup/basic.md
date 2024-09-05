@@ -384,7 +384,7 @@ PasswordAuthentication no
    > [    0.481433] perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).
    > ```
 
-1. Open [GRUB2](https://help.ubuntu.com/community/Grub2).
+1. Open the [GRUB2](https://help.ubuntu.com/community/Grub2) config file.
 
    ```sh
    sudo nano /etc/default/grub
@@ -395,7 +395,7 @@ PasswordAuthentication no
    ```
    GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
    ```
-   
+
 1. 
 
 
