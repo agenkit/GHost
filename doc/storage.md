@@ -69,7 +69,7 @@ Setup XFS in RAID `0` over `n` drives.
 > [!Warning]
 > After reboot, the `mdadm` RAID virtual device MAY have a different name, e.g. to `md127` instead of `md0`.
 >
-> Quick-n-dirty fix: do `sudo mdadm --detail /dev/md*`.
+> Quick-n-dirty fix: do `sudo mdadm --detail /dev/md*`
 
 1. Format the RAID device.
 
