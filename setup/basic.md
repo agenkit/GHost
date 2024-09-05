@@ -194,7 +194,7 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
    sudo blkid | grep md0
    ```
 
-   > 🡳 *output* 
+   > 🡳 stdout
    >
    > ```
    > /dev/md0: LABEL="fs" UUID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" BLOCK_SIZE="512" TYPE="xfs"
@@ -355,12 +355,48 @@ PasswordAuthentication no
 > For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
 **Check it first** if my copycat doesn't get you through!
 
+1. Restart your machine and boot into BIOS. 
 
+1. Enable a feature called IOMMU. You'll also need to enable CPU virtualization. 
 
+   - For Intel processors, look for something called VT-d. 
+   - For AMD, look for something called AMD-Vi.
+   - May be called SVM Mode. 
+   
+1. Save any changes and restart the machine.
 
+1. Once you've booted into the host, make sure that IOMMU and CPU virtualization features are enabled. 
 
+   *Note: for Intel, replace* `AMD-Vi` *by* `VT-d` .
 
+   ```sh
+   sudo dmesg | grep 'IOMMU\|AMD-Vi'
+   ```
 
+   > 🡳 stdout
+   > ```
+   > [    0.047873] AMD-Vi: Unknown option - 'on'
+   > [    0.126298] AMD-Vi: Using global IVHD EFR:0x246577efa2254afa, EFR2:0x0
+   > [    0.424759] pci 0000:00:00.2: AMD-Vi: IOMMU performance counters supported
+   > [    0.428506] AMD-Vi: Extended features (0x246577efa2254afa, 0x0): PPR NX GT [5] IA GA PC GA_vAPIC
+   > [    0.428514] AMD-Vi: Interrupt remapping enabled
+   > [    0.479919] AMD-Vi: Virtual APIC enabled
+   > [    0.481433] perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).
+   > ```
+
+1. Open [GRUB2](https://help.ubuntu.com/community/Grub2).
+
+   ```sh
+   sudo nano /etc/default/grub
+   ```
+
+1. Edit `GRUB_CMDLINE_LINUX_DEFAULT`.
+
+   ```
+   GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
+   ```
+   
+1. 
 
 
 
