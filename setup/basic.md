@@ -3,6 +3,9 @@
 Status: `v0.1` **work-in-progress**  
 Target: complete PoC (1); then proper writing (2).
 
+> [!Warning]
+> Numbering, sectioning, etc. is unstable.
+
 - [x] 1 — Install Linux (Kubuntu 24.04)
 - [x] 2 — Terminal: Zsh, OMZ, bat, tldr, etc.
 - [ ] 3 — Security: browser, secrets, SSH server
@@ -19,9 +22,6 @@ Target: complete PoC (1); then proper writing (2).
 > Footnote = **Help!**
 > 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
-
-> [!Warning]
-> Numbering, sectioning, etc. is unstable.
 
 
 
