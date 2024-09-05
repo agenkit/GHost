@@ -91,7 +91,7 @@ until it asks you about **storage**.
 
 
 
-## Host OS configuration
+## 2 — Host OS configuration
 
 
 
@@ -251,7 +251,7 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 
 
 
-## 2 — Security
+## 3 — Security
 
 
 
@@ -349,7 +349,7 @@ PasswordAuthentication no
 
 
 
-## 3 — IOMMU
+## 4 — IOMMU
 
 > [!Important]
 > For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
@@ -396,8 +396,19 @@ PasswordAuthentication no
    GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
    ```
 
-1. 
+1. To determine your IOMMU grouping, create `iommu.sh` .
 
+
+   
+
+   ```
+   #!/bin/bash
+   for d in /sys/kernel/iommu_groups/*/devices/*; do
+     n=${d#*/iommu_groups/*}; n=${n%%/*}
+     printf 'IOMMU Group %s ' "$n"
+     lspci -nns "${d##*/}"
+   done
+   ```
 
 
 
