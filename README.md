@@ -162,7 +162,7 @@ Tested on Kubuntu 24.04 🡪 *should* thus work on most recent Debian-based dist
 
 ### About these guides
 
-#### Basic
+#### Basic setup
 
 The [basic procedure](setup/basic.md) gets you there *as fast as possible*.
 

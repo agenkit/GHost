@@ -13,7 +13,7 @@
 
 
 
-## Host OS installation
+## 1 ··· Host OS installation
 
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
@@ -158,7 +158,7 @@ Custom DNS, packages like `htop`, theme, etc.*
 
 
 
-## Security (1)
+## ·2· Security
 
 
 
@@ -222,7 +222,7 @@ sudo ufw status verbose
 
 
 
-## IOMMU
+## ·3· IOMMU
 
 From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/).
 
