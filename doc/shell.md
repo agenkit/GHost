@@ -46,6 +46,9 @@ and login again (relaunch your terminal emulator).
 
 [Zsh](https://zsh.sourceforge.io/) is great for IT people and programmers. Productivity is increased by great plugins like `zsh-autosuggestions` (helps reuse & do variations on history commands).
 
+
+
+
 ### Installation
 
 ```sh
@@ -60,13 +63,28 @@ You will be greeted by the Z Shell config function for new users, `zsh-newuser-i
 *Hit <kbd>q</kbd> to quit if you're going to install Oh My Zsh next.*
 
 
+
+
 ### Configuration
+
+Zsh is configured mostly through your **`~/.zshrc`** file, following the usual inheritance paths from the system-wide `/etc/zsh/zshrc` .  
+Global Order: `zshenv`, `zprofile`, `zshrc`, `zlogin`
+
+You can tweak lots of parameters.
 
 📚 https://zsh.sourceforge.io/Doc/Release/Parameters.html#Parameters-Used-By-The-Shell
 
-In your `.zshrc`, you may want to change history size.
+#### History
 
-```sh
+Zsh has a custom tool to present history in a human-friendly way from the raw `~/.zsh_history` file.
+
+```zsh
+history
+```
+
+Near-infinite history size: in `~/.zshrc` set these parameters to a high-enough value.
+
+```zshrc
 # Number of commands to keep in memory
 HISTSIZE=1000000
 
@@ -74,15 +92,20 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 ```
 
+
+
+
 ### Oh My Zsh!
 
 https://ohmyz.sh/
+
 
 #### Installation
 
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+
 
 #### Plugins
 
@@ -99,6 +122,7 @@ plugins=(rails git ruby)
 > [!NOTE]
 > Elements in zsh arrays are separated by whitespace (spaces, tabs, newlines...).  
 > **DO NOT use commas.**
+
 
 #### zsh-autosuggestions
 
@@ -121,6 +145,7 @@ plugins=(
 
 3. Restart zsh (such as by opening a new instance of your terminal emulator).
 
+
 #### zsh-syntax-highlighting
 
 https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh
@@ -140,6 +165,9 @@ plugins=( [plugins...] zsh-syntax-highlighting)
 
 3. Restart Zsh (such as by opening a new instance of your terminal emulator).
 
+
+
+
 ### Spaceship Prompt
 
 🏛️ https://spaceship-prompt.sh/
@@ -149,7 +177,6 @@ plugins=( [plugins...] zsh-syntax-highlighting)
 > **Minimalistic, powerful and extremely customizable Zsh prompt**  
 >
 > It combines everything you may need for convenient work, without unnecessary complications, like a real spaceship."
-
 
 
 #### Installation
@@ -175,6 +202,9 @@ plugins=( [plugins...] zsh-syntax-highlighting)
    ```
 
 4. Restart Zsh.
+
+
+
 
 
 
