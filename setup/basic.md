@@ -240,15 +240,14 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > [!Important]
 > This is entirely optional, do as you wish.  
 > 
-> This GHost spec however expects a local directory (default below: `/cfg` ) wherein to  
-> **centralize**,  
-> **externalize**,  
-> and **version**  
-> all config files in a **`git` repository**.
+> This GHost spec however expects a local directory (default below: `/cfg` ),  
+> wherein to  **centralize**, **externalize**, and **version** all config files in a **`git` repository**.  
+> Files are then symlinked to their proper directory.
 
 1. Create the following root-level `/cfg` directory structure.
 
    ```sh
+
    sudo mkdir -p /cfg/
    ```
 
