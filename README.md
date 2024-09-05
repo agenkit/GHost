@@ -3,15 +3,17 @@
 > **GHost: the G*raphical* Host.**  
 Whole infrastructure in 1 PC.
 
+## TL;DR / Quick Start
+
 Here are the setup guides for GHost:
 
-1. 📌 [**Basic guide**](setup/basic.md). *Terse, instructions-only, shortest path.*  
-Status: **work-in-progress**
+1. 📌 [**Basic guide**](setup/basic.md): a procedure. *Terse, instructions-only, least resistance.*  
+Status: `v0.1` **work-in-progress**
 
-2. 📑 [**Advanced guide**](setup/advanced.md). *Much longer, more involved, broader scope.*  
+2. 📑 [**Advanced guide**](setup/advanced.md): a whitebook. *Broader scope and customization.*  
 Status: Not started yet.
 
-3. 📔 [**A discussion**](setup/discussion.md). *Explains most of what was left out of procedural guides.*  
+3. 📔 [**Discussion**](setup/discussion.md): below & beyond. *Relevant ~~rabbit holes~~ knowledge; ways to simplify and expand.*  
 Status: Not started yet.
 
 *An automated script would always require human intervention (to change UEFI settings, select storage, etc.), so the eventual plan is to make a dashboard-wizard GUI (web site served locally, possibly bundled as an OS app using `pywebview` for instance). It would serve initial setup, monitoring, and maintenance (troubleshooting, upgrades).*

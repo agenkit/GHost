@@ -1,13 +1,30 @@
 # Setup Guide (basic)
 
+Status: `v0.1` **work-in-progress**  
+Target: complete PoC (1); then proper writing (2).
+
+- [x] 1 — Install Linux (I use Kubuntu 24.04)
+- [x] 2 — Terminal (1): Zsh, OMZ, bat, tldr, etc.
+- [ ] 3 — Security (1): browser, secrets, SSH server
+- [ ] 4 — IOMMU
+- [ ] . — Libvirt hooks (PCIe hand-off)
+- [ ] . — VM (1) creation (VirtManager)
+- [ ] . — Performance tweaks
+
+
+
+---
+
 > [!Tip]
 > Footnote = **Help!**
 > 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
----
 
 > [!Warning]
 > Numbering, sectioning, etc. is unstable.
+
+
+
 
 
 
@@ -74,6 +91,11 @@ until it asks you about **storage**.
 
 
 
+## Host OS configuration
+
+
+
+
 ### First boot
 
 1. Upgrade packages.
@@ -90,6 +112,8 @@ until it asks you about **storage**.
 
 1. Install your preferred CLI shell.[^shell]
 
+   *Suggestion:* [**Zsh**](https://github.com/agenkit/GHost/blob/main/doc/shell.md#zsh)  
+   *It's easier for admin duties; allows advanced scripting (like Perl); transfers to BSD (including MacOS).*  
    *See* **[`Shell`](doc/shell.md)** *for more details.*
 
 1. *(Optional) Play with OS & DE settings to your liking.  
