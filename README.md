@@ -73,7 +73,7 @@ subgraph n["Network interfaces"]
    net("Routing<br>Reverse proxy<br>Firewall<br>")
    pn("Public internet<br><br>self-hosted<br>services")
    sn("Secure networks<br><br>LAN, VLAN,<br>VPNs, SSH…")
-   net --> pn & sn
+   net --- pn & sn
 end
 
 p --- net
@@ -105,7 +105,7 @@ gg:::main
 vsrv:::tr2
 cont:::tr2
 uip:::tr1
-net:::tr1
+net:::trb
 n:::main
 sn:::cyan
 pn:::red
@@ -114,6 +114,7 @@ you:::grn
 classDef main fill:#0d1117,stroke:#30363c
 classDef tr1 fill:#0d1117,stroke:#0d1117
 classDef tr2 fill:#000,stroke:#000
+classDef trb fill:#0d1117,stroke:#007FFF
 classDef wht fill:#000,stroke:#f0f6fc
 classDef cyan fill:#000,stroke:#0ff
 classDef blu fill:#000,stroke:#007FFF
