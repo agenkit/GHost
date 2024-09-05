@@ -72,7 +72,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
    *In this guide, the Ryzen iGPU is dedicated to the host.  
    So we unplug all video cables going out of the Nvidia GPU.*[^unplug]
 
-1. Boot to USB to setup Kubuntu.
+1. Boot to USB to install Kubuntu.
 
 1. **Follow the steps** (language, kbd. layout, time zone, network, `$HOST`, `$USERNAME`…)  
 until it asks you about **storage**.
@@ -86,7 +86,7 @@ until it asks you about **storage**.
    
 1. Remove the USB stick when asked to, then press <kbd>Enter</kbd>.
 
-   You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.
+   *You'll reboot on the freshly installed system, to be greeted by the KDE welcome wizard.*
 
 
 
@@ -107,17 +107,19 @@ until it asks you about **storage**.
 
 1. Open KDE Settings.
 
-   1. Ensure **Display** is fine (Xorg|Wayland; resolution, refresh rate, scaling; **Fonts**, antialiasing…)  
+1. Ensure **Display** is fine (Xorg|Wayland; resolution, refresh rate, scaling; **Fonts**, antialiasing…)  
    *Reboot if needed.*
 
-   1. Check the **Driver Manager** for your currently in-use GPU otherwise.
+1. Check the **Driver Manager** for your currently in-use GPU otherwise.
    
-   1. Do stuff needed for you (appearance, behaviors, shortcuts, Bluetooth, etc.)
+1. Do stuff needed for you (appearance, behaviors, shortcuts, Bluetooth, etc.)
 
 
 
 
 ### Shell
+
+1. Customize your terminal emulator preferences.
 
 1. Install your preferred **CLI shell**.[^shell]
 
@@ -135,16 +137,19 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 **Recommended**: Setup additional devices meant to be used by the host, such as **high-IOPS storage** for VMs, and large fast storage for large static file collections like AI models.
 
-It's hard to generalize for all users.  
-See 📜 **[Storage](doc/storage.md)** if needed.
+See 📜 **[Storage](doc/storage.md)** if needed, as it's hard to generalize for all cases.
 
-Example:
+Example below:
+
    - *array of n=*`3` *drives*
    - *RAID level* `0`
    - *XFS filesystem label* `fs`
    - *mounted at* `/fs`
 
-Disk names should be sourced from `/dev/disk/by-id/`  
+You most likely only have to change `n` and RAID level to fit your case.
+
+> [!Important]
+> Disk names should be sourced from `/dev/disk/by-id/`  
 🡢 select those with a unique **serial_number** or `eui`
 
 1. Install `mdadm` (**m**ultiple **d**evices **adm**inistration).
