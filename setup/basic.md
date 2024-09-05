@@ -4,8 +4,10 @@
 > Footnote = **Help!**
 > 🡪 *If some* `thing`[^footnote] *doesn't work, check out its footnote!*
 
+---
 
-
+> [!Warning]
+> Numbering, sectioning, etc. is unstable.
 
 
 
@@ -158,7 +160,7 @@ Custom DNS, packages like `htop`, theme, etc.*
 
 
 
-## 2 ··· Security
+## 2 — Security
 
 
 
@@ -222,7 +224,7 @@ sudo ufw status verbose
 
 
 
-## 3 ··· IOMMU
+## 3 — IOMMU
 
 From this point on, we mostly rely on Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/).
 
