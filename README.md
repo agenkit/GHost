@@ -28,7 +28,7 @@ Functionally, it lets you deploy multiple workstations and servers in a single P
 >
 > The end result is **easy to maintain** (including migration to any new hardware or OS version). If you're like me, it'll likely be much more **convenient to use** than any regular workstation, as you live in the 'meta-OS' space of core infrastructure where you feel more like a realm admin than a basic user on a lone machine. The feature set is nearly limitless, provided you buy the hardware to accommodate it.
 
-The following visual spec gives an example idea of what sxervices could be deployed in the GHost infrastructure.
+The following visual spec gives an example idea of what services could be deployed in the GHost infrastructure.
 
 ```mermaid
 graph TB
