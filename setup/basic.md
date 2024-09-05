@@ -8,7 +8,7 @@ Target: complete PoC (1); then proper writing (2).
 
 - [x] 1 — Install Linux (Kubuntu 24.04)
 - [x] 2 — Terminal: Zsh, OMZ, bat, tldr, etc.
-- [ ] 3 — Security: browser, secrets, SSH server
+- [x] 3 — Security: browser, secrets, SSH server
 - [ ] 4 — IOMMU
 - [ ] . — Libvirt hooks (PCIe hand-off)
 - [ ] . — VM (1) creation (VirtManager)
@@ -351,8 +351,18 @@ PasswordAuthentication no
 
 ## 3 — IOMMU
 
-For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
+> [!Important]
+> For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
 **Check it first** if my copycat doesn't get you through!
+
+
+
+
+
+
+
+
+
 
 
 
