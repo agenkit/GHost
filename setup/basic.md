@@ -238,17 +238,19 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 ### Nexus directories
 
 > [!Important]
-> This is entirely optional, do as you wish.  
-> 
-> This GHost spec however expects a local directory (default below: `/cfg` ),  
+> The GHost spec however a local directory (default below: `/cfg` ),  
 > wherein to  **centralize**, **externalize**, and **version** all config files in a **`git` repository**.  
-> Files are then symlinked to their proper directory.
+> Files are then symlinked to their proper directory.  
+> The whole `cfg` structure is synchronized with `rsync` to `/fs` for portability and backup.
 
 1. Create the following root-level `/cfg` directory structure.
 
    ```sh
-
-   sudo mkdir -p /cfg/
+   sudo mkdir -p \
+   /cfg/etc/ssh/sshd_config.d \
+   /cfg/etc/ufw/applications.d \
+   /cfg/home/$USER \
+   /cfg/usr/local/{bin,sbin} 
    ```
 
 1. 
@@ -487,21 +489,7 @@ PasswordAuthentication no
 [^shell]: Ricing: I use [Zsh](https://zsh.org/),  
 with [Oh My Zsh](https://ohmyz.sh/) (OMZ),  
 the [Spaceship Prompt](https://spaceship-prompt.sh/) theme,  
-and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](https://www.nerdfonts.com/font-downloads)).  
-
-  Whenever you install a new terminal tool on a machine, check for its [OMZ plugin](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).  
-E.g., 
-[`sudo`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo), 
-[`git`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git), 
-[`1password`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/1password), 
-[`pip`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/pip), 
-[`ssh`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh), 
-[`ssh-agent`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent), 
-[`systemd`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/systemd) 
-[`ufw`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ufw), 
-[`ubuntu`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ubuntu), 
-[`vscode`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vscode)…  
-Don't add too many (strict need-to basis), as it may slow down shell startup.
+and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](https://www.nerdfonts.com/font-downloads)).
 
 
 

@@ -109,9 +109,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 #### Plugins
 
-Overview: <https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins-Overview>
-
-Full list: <https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins>
+- Overview: <https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins-Overview>
+- Full list: <https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins>
 
 Enable a plugin by adding its name to the `plugins` array in your `.zshrc` file (found in the `$HOME` directory). For example, this enables the `rails`, `git` and `ruby` plugins, in that order:
 
@@ -122,6 +121,24 @@ plugins=(rails git ruby)
 > [!NOTE]
 > Elements in zsh arrays are separated by whitespace (spaces, tabs, newlines...).  
 > **DO NOT use commas.**
+
+Whenever you install a new terminal tool on a machine, check for its [OMZ plugin](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).  
+E.g., 
+[`sudo`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo),
+[`cp`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/cp),
+[`ssh`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh),
+[`ssh-agent`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent),
+[`systemd`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/systemd) 
+[`git`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git),
+[`ufw`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ufw),
+[`1password`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/1password),
+[`pip`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/pip),
+[`ubuntu`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ubuntu),
+[`vscode`](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vscode),
+…
+
+> [!Tip]
+> Don't add too many (strict need-to basis), as it may slow down shell startup.
 
 
 #### zsh-autosuggestions
