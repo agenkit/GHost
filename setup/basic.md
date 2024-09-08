@@ -27,9 +27,26 @@ Target: complete PoC (1); then proper writing (2).
 
 ## 0 — Variables
 
-```sh
+List of all variables used in the GHost setup.  
+*For `bash`, modify `*.zsh` paths.*[^bash-env]
 
-NXS_CFG='/cfg'
+```sh
+# $NXS_xxx = Nexus global configuration variables
+NXS_FS="/fs"
+NXS_FS_LABEL="fs"
+NXS_CFG="/cfg"
+
+# $N0A_xxx = n0 Admin variables
+N0A_GROUP="nexus"
+N0A_ALIASES="$ZSH_CUSTOM/aliases.zsh"
+N0A_ENV="$ZSH_CUSTOM/env.zsh"
+```
+
+To display all variables in use on a system, do any of:
+
+```sh
+set
+compgen -v
 ```
 
 
@@ -142,15 +159,8 @@ until it asks you about **storage**.
 1. *(Optional) Play with OS & DE settings to your liking.  
 Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
+1. Add
 
-
-### Variables
-
-```sh
-NXS_FS='/fs'
-NXS_FS_LABEL='fs'
-NXS_CFG='/cfg'
-```
 
 
 
@@ -280,13 +290,14 @@ NXS_FS_LABEL='fs'
    ```sh
    cd $NXS_CFG 
    echo '# Nexus Configuration' | sudo tee README.md
-   echo '
+   echo '# Ignore all files\n*\n\n# Whitelist\n!.gitignore' | sudo tee .gitignore
    ```
 
 1. Create a bare git repository.
 
    ```
    git init --bare $NXS_CFG/.cfg
+   alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
    ```
 
 
@@ -501,6 +512,14 @@ sudo ufw status verbose
 
 
 [^footnote]: Click the ending link to go back up where you were:
+
+[^bash-env]: For `bash`, use these:  
+  ```
+  N0A_ALIASES="$HOME/bash_aliases.sh"
+  N0A_ENV="$HOME/nexus_env.sh"
+  ```
+
+
 
 [^unplug]: Generally, unplug all non-host devices during host OS installation. This ensures that, later on:  
       - proper graphics drivers will get installed on the host (*AMD in this guide*);  
