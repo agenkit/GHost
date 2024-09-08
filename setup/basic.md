@@ -238,9 +238,9 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 ### Nexus directories
 
 > [!Important]
-> The GHost spec however a local directory (default below: `/cfg` ),  
+> The GHost spec expects a local directory (default below: `/cfg` ),  
 > wherein to  **centralize**, **externalize**, and **version** all config files in a **`git` repository**.  
-> Files are then symlinked to their proper directory.  
+> Files are then linked to their proper directory.  
 > The whole `cfg` structure is synchronized with `rsync` to `/fs` for portability and backup.
 
 1. Create the following root-level `/cfg` directory structure.
@@ -340,31 +340,29 @@ sudo ufw status verbose
    sudo nano /etc/ssh/sshd_config.d/nexus.conf 
    ```
 
-1. We'll only take care of a few security aspects for now.  
+1. We'll only take care of a few security aspects for now.
 
-   It's a good idea to document your systems, so I add a short intro.
-
-```
-
-# This is the sshd server nexus-wide configuration file.  See
-# /fs/nexus.md for more information.
-
-# The strategy used for options is to override the defaults at
-# /etc/ssh/sshd_config with the following.
-
-Port 60000
-AddressFamily inet
-ListenAddress 127.0.0.1
-
-HostKey /etc/ssh/ssh_host_ed25519_key
-
-AllowUsers kit
-PermitRootLogin no
-
-PasswordAuthentication no
-```
-
-*You may need to reboot for OpenSSH to work properly and accept your settings. We don't need it yet though, so it can wait.*
+   ```
+   
+   # This is the sshd server nexus-wide configuration file.  See
+   # /fs/nexus.md for more information.
+   
+   # The strategy used for options is to override the defaults at
+   # /etc/ssh/sshd_config with the following.
+   
+   Port 60000
+   AddressFamily inet
+   ListenAddress 127.0.0.1
+   
+   HostKey /etc/ssh/ssh_host_ed25519_key
+   
+   AllowUsers kit
+   PermitRootLogin no
+   
+   PasswordAuthentication no
+   ```
+   
+   *You may need to reboot for OpenSSH to work properly and accept your settings. We don't need it yet though, so it can wait.*
 
 1. Enable `ssh` in systemd.
 
@@ -374,7 +372,7 @@ PasswordAuthentication no
 
 > [!Note]
 > At this point, the ssh server isn't accessible from the outside world, on purpose.
-> We'll set it up properly, along with `ufw`, later.
+> We'll set it up properly later, along with `ufw`.
 
 
 
@@ -389,19 +387,17 @@ PasswordAuthentication no
 
 > [!Important]
 > For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
-**Check it first** if my copycat doesn't get you through!
+**Check it first** if my simplified copycat doesn't get you through!
 
-1. Restart your machine and boot into BIOS. 
+1. Reboot to UEFI settings.[^uefi]
 
-1. Enable a feature called IOMMU. You'll also need to enable CPU virtualization. 
+1. Enable a feature called `IOMMU`.
 
-   - For Intel processors, look for something called VT-d. 
-   - For AMD, look for something called AMD-Vi.
-   - May be called SVM Mode. 
+1. Enable CPU virtualization features: **`AMD-Vi`**, or **`VT-d`** (for Intel). 
    
-1. Save any changes and restart the machine.
+1. Save any changes and reboot to Linux.
 
-1. Once you've booted into the host, make sure that IOMMU and CPU virtualization features are enabled. 
+1. Make sure that IOMMU and CPU virtualization features are enabled. 
 
    *Note: for Intel, replace* `AMD-Vi` *by* `VT-d` .
 
@@ -491,7 +487,8 @@ with [Oh My Zsh](https://ohmyz.sh/) (OMZ),
 the [Spaceship Prompt](https://spaceship-prompt.sh/) theme,  
 and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](https://www.nerdfonts.com/font-downloads)).
 
-
+[^uefi]: Usually, spam <kbd>Del</kbd> or <kbd>F2</kbd> during POST (when the PC displays some first page with CPU, RAM, storage info; which might be hidden by a fullscreen logo: spam anyway).  
+  On KDE, you can open **System Settings** > **Startup and Shutdown** > **Desktop Session** (or just search for '`UEFI`' your app launcher), and in the **Firmware** section (last), tick "**After next restart: [ ] Enter UEFI setup screen**".
 
 
 
