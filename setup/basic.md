@@ -25,7 +25,12 @@ Target: complete PoC (1); then proper writing (2).
 
 
 
+## 0 — Variables
 
+```sh
+
+NXS_CFG='/cfg'
+```
 
 
 
@@ -139,6 +144,16 @@ Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
 
 
+### Variables
+
+```sh
+NXS_FS='/fs'
+NXS_FS_LABEL='fs'
+NXS_CFG='/cfg'
+```
+
+
+
 
 ### NVMe Storage
 
@@ -232,7 +247,12 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > After reboot, the `mdadm` RAID virtual device MAY be given a different name by **udev**.  
 *In my case, it's `md127` instead of `md0`.*
 
+From now on, we'll alias this filesystem mountpoint to `$NXS_FS`: adjust the path for you if needed.
 
+```sh
+NXS_FS='/fs'
+NXS_FS_LABEL='fs'
+```
 
 
 ### Nexus directories
@@ -243,20 +263,37 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > Files are then linked to their proper directory.  
 > The whole `cfg` structure is synchronized with `rsync` to `/fs` for portability and backup.
 
-1. Create the following root-level `/cfg` directory structure.
+1. Create the following root-level Nexus Configuration (eg., `/cfg` ) directory structure.[^nexus]
 
    ```sh
+   NXS_CFG='/cfg'
+
    sudo mkdir -p \
-   /cfg/etc/ssh/sshd_config.d \
-   /cfg/etc/ufw/applications.d \
-   /cfg/home/$USER \
-   /cfg/usr/local/{bin,sbin} 
+   $NXS_CFG/etc/ssh/sshd_config.d \
+   $NXS_CFG/etc/ufw/applications.d \
+   $NXS_CFG/home/$USER \
+   $NXS_CFG/usr/local/{bin,sbin} 
    ```
 
-1. 
+1. Create a `README.md` and a `.gitignore` placeholders.
+
+   ```sh
+   cd $NXS_CFG 
+   echo '# Nexus Configuration' | sudo tee README.md
+   echo '
+   ```
+
+1. Create a bare git repository.
+
+   ```
+   git init --bare $NXS_CFG/.cfg
+   ```
 
 
-
+git init --bare $HOME/.cfg
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+config config --local status.showUntrackedFiles no
+echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $HOME/.bashrc
 
 
 
@@ -490,7 +527,7 @@ and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](h
 [^uefi]: Usually, spam <kbd>Del</kbd> or <kbd>F2</kbd> during POST (when the PC displays some first page with CPU, RAM, storage info; which might be hidden by a fullscreen logo: spam anyway).  
   On KDE, you can open **System Settings** > **Startup and Shutdown** > **Desktop Session** (or just search for '`UEFI`' your app launcher), and in the **Firmware** section (last), tick "**After next restart: [ ] Enter UEFI setup screen**".
 
-
+[^nexus]: The GHost PC setup (this guide) is part of a larger systems paradigm called 'Nexus' (optionally shortened to `nxs` or `NXS`).
 
 
 
