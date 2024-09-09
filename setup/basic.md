@@ -37,9 +37,9 @@ NXS_FS_LABEL="fs"
 NXS_CFG="/cfg"
 
 # $N0A_xxx = n0 Admin variables
+N0A_ENV="$ZSH_CUSTOM/env.zsh"
 N0A_GROUP="nexus"
 N0A_ALIASES="$ZSH_CUSTOM/aliases.zsh"
-N0A_ENV="$ZSH_CUSTOM/env.zsh"
 ```
 
 To display all variables in use on a system, do any of:
@@ -157,10 +157,9 @@ until it asks you about **storage**.
    *See* **[`Shell`](doc/shell.md)** *for more details.*
 
 1. *(Optional) Play with OS & DE settings to your liking.  
-Custom DNS; nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
+Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
 
-1. Add
-
+1. Add 
 
 
 
@@ -265,6 +264,8 @@ NXS_FS_LABEL='fs'
 ```
 
 
+
+
 ### Nexus directories
 
 > [!Important]
@@ -297,14 +298,20 @@ NXS_FS_LABEL='fs'
 
    ```
    git init --bare $NXS_CFG/.cfg
-   alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
    ```
 
+1. This alias for `git` will ease repository use.
 
-git init --bare $HOME/.cfg
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-config config --local status.showUntrackedFiles no
-echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $HOME/.bashrc
+   ```sh
+   echo "alias nexusctl-git='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $N0A_ALIASES
+   source ~/.zshrc
+   ```
+
+1. Hide untracked files.
+
+   ```sh
+   nexusctl-git config --local status.showUntrackedFiles no
+   ```
 
 
 
