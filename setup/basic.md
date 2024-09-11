@@ -53,12 +53,12 @@ graph LR
 ```sh
 # $NXS_xxx = Nexus global configuration variables
 NXS_CFG="/cfg"
+NXS_ENV="$NXS_CFG/etc/profiles.d/env.zsh"
 NXS_FS="/fs"
 NXS_FS_LABEL="fs"
+NXS_GROUP="nexus"
 
 # $N0A_xxx = n0 Admin variables
-N0A_ENV="$NXS_CFG/etc/profiles.d/env.zsh"
-N0A_GROUP="nexus"
 N0A_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
 
