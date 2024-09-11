@@ -15,8 +15,10 @@ Target: complete PoC (1); then proper writing (2).
 - [ ] . — Performance tweaks
 
 
-
 ---
+
+
+
 
 > [!Tip]
 > Footnote = **Help!**
@@ -29,6 +31,23 @@ Target: complete PoC (1); then proper writing (2).
 
 List of all variables used in the GHost setup.  
 *For `bash`, modify `*.zsh` paths.*[^bash-env]
+
+```mermaid
+graph TB
+   n("Nexus")
+   a("Admin")
+   cfg("NXS_CFG<br>'/cfg'")
+   env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
+   fs("NXS_FS<br>'/fs'")
+   fsl("NXS_FS_LABEL<br>'fs'")
+   grp("N0A_GROUP<br>'nexus'")
+   as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
+
+   n --> env & fs & fsl & cfg
+   a --> grp & as
+```
+
+
 
 ```sh
 # $NXS_xxx = Nexus global configuration variables
@@ -48,6 +67,10 @@ To display all variables in use on a system, do any of:
 set
 compgen -v
 ```
+
+
+
+
 
 
 
@@ -280,6 +303,7 @@ NXS_FS_LABEL='fs'
    NXS_CFG='/cfg'
 
    sudo mkdir -p \
+   $NXS_CFG/etc/profile.d \
    $NXS_CFG/etc/ssh/sshd_config.d \
    $NXS_CFG/etc/ufw/applications.d \
    $NXS_CFG/home/$USER \
