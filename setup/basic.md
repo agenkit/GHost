@@ -6,6 +6,7 @@ Target: complete PoC (1); then proper writing (2).
 > [!Warning]
 > Numbering, sectioning, etc. is unstable.
 
+- [ ] 0 — Variables
 - [x] 1 — Install Linux (Kubuntu 24.04)
 - [x] 2 — Terminal: Zsh, OMZ, bat, tldr, etc.
 - [x] 3 — Security: browser, secrets, SSH server
