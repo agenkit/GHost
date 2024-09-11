@@ -37,13 +37,13 @@ graph LR
    n("Nexus")
    a("Admin")
    cfg("NXS_CFG<br>'/cfg'")
-   env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
+   env("N0A_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
    fs("NXS_FS<br>'/fs'")
    fsl("NXS_FS_LABEL<br>'fs'")
    grp("N0A_GROUP<br>'nexus'")
    as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
-   n --> env & fs & fsl & cfg
+   n --> cfg & env & fs & fsl
    n --> a
    a --> grp & as
 ```
@@ -52,12 +52,12 @@ graph LR
 
 ```sh
 # $NXS_xxx = Nexus global configuration variables
+NXS_CFG="/cfg"
 NXS_FS="/fs"
 NXS_FS_LABEL="fs"
-NXS_CFG="/cfg"
 
 # $N0A_xxx = n0 Admin variables
-N0A_ENV="$ZSH_CUSTOM/env.zsh"
+N0A_ENV="$NXS_CFG/etc/profiles.d/env.zsh"
 N0A_GROUP="nexus"
 N0A_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
