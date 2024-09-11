@@ -36,7 +36,6 @@ List of all variables used in the GHost setup.
 ```mermaid
 graph LR
    n("Nexus")
-   a("Admin")
    cfg("NXS_CFG<br>'/cfg'")
    env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
    fs("NXS_FS<br>'/fs'")
@@ -44,7 +43,13 @@ graph LR
    grp("NXS_GROUP<br>'nexus'")
    as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
-   n --> cfg & env & fs & fsl & grp
+   n --> c
+   subgraph c["Config '/cfg'"]
+      
+      cfg & env & fs & fsl & grp
+   
+   end
+   
    n --> a
    subgraph a["Admin"]
       as
