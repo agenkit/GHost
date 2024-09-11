@@ -43,9 +43,9 @@ graph LR
    grp("N0A_GROUP<br>'nexus'")
    as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
-   n --> cfg & env & fs & fsl
+   n --> cfg & env & fs & fsl & grp
    n --> a
-   a --> grp & as
+   a --> as
 ```
 
 
