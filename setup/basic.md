@@ -37,10 +37,10 @@ graph LR
    n("Nexus")
    a("Admin")
    cfg("NXS_CFG<br>'/cfg'")
-   env("N0A_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
+   env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
    fs("NXS_FS<br>'/fs'")
    fsl("NXS_FS_LABEL<br>'fs'")
-   grp("N0A_GROUP<br>'nexus'")
+   grp("NXS_GROUP<br>'nexus'")
    as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
    n --> cfg & env & fs & fsl & grp
