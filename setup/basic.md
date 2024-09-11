@@ -45,7 +45,9 @@ graph LR
 
    n --> cfg & env & fs & fsl & grp
    n --> a
-   a --> as
+   subgraph a
+      as
+   end
 ```
 
 
