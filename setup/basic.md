@@ -34,7 +34,7 @@ List of all variables used in the GHost setup.
 *For `bash`, modify `*.zsh` paths.*[^bash-env]
 
 ```mermaid
-graph LR
+graph TB
    n("Nexus")
    cfg("NXS_CFG<br>'/cfg'")
    env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
