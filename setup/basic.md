@@ -45,7 +45,7 @@ graph LR
 
    n --> cfg & env & fs & fsl & grp
    n --> a
-   subgraph a
+   subgraph a("Admin")
       as
    end
 ```
