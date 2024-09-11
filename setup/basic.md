@@ -44,6 +44,7 @@ graph TB
    as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
    n --> env & fs & fsl & cfg
+   n --> a
    a --> grp & as
 ```
 
