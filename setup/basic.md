@@ -192,7 +192,7 @@ until it asks you about **storage**.
 1. Ensure **Display** is fine (Xorg|Wayland; resolution, refresh rate, scaling; **Fonts**, antialiasing…)  
    *Reboot if needed.*
 
-1. Check the **Driver Manager** for your currently in-use GPU otherwise.
+1. Check the **Driver Manager** for your currently in-use GPU.
    
 1. Do stuff needed for you (appearance, behaviors, shortcuts, Bluetooth, etc.)
 
@@ -206,7 +206,7 @@ until it asks you about **storage**.
 
 #### 🔙 Timeshift (btrfs)
 
-
+1. Install [Timeshift](https://github.com/linuxmint/timeshift/tree/master).
 
 
 #### 🆘 Test backup
@@ -342,10 +342,13 @@ NX_FS_LABEL='fs'
 
 ### 🎛️ Nexus control
 
-1. Create a Nexus[^nexus] profile for environment variables.
+
+#### 📑 Variables
+
+1. Create a shell script for environment variables, inside a new Nexus[^nexus] directory in `/etc`.
 
    ```sh
-   sudo nano /etc/profile.d/nexus.sh
+   sudo mkdir /etc/nexus && nano /etc/nexus/env.sh
    ```
 
 1. Add these for starters.
@@ -355,13 +358,21 @@ NX_FS_LABEL='fs'
 
    ```sh
    # $NX_xxx = Nexus global configuration variables
-   NX_NS="nexus"
-   NX_FS="/fs"
-   NX_FS_LABEL="fs"
    NX_CFG="/cfg"
-   NX_ENV="$NX_CFG/etc/profile.d/nexus.sh"
-   NX_ENV_LINK="/etc/profile.d/nexus.sh"
+   NX_NS="nexus"
+
+   NX_NS_FS="fs"
+   NX_FS_PATH="/$NX_NS_FS"
+
+   NX_ETC_PATH="/etc/$NX_NS"
+   NX_ENV="$NX_ETC/env.sh"
+   NX_ENV_PATH="$NX_CFG$NX_ENV"
+
+
+   NX_NS_SSHD="/etc/ssh/sshd_config.d/nexus.conf"
+   NX_NS_UFW="/etc/ufw/applications.d/openssh-server"
    NX_GIT_DIR="$NX_CFG/.git"
+
    
    # $NX_ADM_xxx = Nexus Admin variables
    NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
@@ -371,11 +382,21 @@ NX_FS_LABEL='fs'
    export NX_FS
    export NX_FS_LABEL
    export NX_CFG
+   export NX_ETC
    export NX_ENV
-   export NX_ENV_LINK
+   export NX_BASH_ENV
+   export NX_ZSH_ENV
    export NX_GIT_DIR
    export NX_ADM_ALIASES
    ```
+
+
+   ```sh
+   NX_NS_ENV="/etc/profile.d/nexus.sh"
+   NX_ZSH_ENV="/etc/zsh/nexus.sh"
+   NX_BASH_ENV="/etc/profile.d/nexus.sh"
+   ```
+
 
 1. Press <kbd>Ctrl</kbd> + <kbd>o</kbd>, then <kbd>Enter</kbd> to save the file.  
 Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
@@ -386,11 +407,15 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
    source /etc/profile.d/nexus.sh
    ```
 
+
+#### Configuration directory
+
 1. Create the Nexus Configuration directory structure.
 
    ```sh
    sudo mkdir -p \
    $NX_CFG/etc/profile.d \
+   $NX_CFG/etc/zsh \
    $NX_CFG/etc/ssh/sshd_config.d \
    $NX_CFG/etc/ufw/applications.d \
    $NX_CFG/home/$USER \
@@ -400,13 +425,13 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
 1. Copy our environment profile to the repo.
 
    ```sh
-   sudo cp -v $NX_ENV_LINK $NX_ENV
+   sudo cp -v $NX_BASH_ENV $NX_ENV
    ```
 
 1. Symlink it back to its correct location.
 
    ```sh
-   sudo ln -s $NX_ENV $NX_ENV_LINK
+   sudo ln -s $NX_ENV $NX_BASH_ENV
    ```
 
 1. Create the `nexus` Linux group, then the eponym user without login shell access.
@@ -513,7 +538,7 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
 
 
 
-### 🗝️ Secrets
+### ㊙️ Secrets
 
 1. Setup whatever means you use to **store and access secrets**.  
    *Password manager, pen and paper, `pass`, savant memory… it's up to you.*[^secrets]
@@ -614,7 +639,7 @@ sudo ufw status verbose
 
 1. Enable a feature called `IOMMU`.
 
-1. Enable CPU virtualization features: **`AMD-Vi`**, or **`VT-d`** (for Intel). 
+1. Enable CPU virtualization features: usually called **`SVM`**, **`AMD-Vi`**, or **`VT-d`** . 
    
 1. Save any changes and reboot to Linux.
 
