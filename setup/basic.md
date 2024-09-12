@@ -1,10 +1,10 @@
 # 🚧 Setup Guide (basic) 🚧
 
 > [!Warning]
-> ⚠️ **DO NOT USE YET!** ⚠️  
+> **DO NOT USE YET!**  
 > I'm creating and writing this guide in the open.
-> - It's **not ready**.
-> - Bugged instructions may **irreparably break** things.
+> - ⚠️ It's **not ready**.
+> - ⚠️ Bugged instructions may **irreparably break** things.
 >
 > ***I frequently push broken states to main, because it's just text.***  
 > *Proper scripts will follow, once this 101/PoC guide is done.*
