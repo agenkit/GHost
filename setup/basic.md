@@ -1,7 +1,7 @@
-# Setup Guide (basic)
+# 🚧 Setup Guide (basic) 🚧
 
 > [!Warning]
-> **DO NOT USE YET!**  
+> ⚠️ **DO NOT USE YET!** ⚠️  
 > I'm creating and writing this guide in the open.
 > - It's **not ready**.
 > - Bugged instructions may **irreparably break** things.
@@ -13,7 +13,7 @@
 >
 > Note that even the guide's numbering, sectioning, etc. is unstable.
 
-Status: `v0.1` — **Work-in-progress!**  
+Status: `v0.1` — 🚧 **Work-in-progress!** 🚧  
 Target: complete PoC (1); then proper writing (2).
 
 - [ ] 0 — Variables
@@ -199,20 +199,28 @@ until it asks you about **storage**.
 
 
 
+### Backup & Recovery
+
+
+
+
+
+
 ### 🧑‍💻 Shell
 
-1. Customize your terminal emulator preferences.
+> [!Important]
+> This guide uses Zsh.
 
-1. Install your preferred **CLI shell**.[^shell]
+1. Customize your terminal emulator (**Konsole**) preferences.
+
+1. Install and setup your preferred **CLI shell**.[^shell]
 
    *Suggestion:* [**Zsh**](https://github.com/agenkit/GHost/blob/main/doc/shell.md#zsh)  
    *It's easier for admin duties; allows advanced scripting (like Perl); transfers to BSD (including MacOS).*  
    *See* **[`Shell`](doc/shell.md)** *for more details.*
 
 1. *(Optional) Play with OS & DE settings to your liking.  
-Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr`; themes, etc.*
-
-1. Add 
+Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr`; themes; aliases; etc.*
 
 
 
