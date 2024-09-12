@@ -67,16 +67,25 @@ graph TB
 
 
 ```sh
-# $NX_xxx = Nexus global configuration variables
-NX_NS="nexus"
-NX_FS="/fs"
-NX_FS_LABEL="fs"
+# NX_xxxx = Nexus global configuration variables
+# NX_NS_x  = NameSpace
+# NX_FS_x  = FileSystem
+# NX_ENV_x = shell ENVironment
+# NX_GIT_x = GIT 
+
 NX_CFG="/cfg"
-NX_ENV="$NX_CFG/etc/profile.d/nexus.sh"
-NX_ENV_LINK="/etc/profile.d/nexus.sh"
+NX_NS="nexus"
+NX_NS_FS="fs"
+NX_NS_ENV="/etc/profile.d/nexus.sh"
+NXNS_SSHD="/etc/ssh/sshd_config.d/nexus.conf"
+NX_NS_UFW="/etc/ufw/applications.d/openssh-server"
+NX_FS="/$NX_NS_FS"
+NX_ENV="$NX_CFG$NX_NS_ENV"
 NX_GIT_DIR="$NX_CFG/.git"
 
-# $NX_ADM_xxx = Nexus Admin variables
+
+# NX_ADM_xxx = Nexus Admin variables
+
 NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
 
