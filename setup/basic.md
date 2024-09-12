@@ -3,15 +3,15 @@
 > [!Warning]
 > **DO NOT USE YET!**  
 > I'm creating and writing this guide in the open.
-> - ⚠️ It's **not ready**.
-> - ⚠️ Bugged instructions may **irreparably break** things.
+> - It's **not ready**.
+> - Bugged instructions may **irreparably break** things.
 >
-> ***I frequently push broken states to main, because it's just text.***  
+> ⚠️ ***I frequently push broken states to main, because it's just text.***  
 > *Proper scripts will follow, once this 101/PoC guide is done.*
 >
 > So test as you wish, but as a throwaway.
 >
-> Note that even the guide's numbering, sectioning, etc. is unstable.
+> *Note that even the guide's numbering, sectioning, etc. is unstable.*
 
 Status: `v0.1` — 🚧 **Work-in-progress!** 🚧  
 Target: complete PoC (1); then proper writing (2).
