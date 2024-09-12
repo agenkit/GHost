@@ -199,9 +199,17 @@ until it asks you about **storage**.
 
 
 
-### Backup & Recovery
+### 🛟 Backup & Recovery
 
 
+
+
+#### 🔙 Timeshift (btrfs)
+
+
+
+
+#### 🆘 Test backup
 
 
 
