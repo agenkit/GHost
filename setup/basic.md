@@ -206,7 +206,7 @@ Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr
 
 
 
-### 🗄️🗄️ Auxilliary Storage
+### 🗄️ Auxilliary Storage
 
 **(Recommended for physical hardware)** 
 
@@ -313,7 +313,7 @@ NX_FS_LABEL='fs'
 
 
 
-### 🎛️🎚️ Nexus control
+### 🎛️ Nexus control
 
 1. Create a Nexus[^nexus] profile for environment variables.
 
