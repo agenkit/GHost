@@ -67,11 +67,13 @@ graph TB
 
 
 ```sh
-# NX_xxxx = Nexus global configuration variables
-# NX_NS_x  = NameSpace
-# NX_FS_x  = FileSystem
-# NX_ENV_x = shell ENVironment
-# NX_GIT_x = GIT 
+# NX_        : NeXus global configuration variables
+#   _NS      : NameSpace
+#   _FS      : FileSystem
+#   _CFG     : ConFiGuration
+#   _ENV     : shell ENVironment
+#   _GIT     : GIT (version control)
+#       _DIR : DIRectory
 
 NX_CFG="/cfg"
 NX_NS="nexus"
