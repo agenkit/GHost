@@ -364,9 +364,9 @@ NX_FS_LABEL='fs'
    NX_NS_FS="fs"
    NX_FS_PATH="/$NX_NS_FS"
 
-   NX_ETC_PATH="/etc/$NX_NS"
+   NX_ETC_PATH="etc/$NX_NS"
    NX_ENV="$NX_ETC/env.sh"
-   NX_ENV_PATH="$NX_CFG$NX_ENV"
+   NX_ENV_PATH="$NX_CFG/$NX_ENV"
 
 
    NX_NS_SSHD="/etc/ssh/sshd_config.d/nexus.conf"
