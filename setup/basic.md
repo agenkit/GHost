@@ -162,7 +162,7 @@ until it asks you about **storage**.
 
 
 
-## 🖥️ 2 — Host OS configuration
+## ⚙️ 2 — Host OS configuration
 
 
 
