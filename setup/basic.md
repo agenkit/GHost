@@ -119,7 +119,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 
 
-### 📀 Make a bootable device
+### 📀 Bootable device
 
 1. Download the **Kubuntu [`.iso 🔽`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
@@ -140,7 +140,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 
 
-### 🐧 Install Linux
+### 🐧 Linux install
 
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
 
@@ -225,7 +225,7 @@ Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr
 
 
 
-### 🗄️ Auxilliary Storage
+### 🗄️ Auxilliary storage
 
 **(Recommended for physical hardware)** 
 
