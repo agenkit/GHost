@@ -533,6 +533,55 @@ This script provides a straightforward way to keep your `.gitignore` file synchr
 
 
 ---
+
+
+
+
 ---
+
+## bare repo nexus cfg
+
+
+```sh
+echo '# Ignore all files
+*
+
+# Whitelist
+!.gitignore' | sudo tee $NX_CFG/.gitignore
+```
+
+
+1. Create a `README.md` and a `.gitignore`.
+
+   ```sh
+   cd $NX_CFG 
+   echo '# Nexus Configuration' | sudo tee README.md
+   echo '# Ignore all files\n*\n\n# Whitelist\n!.gitignore' | sudo tee .gitignore
+   ```
+
+
+--git-dir=$NX_GIT_DIR --work-tree=$NX_CFG
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+`chcpu` - configure CPUs  
+<https://manpages.ubuntu.com/manpages/noble/en/man8/chcpu.8.html>
+
+
 ---
 ---

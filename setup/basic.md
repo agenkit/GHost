@@ -1,10 +1,20 @@
 # Setup Guide (basic)
 
-Status: `v0.1` **work-in-progress**  
+Status: `v0.1` — **Work-in-progress!**  
 Target: complete PoC (1); then proper writing (2).
 
 > [!Warning]
-> Numbering, sectioning, etc. is unstable.
+> **DO NOT USE YET!**  
+> I'm creating and writing this guide in the open.
+> - It's **not ready**.
+> - Bugged instructions may **irreparably break** things.
+
+> ***I frequently push broken states to main, because it's just text.***  
+> *Proper scripts will follow, once this 101/PoC guide is done.*
+>
+> So test as you wish, but as a throwaway.
+>
+> Note that even the guide's numbering, sectioning, etc. is unstable.
 
 - [ ] 0 — Variables
 - [x] 1 — Install Linux (Kubuntu 24.04)
@@ -36,22 +46,20 @@ List of all variables used in the GHost setup.
 ```mermaid
 graph TB
    n("Nexus")
-   cfg("NXS_CFG<br>'/cfg'")
-   env("NXS_ENV<br>'$NXS_CFG/etc/profiles.d/env.zsh'")
-   fs("NXS_FS<br>'/fs'")
-   fsl("NXS_FS_LABEL<br>'fs'")
-   grp("NXS_GROUP<br>'nexus'")
-   as("N0A_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
+   cfg("NX_CFG<br>'/cfg'")
+   env("NX_ENV<br>'$NX_CFG/etc/profiles.d/env.zsh'")
+   fs("NX_FS<br>'/fs'")
+   fsl("NX_FS_LABEL<br>'fs'")
+   grp("NX_GROUP<br>'nexus'")
+   as("NX_ADM_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
    n --> c
    subgraph c["Config '/cfg'"]
-      
       cfg & env & fs & fsl & grp
-   
    end
    
    n --> a
-   subgraph a["Admin"]
+   subgraph a["Admin '$HOME`'"]
       as
    end
 ```
@@ -59,15 +67,15 @@ graph TB
 
 
 ```sh
-# $NXS_xxx = Nexus global configuration variables
-NXS_CFG="/cfg"
-NXS_ENV="$NXS_CFG/etc/profiles.d/env.zsh"
-NXS_FS="/fs"
-NXS_FS_LABEL="fs"
-NXS_GROUP="nexus"
+# $NX_xxx = Nexus global configuration variables
+NX_CFG="/cfg"
+NX_ENV="$NX_CFG/etc/profiles.d/env.zsh"
+NX_FS="/fs"
+NX_FS_LABEL="fs"
+NX_GROUP="nexus"
 
-# $N0A_xxx = n0 Admin variables
-N0A_ALIASES="$ZSH_CUSTOM/aliases.zsh"
+# $NX_ADM_xxx = n0 Admin variables
+NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
 
 To display all variables in use on a system, do any of:
@@ -196,28 +204,33 @@ Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr
 
 
 
-### NVMe Storage
+### Auxilliary Storage
 
-**(Recommended)** 
+**(Recommended for physical hardware)** 
 
-Setup additional storage: 
+Setup 'auxilliary' (i.e., non-OS) storage.
 
-- **High IOPS** drives for virtualization 
-- If you need more space for big static files (like AI models, videos, games…), consider yet another **large** volume (spinners are fine).
+- **High IOPS** drives for virtualization (mounted at `/fs` ).
+- Whatever additional space you require (optional, not covered specifically).
 
-See 📜 **[Storage](doc/storage.md)** if needed, as it's hard to generalize for all cases.
 
-Example below:
 
-   - array of `n = 3` drives
-   - RAID level `0`
-   - XFS filesystem label `fs`
-   - mount point `/fs`
+> [!Tip]
+> For a given capacity, assuming cost is close enough and you have enough ports (NVMe/PCIe, SATA…), always prefer the highest number of smaller drives: for instance, 4× 1TB is better than a single 4TB drive. It opens parallelization and redundancy options (RAID) for you, improving performance and reliability.
+>
+>See 📜 **[Storage](doc/storage.md)** if needed beyond the example below, as it's hard to generalize for all cases.
 
-To fit your case, you likely need to change `n`, and optionally the RAID level.
+Example setup:
+
+   - number of drives: `n` = `3`
+   - RAID level: `l` = `0`[^raid0]
+   - XFS filesystem label: `-L` = `fs`
+   - `mount` point: `/fs`
+
+Change `n` and RAID level `l` to suit your needs.
 
 > [!Important]
-> Disk names should be sourced from `/dev/disk/by-id/`  
+> Disk names below should be sourced from `/dev/disk/by-id/`  
 🡢 Select names with a unique **serial_number** or `eui`
 
 1. Install `mdadm` — **m**ultiple **d**evices **adm**inistration.
@@ -288,63 +301,154 @@ To fit your case, you likely need to change `n`, and optionally the RAID level.
 > After reboot, the `mdadm` RAID virtual device MAY be given a different name by **udev**.  
 *In my case, it's `md127` instead of `md0`.*
 
-From now on, we'll alias this filesystem mountpoint to `$NXS_FS`: adjust the path for you if needed.
+From now on, we'll alias this filesystem mountpoint to `$NX_FS`: adjust the path for you if needed.
 
 ```sh
-NXS_FS='/fs'
-NXS_FS_LABEL='fs'
+NX_FS='/fs'
+NX_FS_LABEL='fs'
 ```
 
 
 
 
-### Nexus directories
+### Nexus control
 
-> [!Important]
-> The GHost spec expects a local directory (default below: `/cfg` ),  
-> wherein to  **centralize**, **externalize**, and **version** all config files in a **`git` repository**.  
-> Files are then linked to their proper directory.  
-> The whole `cfg` structure is synchronized with `rsync` to `/fs` for portability and backup.
-
-1. Create the following root-level Nexus Configuration (eg., `/cfg` ) directory structure.[^nexus]
+1. Create a Nexus[^nexus] profile for environment variables.
 
    ```sh
-   NXS_CFG='/cfg'
+   sudo nano /etc/profile.d/nexus.sh
+   ```
 
+1. Add these for starters.
+
+   `/etc/profile.d/nexus.sh`  
+   🡳
+
+   ```sh
+   # $NX_xxx = Nexus global configuration variables
+   NX_NS="nexus"
+   NX_FS="/fs"
+   NX_FS_LABEL="fs"
+   NX_CFG="/cfg"
+   NX_ENV="$NX_CFG/etc/profile.d/nexus.sh"
+   NX_ENV_LINK="/etc/profile.d/nexus.sh"
+   NX_GIT_DIR="$NX_CFG/.git"
+   
+   # $NX_ADM_xxx = Nexus Admin variables
+   NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
+   
+   # `export` all variables
+   export NX_NS
+   export NX_FS
+   export NX_FS_LABEL
+   export NX_CFG
+   export NX_ENV
+   export NX_ENV_LINK
+   export NX_GIT_DIR
+   export NX_ADM_ALIASES
+   ```
+
+1. Press <kbd>Ctrl</kbd> + <kbd>o</kbd>, then <kbd>Enter</kbd> to save the file.  
+Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
+
+1. Source that profile file.
+
+   ```sh
+   source /etc/profile.d/nexus.sh
+   ```
+
+1. Create the Nexus Configuration directory structure.
+
+   ```sh
    sudo mkdir -p \
-   $NXS_CFG/etc/profile.d \
-   $NXS_CFG/etc/ssh/sshd_config.d \
-   $NXS_CFG/etc/ufw/applications.d \
-   $NXS_CFG/home/$USER \
-   $NXS_CFG/usr/local/{bin,sbin} 
+   $NX_CFG/etc/profile.d \
+   $NX_CFG/etc/ssh/sshd_config.d \
+   $NX_CFG/etc/ufw/applications.d \
+   $NX_CFG/home/$USER \
+   $NX_CFG/usr/local/{bin,sbin} 
    ```
 
-1. Create a `README.md` and a `.gitignore` placeholders.
+1. Copy our environment profile to the repo.
 
    ```sh
-   cd $NXS_CFG 
-   echo '# Nexus Configuration' | sudo tee README.md
-   echo '# Ignore all files\n*\n\n# Whitelist\n!.gitignore' | sudo tee .gitignore
+   sudo cp -v $NX_ENV_LINK $NX_ENV
    ```
 
-1. Create a bare git repository.
-
-   ```
-   git init --bare $NXS_CFG/.cfg
-   ```
-
-1. This alias for `git` will ease repository use.
+1. Symlink it back to its correct location.
 
    ```sh
-   echo "alias nexusctl-git='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $N0A_ALIASES
+   sudo ln -s $NX_ENV $NX_ENV_LINK
+   ```
+
+1. Create the `nexus` Linux group, then the eponym user without login shell access.
+
+   ```sh
+   sudo groupadd -r $NX_NS && sudo useradd -r -s /bin/false -g $NX_NS $NX_NS
+   ```
+
+1. Change `/cfg` ownership to the `nexus` user and group.
+
+   ```sh
+   sudo chown -R $NX_NS:$NX_NS $NX_CFG
+   ```
+
+1. Create the command `nxctl-git`: a `git` wrapper to facilitate interaction with this repo.  
+*A straightforward shell `alias`.*
+
+   ```sh
+   printf 'alias nxctl-git="sudo -u $NX_NS /usr/bin/git -C $NX_CFG"' | sudo tee -a $NX_ADM_ALIASES >/dev/null
+   ```
+
+1. Enable `nxctl-git`: either open a new terminal, or source the alias.
+
+   ```sh
    source ~/.zshrc
    ```
 
-1. Hide untracked files.
+1. Initialize a git repository.
 
    ```sh
-   nexusctl-git config --local status.showUntrackedFiles no
+   cd $NX_CFG \
+   && nxctl-git init --initial-branch=main $NX_CFG
    ```
+
+1. Configure `git` for use by the `nexus` user.
+
+   ```sh
+   nxctl-git config user.name ""
+   nxctl-git config user.email ""
+   ```
+
+1. Create the `.gitignore` file.
+
+   ```sh
+   printf '
+   # Nexus Configuration (Git)
+   # Default location: /cfg/.gitignore
+   '|sudo tee $NX_CFG/.gitignore >/dev/null
+   ```
+
+1. Create a README.
+
+   ```sh
+   printf '# Nexus Configuration' | sudo tee $NX_CFG/README.md
+   ```
+
+1. Add and commit all files we've managed so far.
+
+   ```sh
+   nxctl-git add . \
+   && nxctl-git commit -m \
+   "Add README.md, .gitignore, etc/profile.d/nexus.sh."
+   ```
+
+> [!Tip]
+> It's good practice to reboot once in a while, to check that all configs survive.
+>
+> Consider making some `alias`-es to quickly check all relevant parts (e.g., `dmesg`, `mdadm`, `git`…).
+>
+> ```sh
+> alias 'nxctl-status'='printf "[NCC-9] Nexus Configuration Check (9)\nStardate: 0%s" "$(date '\''+%y%V.%u%H'\'')"; sep&& cat /proc/mdstat; sep&& sudo mdadm --detail /dev/md0; sep&& nxctl-git status'
 
 
 
@@ -555,8 +659,8 @@ sudo ufw status verbose
 
 [^bash-env]: For `bash`, use these:  
   ```
-  N0A_ALIASES="$HOME/bash_aliases.sh"
-  N0A_ENV="$HOME/nexus_env.sh"
+  NX_ADM_ALIASES="$HOME/bash_aliases.sh"
+  NX_ADM_ENV="$HOME/nexus_env.sh"
   ```
 
 
@@ -586,7 +690,8 @@ and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](h
 [^uefi]: Usually, spam <kbd>Del</kbd> or <kbd>F2</kbd> during POST (when the PC displays some first page with CPU, RAM, storage info; which might be hidden by a fullscreen logo: spam anyway).  
   On KDE, you can open **System Settings** > **Startup and Shutdown** > **Desktop Session** (or just search for '`UEFI`' your app launcher), and in the **Firmware** section (last), tick "**After next restart: [ ] Enter UEFI setup screen**".
 
-[^nexus]: The GHost PC setup (this guide) is part of a larger systems paradigm called 'Nexus' (optionally shortened to `nxs` or `NXS`).
+[^nexus]: The GHost PC setup (this guide) is part of a larger systems paradigm called '**Nexus**'.  
+(may be shortened to `nex`, `nxs`, `nx`…)
 
 
 
@@ -601,7 +706,8 @@ and a [NerdFont](https://github.com/ryanoasis/nerd-fonts) (preview them [here](h
 [^?]: Consider using PCIe splitters if you don't have enough slots. Keep in mind that expensive PLX chips won't help for concurrent use, so I'd avoid them for GHost.
 
 
-[^raid0]: Using **RAID 0 is highly discouraged** unless you do extremely regular backups, or you just plain don't care about your data.
+[^raid0]: Using **RAID 0 is highly discouraged** unless you do regular backups (or don't care about that data). That said, modern NVMe drives usually fail to read-only mode, letting you retrieve the data, whose loss is thus highly unlikely.  
+  Do as you wish, but good backups of a RAID 0 NVMe should be safe enough for personal use, if you can live with some down time once a decade if/when it fails (it never did for me, as drives get replaced well before EoL).
 
 [^xfs]: 
 
