@@ -1,8 +1,5 @@
 # Setup Guide (basic)
 
-Status: `v0.1` — **Work-in-progress!**  
-Target: complete PoC (1); then proper writing (2).
-
 > [!Warning]
 > **DO NOT USE YET!**  
 > I'm creating and writing this guide in the open.
@@ -15,6 +12,9 @@ Target: complete PoC (1); then proper writing (2).
 > So test as you wish, but as a throwaway.
 >
 > Note that even the guide's numbering, sectioning, etc. is unstable.
+
+Status: `v0.1` — **Work-in-progress!**  
+Target: complete PoC (1); then proper writing (2).
 
 - [ ] 0 — Variables
 - [x] 1 — Install Linux (Kubuntu 24.04)
