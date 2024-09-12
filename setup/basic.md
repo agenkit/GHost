@@ -38,7 +38,7 @@ Target: complete PoC (1); then proper writing (2).
 
 
 
-## 0 — Variables
+## 📑 0 — Variables
 
 List of all variables used in the GHost setup.  
 *For `bash`, modify `*.zsh` paths.*[^bash-env]
@@ -68,13 +68,15 @@ graph TB
 
 ```sh
 # $NX_xxx = Nexus global configuration variables
-NX_CFG="/cfg"
-NX_ENV="$NX_CFG/etc/profiles.d/env.zsh"
+NX_NS="nexus"
 NX_FS="/fs"
 NX_FS_LABEL="fs"
-NX_GROUP="nexus"
+NX_CFG="/cfg"
+NX_ENV="$NX_CFG/etc/profile.d/nexus.sh"
+NX_ENV_LINK="/etc/profile.d/nexus.sh"
+NX_GIT_DIR="$NX_CFG/.git"
 
-# $NX_ADM_xxx = n0 Admin variables
+# $NX_ADM_xxx = Nexus Admin variables
 NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
 
@@ -94,7 +96,7 @@ compgen -v
 
 
 
-## 1 — Host OS installation
+## 🖥️ 1 — Host OS installation
 
 *Two approaches for the host GUI: 'richer' (KDE, Gnome...) or 'leaner' (Mate, i3...).  
 Here we go with KDE on Ubuntu, because it has many required features out of the box.*
@@ -106,7 +108,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 
 
-### Make a bootable device
+### 📀 Make a bootable device
 
 1. Download the **Kubuntu [`.iso 🔽`](https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/kubuntu-24.04-desktop-amd64.iso)** file.
 
@@ -127,7 +129,7 @@ Here we go with KDE on Ubuntu, because it has many required features out of the 
 
 
 
-### Install Linux
+### 🐧 Install Linux
 
 1. ⚠️ **Unplug (physically) all video outputs, except the host's.**
 
@@ -160,12 +162,12 @@ until it asks you about **storage**.
 
 
 
-## 2 — Host OS configuration
+## 🖥️ 2 — Host OS configuration
 
 
 
 
-### First boot
+### 🆙 First boot
 
 1. Upgrade packages.
 
@@ -186,7 +188,7 @@ until it asks you about **storage**.
 
 
 
-### Shell
+### 🧑‍💻 Shell
 
 1. Customize your terminal emulator preferences.
 
@@ -204,7 +206,7 @@ Custom [DNS](https://www.quad9.net/); nice packages like `htop`, `batcat`, `tldr
 
 
 
-### Auxilliary Storage
+### 🗄️🗄️ Auxilliary Storage
 
 **(Recommended for physical hardware)** 
 
@@ -311,7 +313,7 @@ NX_FS_LABEL='fs'
 
 
 
-### Nexus control
+### 🎛️🎚️ Nexus control
 
 1. Create a Nexus[^nexus] profile for environment variables.
 
@@ -453,7 +455,7 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
 
 
 
-### Browser
+### 🌐 Browser
 
 1. (Optional) *Install your browser of choice.*
     
@@ -479,22 +481,22 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
 
 
 
-## 3 — Security
+## 🔒 3 — Security
 
 
 
 
-### Secrets
+### 🗝️ Secrets
 
 1. Setup whatever means you use to **store and access secrets**.  
-   *Software, pen and paper, savant memory… it's up to you.*[^secrets]
+   *Password manager, pen and paper, `pass`, savant memory… it's up to you.*[^secrets]
 
 1. Fill in all **credentials for this workstation**. User password, any filesystem encryption passphrase, browser sync, etc.
 
 
 
 
-### Firewall
+### 🧱 Firewall
 
 **`ufw`**, the **U**ncomplicated **F**ire**w**all,[^ufw] is preinstalled with Ubuntu.
 
@@ -518,7 +520,7 @@ sudo ufw status verbose
 
 
 
-### SSH server
+### 🔐 SSH server
 
 1. Install OpenSSH, both `client` and `server`.
 
@@ -575,7 +577,7 @@ sudo ufw status verbose
 
 
 
-## 4 — IOMMU
+## ❇️ 4 — IOMMU
 
 > [!Important]
 > For the next few sections, we mostly rely on **Bryan Steiner's excellent [tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial/)**.  
@@ -637,13 +639,11 @@ sudo ufw status verbose
 
 
 
-## Libvirt hooks
+## 🪝 Libvirt hooks
 
-## VM (1) creation
+## 🌱 VM (1) creation
 
-## Performance tweaks
-
-
+## 🔥 Performance tweaks
 
 
 
@@ -654,6 +654,8 @@ sudo ufw status verbose
 
 
 
+
+----
 
 [^footnote]: Click the ending link to go back up where you were:
 
