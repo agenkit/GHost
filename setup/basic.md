@@ -408,14 +408,13 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
    ```
 
 
-#### Configuration directory
+#### 🕸️ Directory structure
 
 1. Create the Nexus Configuration directory structure.
 
    ```sh
    sudo mkdir -p \
-   $NX_CFG/etc/profile.d \
-   $NX_CFG/etc/zsh \
+   $NX_CFG/etc/ \
    $NX_CFG/etc/ssh/sshd_config.d \
    $NX_CFG/etc/ufw/applications.d \
    $NX_CFG/home/$USER \
@@ -434,6 +433,8 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
    sudo ln -s $NX_ENV $NX_BASH_ENV
    ```
 
+#### 🤖 System user
+
 1. Create the `nexus` Linux group, then the eponym user without login shell access.
 
    ```sh
@@ -445,6 +446,8 @@ Then <kbd>Ctrl</kbd> + <kbd>x</kbd> to exit `nano` .
    ```sh
    sudo chown -R $NX_NS:$NX_NS $NX_CFG
    ```
+
+#### 🧬 Git init & config
 
 1. Create the command `nxctl-git`: a `git` wrapper to facilitate interaction with this repo.  
 *A straightforward shell `alias`.*
