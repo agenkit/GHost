@@ -710,6 +710,20 @@ sudo ufw status verbose
 
 
 
+## temp notes
+
+---
+
+ubuntu-server-documentation
+
+https://github.com/canonical/ubuntu-server-documentation
+
+---
+
+VM tools in the Ubuntu space
+
+https://github.com/canonical/ubuntu-server-documentation/blob/9d250c16e4a14bea42f0020ff4505920fda33ce8/explanation/virtualisation/vm-tools-in-the-ubuntu-space.md
+
 ----
 
 [^footnote]: Click the ending link to go back up where you were:
