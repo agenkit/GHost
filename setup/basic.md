@@ -40,6 +40,8 @@ Target: complete PoC (1); then proper writing (2).
 
 ## 📑 0 — Variables
 
+<!--
+
 List of all variables used in the GHost setup.  
 *For `bash`, modify `*.zsh` paths.*[^bash-env]
 
@@ -53,12 +55,12 @@ graph TB
    grp("NX_GROUP<br>'nexus'")
    as("NX_ADM_ALIASES<br>'$ZSH_CUSTOM/aliases.zsh'")
 
-   n --> c
+   n --- c
    subgraph c["Config '/cfg'"]
       cfg & env & fs & fsl & grp
    end
    
-   n --> a
+   n --- a
    subgraph a["Admin '$HOME`'"]
       as
    end
@@ -90,6 +92,8 @@ NX_GIT_DIR="$NX_CFG/.git"
 
 NX_ADM_ALIASES="$ZSH_CUSTOM/aliases.zsh"
 ```
+
+-->
 
 To display all variables in use on a system, do any of:
 
